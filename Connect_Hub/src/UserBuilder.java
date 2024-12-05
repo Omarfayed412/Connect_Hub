@@ -7,4 +7,5 @@ public interface UserBuilder {
     UserBuilderConcerete setEmail(String email);
     UserBuilderConcerete setUsername(String username);
     UserBuilderConcerete setPassword(String password);
+    UserBuilderConcerete setProfile();
 }

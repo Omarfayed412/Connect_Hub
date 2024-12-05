@@ -11,7 +11,7 @@ public  class User {
     private String dateOfBirth;
     private String userID;
     private String status;
-    private ArrayList<User> friends;
+    private Profile profile;
       User(UserBuilderConcerete userBuilderConcerete) {   // 3shan  i used builder implementation
         this.userID = userBuilderConcerete.getUserID();
         this.email = userBuilderConcerete.getEmail();
@@ -19,20 +19,19 @@ public  class User {
         this.password = userBuilderConcerete.getPassword(); //working with hashed in the program
         this.dateOfBirth = userBuilderConcerete.getDateOfBirth();
         this.status = userBuilderConcerete.getStatus();
-        this.friends = new ArrayList<>();
+        this.profile = userBuilderConcerete.getProfile();   //each user has one profile
+      }
+
+    public Profile getProfile() {
+        return profile;
     }
-    public void addFriend(User user) {  //consider validation is exist in the contact manager
-        this.friends.add(user);
-    }
-    public void removeFriend(User user) {    ////consider validation is exist in the contact manager
-        this.friends.remove(user);
-    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+       this.email = email;
     }
 
     public String getUsername() {
@@ -57,10 +56,6 @@ public  class User {
 
     public String getUserID() {
         return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
     }
 
     public String getStatus() {

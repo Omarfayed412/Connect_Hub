@@ -20,7 +20,7 @@ public class AccountManager {
     }
     // use signup after validate(password,username,email)
     public void signup(String email, String username, String rawPassword, String dateOfBirth){   //validation of the sign up handeled in frontend using validators classess
-        User user= new UserBuilderConcerete().setEmail(email).setUsername(username).setPassword(rawPassword).setDateOfBirth(dateOfBirth).setUserID().setStatus().build();
+        User user= new UserBuilderConcerete().setEmail(email).setUsername(username).setPassword(rawPassword).setDateOfBirth(dateOfBirth).setUserID().setStatus().setProfile().build();
         userDataBase.addUser(user);
     }
     public void login(User user){

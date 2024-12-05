@@ -8,6 +8,7 @@ public class UserBuilderConcerete implements UserBuilder {
     private String dateOfBirth;
     private String userID;
     private String status;
+    private Profile profile;
     @Override
     public UserBuilderConcerete setUserID() {
         this.userID = UUID.randomUUID().toString();
@@ -41,6 +42,16 @@ public class UserBuilderConcerete implements UserBuilder {
     public UserBuilderConcerete setPassword(String password) {
        this.password = PasswordHasher.hash(password); //working with hashed password in our program
        return this;
+    }
+
+    @Override
+    public UserBuilderConcerete setProfile() {
+        this.profile = new Profile();
+        return this;
+    }
+
+    public Profile getProfile() {
+        return profile;
     }
 
     public String getEmail() {
