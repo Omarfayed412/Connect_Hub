@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Database;
 ///           class UserDataBase .....
 ///           this class follows the Singleton design pattern
 ///           usage : use getUserDataBase() : DataBase method to get the DataBase
@@ -6,6 +6,7 @@ package Backend;
 ///           ArrayList<User> users = userDataBase.getUsers();
 
 
+import Backend.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDataBase implements UserRepository {
+public class UserDataBase implements IUserDatabase {
     private static List<User> users = null;
     private static UserDataBase userDataBase =  null;
     private static final String users_json = "src/users.json";
