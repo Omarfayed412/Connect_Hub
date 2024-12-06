@@ -16,75 +16,65 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDataBase implements UserDBA {
+public class UserDataBase implements UserRepository {
     private static List<User> users = null;
-    private static UserDataBase userDataBase = null;
+    private static UserDataBase userDataBase =  null;
     private static final String users_json = "src/users.json";
     private static Gson gson = null;
-    private static int numberOfUsers;
+    private static int numberOfUsers ;
 
 
-    private UserDataBase() {
-        users = new ArrayList<User>();
-        gson = new Gson();
-        numberOfJSONOBJECTS();
+
+    private UserDataBase()
+    {
+     users = new ArrayList<User>();
+     gson = new Gson();
+     numberOfJSONOBJECTS();
     }
 
     public synchronized static UserDataBase getUserDataBase() {
-        if (userDataBase == null) {
+        if(userDataBase == null)
+        {
             System.out.println("UserDataBase Created");
             userDataBase = new UserDataBase();
             /// Avoid null Exceptions
-            if (numberOfUsers > 0)
-                innerLoad();
+            if(numberOfUsers > 0)
+                     load();
 
         }
         return userDataBase;
     }
 
-    public void numberOfJSONOBJECTS() {
+    public void numberOfJSONOBJECTS()
+    {
         List<User> userList = null;
         try {
             FileReader reader = new FileReader(users_json);
-            Type type = new TypeToken<List<User>>() {
-            }.getType();
-            userList = gson.fromJson(reader, type);
+            Type type = new TypeToken<List<User>>(){}.getType();
+             userList = gson.fromJson(reader,type);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (userList == null)
-            numberOfUsers = 0;
+        if(userList == null)
+            numberOfUsers = 0 ;
         else
-            numberOfUsers = userList.size();
+          numberOfUsers = userList.size();
 
 
     }
 
 
-    /// Deserialization..... first instance
 
-    private static void innerLoad() {
+    /// Deserialization.....
+    ///
+    public  static void load()
+    {
         try {
             FileReader reader = new FileReader(users_json);
             /// generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<User>>() {
-            }.getType();
-            users = gson.fromJson(reader, type);
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void load() {
-        try {
-            FileReader reader = new FileReader(users_json);
-            /// generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<User>>() {
-            }.getType();
-            users = gson.fromJson(reader, type);
+            Type type = new TypeToken<List<User>>(){}.getType();
+            users = gson.fromJson(reader,type);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,11 +84,12 @@ public class UserDataBase implements UserDBA {
 
 
     /// Serialization.....
-    public void save() {
+    public void save()
+    {
         //serialization into users.json......
         try {
             FileWriter writer = new FileWriter(users_json);
-            gson.toJson(users, writer);
+            gson.toJson(users,writer);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,15 +98,6 @@ public class UserDataBase implements UserDBA {
 
     public List<User> getUsers() {
         return users;
-    }
-
-    /// getUser() method return user if found
-    /// return null if user not found
-    public User getUser(String userId)
-    {
-        for (User user : users)
-            if(user.getUserID().matches(userId)) return user;
-        return null;
     }
     /// returns true if user  already existed
     /// return false if email not  existed

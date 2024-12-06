@@ -4,7 +4,3 @@
      void addUser(User user);
      public void load();
 }
-/*
-user    content
-Dat=Base userDateba  = new
- */
