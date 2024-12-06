@@ -17,11 +17,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< Updated upstream
-public class UserDataBase implements UserDBA {
-=======
+
 public class UserDataBase implements  IUserDatabase{
->>>>>>> Stashed changes
     private static List<User> users = null;
     private static UserDataBase userDataBase = null;
     private static final String users_json = "users.json";

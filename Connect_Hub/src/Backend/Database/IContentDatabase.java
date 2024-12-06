@@ -13,4 +13,5 @@ import Backend.ContentCreation.IContent;
 public interface IContentDatabase extends Database{
     public boolean addContent(IContent content);
     public boolean removeContent(String contentID);
+    public IContent getContent(String contentId);
 }

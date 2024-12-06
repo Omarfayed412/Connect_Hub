@@ -116,8 +116,7 @@ public class ContentDatabase implements IContentDatabase{
     // getContent() method return content if found
     // return null if content not found
     @Override
-    public IContent getContent(String contentId)
-    {
+    public IContent getContent(String contentId) {
         for (IContent i : contentList)
             if(i.getContentId().equalsIgnoreCase(contentId)) return i;
         return null;
