@@ -1,3 +1,5 @@
+package Backend;
+
 public interface UserDBA extends DataBase{
     void save();
     void addUser(User user);

@@ -1,3 +1,5 @@
+package Backend;
+
 public class UserNameChecker {
     static UserDataBase userRepository = UserDataBase.getUserDataBase();
 

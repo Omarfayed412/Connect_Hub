@@ -1,3 +1,5 @@
+package Frontend;
+
 import javax.swing.*;
 
 public class ProfileWindow {

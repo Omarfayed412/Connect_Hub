@@ -1,3 +1,5 @@
+package Backend;
+
 import java.util.regex.Pattern;
 
 public class PasswordsStrengthTester {
