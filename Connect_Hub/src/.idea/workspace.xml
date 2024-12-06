@@ -18,6 +18,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -40,23 +45,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.FriendManagerGUI.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/Facebook/Connect_Hub/Connect_Hub/Connect_Hub/src&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.FriendManagerGUI.executor": "Run",
+    "Application.NewsFeed.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "git-widget-placeholder": "Changes-confilcsResolve",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/Desktop/Facebook/Connect_Hub/Connect_Hub/Connect_Hub/src",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.fileTypes"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="NewsFeed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Frontend.NewsFeed" />
+      <module name="Connect_Hub" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Frontend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -66,6 +88,27 @@
       <option name="presentableId" value="Default" />
       <updated>1733492679690</updated>
     </task>
+    <task id="LOCAL؜-٠٠٠٠١" summary="ConnectHubCopy is added">
+      <option name="closed" value="true" />
+      <created>1733511436362</created>
+      <option name="number" value="٠٠٠٠١" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠١" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1733511436362</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٢" summary="ConnectHubCopy is added">
+      <option name="closed" value="true" />
+      <created>1733511445111</created>
+      <option name="number" value="٠٠٠٠٢" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٢" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1733511445111</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ConnectHubCopy is added" />
+    <option name="LAST_COMMIT_MESSAGE" value="ConnectHubCopy is added" />
   </component>
 </project>

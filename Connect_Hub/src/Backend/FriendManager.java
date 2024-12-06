@@ -1,5 +1,7 @@
 package Backend;
 
+import java.util.List;
+
 public class FriendManager
 {
 
@@ -16,9 +18,38 @@ public class FriendManager
         friend.getProfile().getFriends().addPending(this.client.getUserID());
         return true;
     }
+    public List<String> getFriends() {
+    return friends.getFriends();
+}
+    public List<String> getPending() {
+        return friends.getPending();
+    }
+    public Boolean isFriend(String userId)
+    {
+        Boolean flag  = false;
+        for(String temp : friends.getFriends())
+        {
+            if(temp.matches(userId)) {flag = true;break;}
+
+        }
+        if(isBlocked(userId)) flag = false;
+        return flag;
+
+    }
+    public Boolean isBlocked(String userId)
+    {
+        Boolean flag  = false;
+        for(String temp : friends.getBlocked())
+        {
+            if(temp.matches(userId)) {flag = true;break;}
+
+        }
+        return flag;
+
+    }
     public Boolean acceptRequest(User friend)
     {
-        friends.acceptFriends(friend.getUserID());
+        this.friends.acceptFriends(friend.getUserID());
         friend.getProfile().getFriends().addFriends(this.client.getUserID());
         return true;
     }

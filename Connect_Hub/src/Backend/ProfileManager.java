@@ -3,7 +3,7 @@ package Backend;
 import Backend.ContentCreation.IContent;
 import java.util.List;
 
-public class ProfileManager implements ProfileInterface {
+public class ProfileManager implements UserDBA {
     UserInterfaceID userInterface;
     Profile profile;
     public ProfileManager(UserInterfaceID userInterface) {
