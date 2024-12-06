@@ -5,4 +5,8 @@
 /Connect_Hub/Test
 /Connect_Hub/.idea
 Connect_Hub/Connect_Hub.iml
+nbproject
+Connect_Hub/Connect_Hub.iml
+/.idea
+Connect_Hub/.idea/workspace.xml
 Connect_Hub.iml
