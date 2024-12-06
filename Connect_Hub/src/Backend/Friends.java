@@ -3,7 +3,7 @@ package Backend;
 import java.util.ArrayList;
 import java.util.List;
 
- class Friends implements FriendsInterface {
+ public class Friends implements FriendsInterface {
     private List<String> friends;
     private List<String> blocked;
     // Received friend requests

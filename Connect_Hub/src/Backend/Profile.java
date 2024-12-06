@@ -12,8 +12,8 @@ public class Profile {
     private List<IContent> content;
     private Friends friends;
     public Profile() {
-        this.profilePhoto ="\"C:\\Users\\Lenovo\\Desktop\\profile-default-avatar-icon-user-600nw-2463844171.webp\"";  //default photo
-        this.coverPhoto ="\"C:\\Users\\Lenovo\\Desktop\\profile-default-avatar-icon-user-600nw-2463844171.webp\"" ;    //default photo
+        this.profilePhoto ="C:/Users/mido9/Documents/GitHub/Connect_Hub/Connect_Hub/test/img.png";  //default photo
+        this.coverPhoto ="Connect_Hub/test/try.png" ;    //default photo
         this.bio = null;  //default
         this.content = new ArrayList<>();
         this.friends = new Friends();

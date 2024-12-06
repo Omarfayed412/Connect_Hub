@@ -22,13 +22,15 @@ import java.util.List;
 
 public class ContentDatabase implements IContentDatabase{
     private static ContentDatabase database = null;
-    private static ArrayList<IContent> contentList;
+    private static List<IContent> contentList;
     private static final String contnetJson = "content.json";
     private static Gson gson = null;
     
     //Apllying the singlton design pattern 
     private ContentDatabase() {
-        contentList = new ArrayList<IContent>();
+        System.out.println("in ContentDatabase");
+        contentList = new ArrayList<>();
+        gson = new Gson();
     }
     
     public synchronized static Database getInstance() {
@@ -41,7 +43,9 @@ public class ContentDatabase implements IContentDatabase{
      
     @Override
     public boolean addContent(IContent content) {
+
         try {
+            System.out.println("add content");
             contentList.add(content);
             System.out.println("Content added");
             this.save();
@@ -82,9 +86,11 @@ public class ContentDatabase implements IContentDatabase{
         try {
             FileReader reader = new FileReader(contnetJson);
             // generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<User>>() {
+            Type type = new TypeToken<List<IContent>>() {
             }.getType();
+            System.out.println(contentList);
             contentList = gson.fromJson(reader, type);
+            System.out.println(contentList);
             reader.close();
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
@@ -98,9 +104,15 @@ public class ContentDatabase implements IContentDatabase{
         try {
             FileReader reader = new FileReader(contnetJson);
             // generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<User>>() {
+            Type type = new TypeToken<List<IContent>>() {
             }.getType();
-            contentList = gson.fromJson(reader, type);
+            System.out.println(contentList);
+
+            List<IContent>content = gson.fromJson(reader, type);
+            if (content != null) {
+                contentList = content;
+            }
+            System.out.println(contentList);
             reader.close();
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
@@ -109,7 +121,7 @@ public class ContentDatabase implements IContentDatabase{
         }
     }
 
-    public static ArrayList<IContent> getContentList() {
+    public static List<IContent> getContentList() {
         return contentList;
     }
     

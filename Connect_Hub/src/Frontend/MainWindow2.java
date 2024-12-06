@@ -30,7 +30,7 @@ public class MainWindow2 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-              //  new SignUpWindow2(MainWindow2.this);
+               new SignUpWindow2(MainWindow2.this);
             }
         });
         // Make the frame visible

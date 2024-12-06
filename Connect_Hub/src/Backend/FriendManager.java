@@ -3,10 +3,10 @@ package Backend;
 public class FriendManager
 {
 
-    private UserInterfaceID client;
+    private User client;
     private FriendsInterface friends;
 
-    public FriendManager(UserInterfaceID client) {
+    public FriendManager(User client) {
         this.client = client;
         this.friends = this.client.getProfile().getFriends();
     }

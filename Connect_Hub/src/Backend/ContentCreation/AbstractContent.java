@@ -1,4 +1,5 @@
 package Backend.ContentCreation;
+import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ public abstract class AbstractContent implements IContent{
     private String contentId;
     private String authorId;
     private LocalDateTime timeStamp;
-    private Image imgContent;
+    private String imgContent;
     private String txtContent;
     private int duratoin;
     
@@ -36,12 +37,7 @@ public abstract class AbstractContent implements IContent{
     @Override
     public void setImgContent(String picPath) {
         //Get the image from the given relative path
-        try {
-            this.imgContent = Toolkit.getDefaultToolkit().getImage(picPath);
-        } catch (Exception e) { 
-            this.imgContent = null;
-            System.out.println("Error loading Image or null Image found: " + e.getMessage());
-        }
+        imgContent = imgContent;
     }
 
     @Override
@@ -72,14 +68,8 @@ public abstract class AbstractContent implements IContent{
         return authorId;
     }
 
-    public Image getImg() {
-        try {
-            if (this.imgContent == null) throw new NullPointerException();
-            return this.imgContent;
-        } catch (NullPointerException e) {
-            System.out.println("Null Image");
-        }
-        return null;        
+    public String getImg() {
+            return imgContent;
     }
     
     public String getTxt() {
