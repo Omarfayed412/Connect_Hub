@@ -1,9 +1,8 @@
 package Frontend;
 
 import Backend.*;
-import Backend.Database;
-import Backend.Database.UserDBA;
-import Backend.Database.UserDataBase;
+import Backend.Database.IUserDatabase;
+import Backend.Database.UserDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,7 @@ public class LoginWindow2 extends JFrame {
     private JButton backButton;
     private JPanel DrawingPanel;
     private MainWindow2 parent; // Reference to the main window (or previous window)
-    UserDBA userDataBase= UserDataBase.getUserDataBase();
+    IUserDatabase userDataBase= UserDatabase.getUserDataBase();
     AccountManager accountManager;
     public LoginWindow2(JFrame parent) {
         accountManager=AccountManager.getInstance(userDataBase);

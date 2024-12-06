@@ -86,9 +86,9 @@ public class NewsFeed extends JFrame{
         storiesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         storiesPanel.setBackground(Color.LIGHT_GRAY);
         for (int i = 1; i <= 10; i++) {
-            JPanel story = new Story();
-            story.setOpaque(true);
-            storiesPanel.add(story);
+            //JPanel story = new Story();
+            //story.setOpaque(true);
+            //storiesPanel.add(story);
         }
 
         JPanel storiesWrapper = new JPanel(new GridBagLayout());
@@ -107,8 +107,8 @@ public class NewsFeed extends JFrame{
 
 
         for (int i = 1; i <= 20; i++) {
-            JPanel postPanel = new Post();
-            postsContainer.add(postPanel);
+            //JPanel postPanel = new Post();
+           // postsContainer.add(postPanel);
         }
         combinedContainer.add(postsContainer);
         news.setViewportView(combinedContainer);

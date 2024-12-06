@@ -1,6 +1,8 @@
 package Frontend;
 import Backend.*;
-import Backend.Database.UserDBA;
+import Backend.Database.Database;
+import Backend.Database.Database;
+import Backend.Database.IUserDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,11 +29,11 @@ public class FriendManagerGUI extends JFrame {
     private JList requestsList;
     private JList friendsList;
     private UserInterfaceID user;
-    private UserDBA userDataBase;
+    private IUserDatabase userDatabase;
 
-    public  FriendManagerGUI (UserDBA userDataBase,UserInterfaceID user)
+    public  FriendManagerGUI (IUserDatabase userDatabase,UserInterfaceID user)
     {
-        this.userDataBase = userDataBase;
+        this.userDatabase = userDatabase;
         this.user = user;
         this.friends = user.getProfile().getFriends();
         setVisible(true);   /// set visibility of this page if not the page won't appear
@@ -57,7 +59,7 @@ public class FriendManagerGUI extends JFrame {
         //       friendRequestsModel.addElement("Yaseen Islam");
         for(String id : friends.getPending())
         {
-            friendRequestsModel.addElement(userDataBase.getUser(id).getUsername());
+            friendRequestsModel.addElement(userDatabase.getUser(id).getUsername());
         }
 
 
@@ -69,7 +71,7 @@ public class FriendManagerGUI extends JFrame {
         //     friendsListModel.addElement("Waseem Islam");
         for(String id : friends.getFriends())
         {
-            friendRequestsModel.addElement(userDataBase.getUser(id).getUsername());
+            friendRequestsModel.addElement(userDatabase.getUser(id).getUsername());
         }
 
 
@@ -79,7 +81,7 @@ public class FriendManagerGUI extends JFrame {
         friendsSuggestionsModel = new DefaultListModel<>();
         suggestionsList.setModel(friendsSuggestionsModel);
         //         friendsListModel.addElement("Waseem Islam");
-        for(UserInterface user : userDataBase.getUsers())
+        for(UserInterface user : userDatabase.getUsers())
         {
             if((!friends.isFriend(user.getUserID()))&&(!friends.isBlocked(user.getUserID())))
                 friendsSuggestionsModel.addElement(user.getUsername());
@@ -89,8 +91,8 @@ public class FriendManagerGUI extends JFrame {
     }
     public static void main(String[] args) {
         UserInterfaceID userInterfaceID = null;
-        UserDBA userDataBase = null;
-        new FriendManagerGUI(userDataBase,userInterfaceID);
+        IUserDatabase userDatabase = null;
+        new FriendManagerGUI(userDatabase,userInterfaceID);
     }
 
 }

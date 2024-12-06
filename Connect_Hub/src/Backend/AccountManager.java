@@ -1,12 +1,11 @@
 package Backend;
 
 import Backend.Database.IUserDatabase;
-import Backend.Database.UserDataBase;
 
 //this class follows singletone design pattern
 // i used lazy initilization approach
 public class AccountManager {
-    private IUserDatabase userDataBase ;
+    private IUserDatabase userDataBase;
     private static AccountManager instance;
     private AccountManager(IUserDatabase userDataBase) {
         this.userDataBase = userDataBase;
@@ -29,12 +28,12 @@ public class AccountManager {
     public void login(User user){
         user.setStatus(); // status eluser in list
         userDataBase.save();
-        UserDataBase.load();
+        userDataBase.load();
     }
     public void logout(User user){
         user.resetStatus();
         userDataBase.save();
-        UserDataBase.load(); // loading data after logout
+        userDataBase.load(); // loading data after logout
     }
 
 }

@@ -1,6 +1,7 @@
 package Frontend.NewFeedWindows;
 
 import javax.swing.*;
+import java.io.File;
 
 public class CreatePost {
     private JPanel panel1;
@@ -13,8 +14,26 @@ public class CreatePost {
         frame.setSize(400, 600);
 
     }
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Create Story");
-        new CreatePost(frame);
+    public JButton getInsertImageButton() {
+        return insertImageButton;
+    }
+    public JButton getCreateButton() {
+        return createButton;
+    }
+    public String getText() {
+        return textArea1.getText();
+    }
+
+    public String getImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(null); // Show Open dialog
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            if (selectedFile.exists())
+            {
+                return selectedFile.getAbsolutePath();
+            }
+        }
+        return null;
     }
 }
