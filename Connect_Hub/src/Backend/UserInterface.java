@@ -1,3 +1,5 @@
+package Backend;
+
 public interface UserInterface {
     Profile getProfile();
     String getEmail();

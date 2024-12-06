@@ -1,7 +1,10 @@
 /Connect_Hub/nbproject/private/
-/Connect_Hub/build/
-/Connect_Hub/dist/
 *.class
+/.idea
+/Connect_Hub/Test
+/Connect_Hub/Test
+/Connect_Hub/.idea
+Connect_Hub/Connect_Hub.iml
 nbproject
 Connect_Hub/Connect_Hub.iml
 /.idea
