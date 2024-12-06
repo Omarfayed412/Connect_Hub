@@ -1,7 +1,6 @@
 package Backend.ContentCreation;
-import Backend.ContentCreation.Content;
-import java.time.LocalDate;
 import java.awt.*;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -11,7 +10,7 @@ import java.awt.*;
 public abstract class AbstractContent implements Content{
     private String contentId;
     private String authorId;
-    private LocalDate timeStamp;
+    private LocalDateTime timeStamp;
     private Image imgContent;
     private String txtContent;
     private int duratoin;
@@ -30,7 +29,7 @@ public abstract class AbstractContent implements Content{
     }
 
     @Override
-    public void setTimeStamp(LocalDate timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
@@ -59,7 +58,7 @@ public abstract class AbstractContent implements Content{
     public abstract int getDuration();
 
     @Override
-    public LocalDate getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
