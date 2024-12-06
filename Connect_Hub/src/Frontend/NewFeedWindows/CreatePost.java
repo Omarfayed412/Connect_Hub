@@ -1,6 +1,9 @@
 package Frontend.NewFeedWindows;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class CreatePost {
@@ -8,10 +11,33 @@ public class CreatePost {
     private JTextArea textArea1;
     private JButton insertImageButton;
     private JButton createButton;
+    private JLabel imageLabel;
+    private String image = null;
+
     public CreatePost(JFrame frame) {
         frame.setContentPane(panel1);
         frame.setVisible(true);
         frame.setSize(400, 600);
+        insertImageButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showOpenDialog(null); // Show Open dialog
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    if (selectedFile.exists())
+                    {
+                        image =  selectedFile.getAbsolutePath();
+                        ImageIcon postPhoto = new ImageIcon(image);
+                        Image scaledImage = postPhoto.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
+                        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                        imageLabel.setText("");
+                        imageLabel.setIcon(scaledIcon);
+                    }
+                }
+            }
+        });
 
     }
     public JButton getInsertImageButton() {
@@ -25,15 +51,8 @@ public class CreatePost {
     }
 
     public String getImage() {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(null); // Show Open dialog
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            if (selectedFile.exists())
-            {
-                return selectedFile.getAbsolutePath();
-            }
-        }
-        return null;
+        return image;
     }
+
+
 }

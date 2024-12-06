@@ -1,8 +1,11 @@
 package Frontend;
 
 import Backend.*;
+import Backend.Database.ContentDatabase;
+import Backend.Database.IContentDatabase;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Frontend.NewFeedWindows.NewsFeed;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +20,7 @@ public class LoginWindow2 extends JFrame {
     private JPanel DrawingPanel;
     private MainWindow2 parent; // Reference to the main window (or previous window)
     IUserDatabase userDataBase= UserDatabase.getUserDataBase();
+    IContentDatabase contentDatabase = (IContentDatabase) ContentDatabase.getInstance();
     AccountManager accountManager;
     public LoginWindow2(JFrame parent) {
         accountManager=AccountManager.getInstance(userDataBase);
@@ -43,11 +47,16 @@ public class LoginWindow2 extends JFrame {
                     else
                     {
                         JOptionPane.showMessageDialog(parent, "Email or Password is not correct!", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
                 }
                 else {
                     JOptionPane.showMessageDialog(parent, "Email or Password is not correct!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
+                dispose();
+                new NewsFeed(userDataBase, user);
+
             }
         });
         backButton.addActionListener(new ActionListener() {

@@ -1,6 +1,7 @@
 package Frontend.NewFeedWindows;
 
 import Backend.ContentCreation.AbstractContent;
+import Backend.ContentCreation.IContent;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -17,7 +18,7 @@ public class Post extends JPanel {
     private JTextArea textArea;
     // Creates a panel for displaying posts
 
-    public Post(String userName, String photo, AbstractContent content) {
+    public Post(String userName, String photo, IContent content) {
         // Post Image load
         ImageIcon postPhoto = new ImageIcon(content.getImg());
         Image scaledImage = postPhoto.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
@@ -42,6 +43,7 @@ public class Post extends JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = now.format(formatter);
         time.setText(formattedDateTime);
+
         add(postPanel);
 
 

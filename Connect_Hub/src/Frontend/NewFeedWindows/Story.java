@@ -1,6 +1,7 @@
 package Frontend.NewFeedWindows;
 
 import Backend.ContentCreation.AbstractContent;
+import Backend.ContentCreation.IContent;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -16,7 +17,7 @@ public class Story extends JPanel {
     private JLabel image;
     private JLabel time;
 
-    public Story(String userName, String photo, AbstractContent content) {
+    public Story(String userName, String photo, IContent content) {
         // Post Image load
         ImageIcon postPhoto = new ImageIcon(content.getImg());
         Image scaledImage = postPhoto.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);

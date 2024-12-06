@@ -1,4 +1,5 @@
 package Backend.ContentCreation;
+import java.awt.*;
 import java.time.LocalDateTime;
 
 //Product interface
@@ -9,6 +10,8 @@ public interface IContent {
     public void setImgContent(String picPath);
     public void setTxtContent(String txtContent);
     public void setDuratoin(int duratoin);
+    public String getImg();
+    public String getTxt();
     public LocalDateTime getTimeStamp();
     public int getDuration();
     public String getContentId();
