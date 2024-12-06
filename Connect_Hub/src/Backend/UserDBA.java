@@ -3,7 +3,7 @@ package Backend;
 import Backend.ContentCreation.IContent;
 import java.util.List;
 
-public interface ProfileInterface  {
+public interface UserDBA {
    String getCoverPhoto();
     void setCoverPhoto(String coverPhoto);
     String getProfilePhoto();

@@ -154,6 +154,7 @@ public class FriendManagerGUI extends JFrame {
 
         UserDBA userDataBase = null;
         FriendManager friendManager1 = null;
+        UserInterfaceID userInterfaceID  = null;
         new FriendManagerGUI(userDataBase, userInterfaceID, friendManager1);
     }
 

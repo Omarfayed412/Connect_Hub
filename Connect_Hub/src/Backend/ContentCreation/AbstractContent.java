@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * @author Omar Fayed
  */
 //Abstract Product which includes all methods required to be implemented
-public abstract class AbstractContent implements Content{
+public abstract class AbstractContent implements IContent{
     private String contentId;
     private String authorId;
     private LocalDateTime timeStamp;

@@ -1,13 +1,12 @@
 package Backend;
 
-import Backend.*;
-import Backend.Database.*;
-import java.time.LocalDate;
+import Backend.Database.UserDBA;
+import Backend.Database.UserDataBase;
 
 //this class follows singletone design pattern
 // i used lazy initilization approach
 public class AccountManager {
-    private UserDBA userDataBase ;
+    private UserDBA userDataBase;
     private static AccountManager instance;
     private AccountManager(UserDBA userDataBase) {
         this.userDataBase = userDataBase;
@@ -30,12 +29,12 @@ public class AccountManager {
     public void login(User user){
         user.setStatus(); // status eluser in list
         userDataBase.save();
-        UserDataBase.load();
+        UserDataBase.getUserDataBase().load();
     }
     public void logout(User user){
         user.resetStatus();
         userDataBase.save();
-        UserDataBase.load(); // loading data after logout
+        UserDataBase.getUserDataBase().load(); // loading data after logout
     }
 
 }

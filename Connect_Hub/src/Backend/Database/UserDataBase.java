@@ -17,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserDataBase implements UserDBA {
     private static List<User> users = null;
     private static UserDataBase userDataBase = null;
@@ -158,5 +159,4 @@ public class UserDataBase implements UserDBA {
 //            System.out.println(user.getUsername());
 //
 //    }
-
 }

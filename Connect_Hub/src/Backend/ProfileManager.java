@@ -1,8 +1,9 @@
 package Backend;
 
+import Backend.ContentCreation.IContent;
 import java.util.List;
 
-public class ProfileManager implements ProfileInterface {
+public class ProfileManager implements UserDBA {
     UserInterfaceID userInterface;
     Profile profile;
     public ProfileManager(UserInterfaceID userInterface) {
@@ -41,22 +42,22 @@ public class ProfileManager implements ProfileInterface {
     }
 
     @Override
-    public List<Content> getContent() {
+    public List<IContent> getContent() {
         return this.profile.getContent();
     }
 
     @Override
-    public void setContent(List<Content> content) {
+    public void setContent(List<IContent> content) {
        this.profile.setContent(content);
     }
 
     @Override
-    public void addContent(Content content) {
+    public void addContent(IContent content) {
        this.profile.addContent(content);
     }
 
     @Override
-    public void removeContent(Content content) {
+    public void removeContent(IContent content) {
        this.profile.removeContent(content);
     }
 }

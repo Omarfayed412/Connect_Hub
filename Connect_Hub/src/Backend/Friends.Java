@@ -14,42 +14,45 @@ import java.util.List;
         pending = new ArrayList<>();
     }
 
+    @Override
     public List<String> getFriends() {
         return friends;
     }
+    @Override
     public void addFriends(String  userId) {
         this.friends.add(userId);
     }
+    @Override
     public List<String> getBlocked() {
         return blocked;
     }
+    @Override
     public void addBlocked(String  userId) {
         this.blocked.add(userId);
     }
+    @Override
     public List<String> getPending() {
         return pending;
     }
+    @Override
     public void addPending(String  userId) {
         this.pending.add(userId);
     }
+    @Override
     public void removeFriends(String  userId) {
         this.friends.remove(userId);
     }
+    @Override
     public void removeBlocked(String  userId) {
         this.blocked.remove(userId);
     }
+    @Override
     public void acceptFriends(String  userId) {
         this.friends.add(userId);
         this.pending.remove(userId);
     }
-
     public void declineFriends(String  userId) {
 //        this.friends.remove(userId);
         this.pending.remove(userId);
     }
-
-
-
-
-
 }
