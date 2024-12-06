@@ -1,12 +1,11 @@
 package Backend;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 import java.util.UUID;
 
-public  class User implements UserInterfaceID {
+public  class User implements UserInterface{
     private String email;
     private String username;
     private String password;   //to be hashed
@@ -73,13 +72,13 @@ public  class User implements UserInterfaceID {
     public boolean verifyPassword(String inputPassword) {
         return this.password.equals(PasswordHasher.hash(inputPassword)); //hash input then compare
     }
-   // public String toJSON() {
+    public String toJSON() {
        // implementation(setting format by data base Tasker)
-      //  return null;
- //   }
+        return null;
+    }
 
-   // public static User fromJSON(String json) {
+    public static User fromJSON(String json) {
         // implementation(setting format by data base Tasker)
-      //  return null;
-  //  }
+        return null;
+    }
 }

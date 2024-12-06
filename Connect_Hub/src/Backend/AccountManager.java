@@ -5,9 +5,9 @@ import java.time.LocalDate;
 //this class follows singletone design pattern
 // i used lazy initilization approach
 public class AccountManager {
-    private UserRepository userDataBase;
+    private DataBase userDataBase;
     private static AccountManager instance;
-    private AccountManager(UserRepository userDataBase) {
+    private AccountManager(DataBase userDataBase) {
         this.userDataBase = userDataBase;
     }
     public static AccountManager getInstance(UserDataBase userDataBase) {

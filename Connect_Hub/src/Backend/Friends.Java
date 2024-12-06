@@ -3,7 +3,7 @@ package Backend;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Friends {
+ class Friends implements FriendsInterface {
     private List<String> friends;
     private List<String> blocked;
     // Received friend requests
@@ -42,8 +42,31 @@ public class Friends {
         this.friends.add(userId);
         this.pending.remove(userId);
     }
+    public Boolean isFriend(String userId)
+    {
+        Boolean flag  = false;
+        for(String temp : friends)
+        {
+            if(temp.matches(userId)) {flag = true;break;}
+
+        }
+       if(isBlocked(userId)) flag = false;
+        return flag;
+
+    }
+    public Boolean isBlocked(String userId)
+    {
+        Boolean flag  = false;
+        for(String temp : blocked)
+        {
+            if(temp.matches(userId)) {flag = true;break;}
+
+        }
+        return flag;
+
+    }
     public void declineFriends(String  userId) {
-        this.friends.remove(userId);
+//        this.friends.remove(userId);
         this.pending.remove(userId);
     }
 
