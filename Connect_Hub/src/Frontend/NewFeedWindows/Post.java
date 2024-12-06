@@ -1,11 +1,10 @@
-package Frontend;
+package Frontend.NewFeedWindows;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class Post extends JPanel {
     private JPanel postPanel;

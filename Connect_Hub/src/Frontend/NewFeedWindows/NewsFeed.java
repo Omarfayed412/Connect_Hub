@@ -1,4 +1,4 @@
-package Frontend;
+package Frontend.NewFeedWindows;
 
 import javax.swing.*;
 import java.awt.*;
