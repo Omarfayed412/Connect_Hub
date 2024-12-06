@@ -118,6 +118,12 @@ public class UserDataBase implements UserDBA {
             if(user.getUserID().matches(userId)) return user;
         return null;
     }
+    public String getUserIdByName(String userName)
+    {
+        for (User user : users)
+            if(user.getUsername().matches(userName)) return user.getUserID();
+        return null;
+    }
     /// returns true if user  already existed
     /// return false if email not  existed
     public Boolean IsUserFound(User user) { return ( users.contains(user) ) ? true : false; }
