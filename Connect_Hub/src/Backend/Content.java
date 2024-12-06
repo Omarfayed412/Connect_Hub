@@ -13,4 +13,8 @@ import java.time.LocalDate;
 public interface Content {
     public int getDuration();
     public LocalDate getTimeStamp();
+    public String getContentId();
+    public String getAuthorId();
+    
+            
 }
