@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Backend;
-
+package Backend.ContentCreation;
+import Backend.ContentCreation.Content;
 import java.time.LocalDate;
 import java.awt.*;
 
@@ -11,8 +7,8 @@ import java.awt.*;
  *
  * @author Omar Fayed
  */
-
-public abstract class AbstractContent extends Frame implements Content {
+//Abstract Product which includes all methods required to be implemented
+public abstract class AbstractContent implements Content{
     private String contentId;
     private String authorId;
     private LocalDate timeStamp;
@@ -20,11 +16,26 @@ public abstract class AbstractContent extends Frame implements Content {
     private String txtContent;
     private int duratoin;
     
-    public AbstractContent(String contentId, String authorId, LocalDate timeStamp, String text, String picPath) {
+    public AbstractContent() {
+    }
+
+    @Override
+    public void setContentId(String contentId) {
         this.contentId = contentId;
+    }
+
+    @Override
+    public void setAuthorId(String authorId) {
         this.authorId = authorId;
+    }
+
+    @Override
+    public void setTimeStamp(LocalDate timeStamp) {
         this.timeStamp = timeStamp;
-        this.txtContent = text;
+    }
+
+    @Override
+    public void setImgContent(String picPath) {
         //Get the image from the given relative path
         try {
             this.imgContent = Toolkit.getDefaultToolkit().getImage(picPath);
@@ -32,6 +43,16 @@ public abstract class AbstractContent extends Frame implements Content {
             this.imgContent = null;
             System.out.println("Error loading Image or null Image found: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void setTxtContent(String txtContent) {
+        this.txtContent = txtContent;
+    }
+
+    @Override
+    public void setDuratoin(int duratoin) {
+        this.duratoin = duratoin;
     }
 
     @Override

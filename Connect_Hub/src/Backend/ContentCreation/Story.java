@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Backend;
+package Backend.ContentCreation;
 
 import java.time.LocalDate;
 
@@ -10,10 +6,12 @@ import java.time.LocalDate;
  *
  * @author Omar Fayed
  */
+
+//Product of Content
 public class Story extends AbstractContent {
 
-    public Story(String contentId, String authorId, LocalDate timeStamp, String text, String picPath) {
-        super(contentId, authorId, timeStamp, text, picPath);
+    public Story() {
+        super();
     }
     
     //Get duration returns difference of days between current time and date at which the story has been uploaded
