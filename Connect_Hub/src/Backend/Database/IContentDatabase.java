@@ -6,8 +6,9 @@ package Backend.Database;
 
 /**
  *
- * @author 20112
+ * @author Omar Fayed
  */
-public interface IContentDatabase {
-    
+public interface IContentDatabase extends Database{
+    public boolean addContent();
+    public boolean removeContent();
 }

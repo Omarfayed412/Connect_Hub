@@ -4,7 +4,7 @@
 ///           usage : use getUserDataBase() : DataBase method to get the DataBase
 ///           UserDataBase userDataBase = UserDataBase.getUserDataBase();
 ///           ArrayList<User> users = userDataBase.getUsers();
-package Backend;
+package Backend.Database;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

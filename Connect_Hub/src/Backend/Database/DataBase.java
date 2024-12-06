@@ -4,12 +4,9 @@ import java.util.List;
 
 // using this interface to apply Dependency inversion Principle
  public interface DataBase {
-     void save();
-     void addUser(User user);
-     public void load();
-    public User getUser(String userId);
-    public List<User> getUsers();
-}
+    public void save();
+    public void load();
+ }
 /*
 user    content
 Dat=Base userDateba  = new
