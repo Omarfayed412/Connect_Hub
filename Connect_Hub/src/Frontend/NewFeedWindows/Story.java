@@ -38,7 +38,7 @@ public class Story extends JPanel {
         // username add
         this.userName.setText(userName);
         LocalDateTime now = content.getTimeStamp();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String formattedDateTime = now.format(formatter);
         time.setText(formattedDateTime);
         add(storyWindow);
