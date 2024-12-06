@@ -6,6 +6,7 @@
 ///           ArrayList<User> users = userDataBase.getUsers();
 package Backend.Database;
 
+import Backend.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDataBase implements UserDBA {
+public class UserDataBase implements IUserDatabase {
     private static List<User> users = null;
     private static UserDataBase userDataBase = null;
     private static final String users_json = "src/users.json";
