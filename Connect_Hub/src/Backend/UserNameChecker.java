@@ -1,10 +1,10 @@
 package Backend;
 
-import Backend.Database.UserDBA;
+import Backend.Database.IUserDatabase;
 import Backend.Database.UserDataBase;
 
 public class UserNameChecker {
-    static UserDBA userRepository = UserDataBase.getUserDataBase();
+    static IUserDatabase userRepository = UserDataBase.getUserDataBase();
 
     public static boolean isValidUsername(String username) {
         // Rule 1: Null or empty check

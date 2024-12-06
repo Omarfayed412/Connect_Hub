@@ -14,42 +14,71 @@ import java.util.List;
         pending = new ArrayList<>();
     }
 
+    @Override
     public List<String> getFriends() {
         return friends;
     }
+    @Override
     public void addFriends(String  userId) {
         this.friends.add(userId);
     }
+    @Override
     public List<String> getBlocked() {
         return blocked;
     }
+    @Override
     public void addBlocked(String  userId) {
         this.blocked.add(userId);
     }
+    @Override
     public List<String> getPending() {
         return pending;
     }
+    @Override
     public void addPending(String  userId) {
         this.pending.add(userId);
     }
+    @Override
     public void removeFriends(String  userId) {
         this.friends.remove(userId);
     }
+    @Override
     public void removeBlocked(String  userId) {
         this.blocked.remove(userId);
     }
+    @Override
     public void acceptFriends(String  userId) {
         this.friends.add(userId);
         this.pending.remove(userId);
     }
+    @Override
+    public Boolean isFriend(String userId)
+    {
+        Boolean flag  = false;
+        for(String temp : friends)
+        {
+            if(temp.matches(userId)) {flag = true;break;}
 
+        }
+       if(isBlocked(userId)) flag = false;
+        return flag;
+
+    }
+    @Override
+    public Boolean isBlocked(String userId)
+    {
+        Boolean flag  = false;
+        for(String temp : blocked)
+        {
+            if(temp.matches(userId)) {flag = true;break;}
+
+        }
+        return flag;
+
+    }
+    @Override
     public void declineFriends(String  userId) {
 //        this.friends.remove(userId);
         this.pending.remove(userId);
     }
-
-
-
-
-
 }

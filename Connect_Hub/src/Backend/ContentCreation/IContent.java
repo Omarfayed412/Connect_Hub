@@ -1,9 +1,8 @@
 package Backend.ContentCreation;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //Product interface
-interface Content {
+public interface IContent {
     public void setContentId(String contentId);
     public void setAuthorId(String authorId);
     public void setTimeStamp(LocalDateTime timeStamp);
