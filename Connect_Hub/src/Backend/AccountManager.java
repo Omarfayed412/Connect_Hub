@@ -1,18 +1,18 @@
 package Backend;
 
-import Backend.Database.DataBase;
-import Backend.Database.UserDataBase;
+import Backend.*;
+import Backend.Database.*;
 import java.time.LocalDate;
 
 //this class follows singletone design pattern
 // i used lazy initilization approach
 public class AccountManager {
-    private DataBase userDataBase;
+    private UserDBA userDataBase ;
     private static AccountManager instance;
-    private AccountManager(DataBase userDataBase) {
+    private AccountManager(UserDBA userDataBase) {
         this.userDataBase = userDataBase;
     }
-    public static AccountManager getInstance(DataBase userDataBase) {
+    public static AccountManager getInstance(UserDBA userDataBase) {
         if (instance == null) {
             synchronized (AccountManager.class) {    // i transported the (synchronized in the if block) to prevent blocking the object every call of a thread
                 if (instance == null) {

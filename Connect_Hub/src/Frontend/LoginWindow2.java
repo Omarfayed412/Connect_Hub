@@ -1,7 +1,9 @@
 package Frontend;
 
 import Backend.*;
-import Backend.Database.DataBase;
+import Backend.Database;
+import Backend.Database.UserDBA;
+import Backend.Database.UserDataBase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +17,7 @@ public class LoginWindow2 extends JFrame {
     private JButton backButton;
     private JPanel DrawingPanel;
     private MainWindow2 parent; // Reference to the main window (or previous window)
-    DataBase userDataBase=UserDataBase.getUserDataBase();
+    UserDBA userDataBase= UserDataBase.getUserDataBase();
     AccountManager accountManager;
     public LoginWindow2(JFrame parent) {
         accountManager=AccountManager.getInstance(userDataBase);
@@ -30,7 +32,7 @@ public class LoginWindow2 extends JFrame {
                 String email = textField1.getText();
                 String password = passwordField1.getText();
                 User user=null;
-                if(userDataBase.isEmailExist(email)) {
+                if(CheckEmailExistance.isEmailExist(userDataBase,email)) {
                     for(User ser : userDataBase.getUsers()) {
                         if(ser.getEmail().equals(email)) {
                             user=ser;

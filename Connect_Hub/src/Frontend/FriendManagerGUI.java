@@ -1,6 +1,6 @@
 package Frontend;
 import Backend.*;
-import Backend.Database.DataBase;
+import Backend.Database.UserDBA;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,9 +27,9 @@ public class FriendManagerGUI extends JFrame {
     private JList requestsList;
     private JList friendsList;
     private UserInterfaceID user;
-    private DataBase userDataBase;
+    private UserDBA userDataBase;
 
-    public  FriendManagerGUI (DataBase userDataBase,UserInterfaceID user)
+    public  FriendManagerGUI (UserDBA userDataBase,UserInterfaceID user)
     {
         this.userDataBase = userDataBase;
         this.user = user;
@@ -89,7 +89,7 @@ public class FriendManagerGUI extends JFrame {
     }
     public static void main(String[] args) {
         UserInterfaceID userInterfaceID = null;
-        DataBase userDataBase = null;
+        UserDBA userDataBase = null;
         new FriendManagerGUI(userDataBase,userInterfaceID);
     }
 

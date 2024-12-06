@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDataBase implements IUserDatabase {
+public class UserDataBase implements UserDBA {
     private static List<User> users = null;
     private static UserDataBase userDataBase = null;
     private static final String users_json = "users.json";
@@ -127,16 +127,7 @@ public class UserDataBase implements IUserDatabase {
 
     /// returns true if email is already used
     /// return false if email is not used
-    public Boolean isEmailExist(String email)
-    {
-        Boolean isFound = false;
-        for(User user : users)
-        {
-            if(user.getEmail().matches(email)) { isFound = true; break;}
 
-        }
-        return isFound;
-    }
     /// returns true if id is already used
     /// return false if id is not used
     public Boolean isIdExist(String id)
