@@ -12,5 +12,6 @@ public interface UserInterface {
     void setStatus();
     void resetStatus();
     boolean verifyPassword(String inputPassword);
+    public String getUserID();
 
 }

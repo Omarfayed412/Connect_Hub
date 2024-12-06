@@ -1,5 +1,7 @@
 package Frontend;
 import Backend.*;
+import Backend.Database.DataBase;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,6 +54,7 @@ public class FriendManagerGUI extends JFrame {
     {
         friendRequestsModel = new DefaultListModel<>();
         requestsList.setModel(friendRequestsModel);
+        //       friendRequestsModel.addElement("Yaseen Islam");
         for(String id : friends.getPending())
         {
             friendRequestsModel.addElement(userDataBase.getUser(id).getUsername());
@@ -63,6 +66,7 @@ public class FriendManagerGUI extends JFrame {
     {
         friendsListModel = new DefaultListModel<>();
         friendsList.setModel(friendsListModel);
+        //     friendsListModel.addElement("Waseem Islam");
         for(String id : friends.getFriends())
         {
             friendRequestsModel.addElement(userDataBase.getUser(id).getUsername());
@@ -70,20 +74,22 @@ public class FriendManagerGUI extends JFrame {
 
 
     }
-//    public void LoadSuggestions()
-//    {
-//        friendsSuggestionsModel = new DefaultListModel<>();
-//        suggestionsList.setModel(friendsSuggestionsModel);
-//        for(UserInterface user : userDataBase.getUsers())
-//        {
-//            if(user.getUserID())
-//        }
-//
-//
-//    }
+    public void LoadSuggestions()
+    {
+        friendsSuggestionsModel = new DefaultListModel<>();
+        suggestionsList.setModel(friendsSuggestionsModel);
+        //         friendsListModel.addElement("Waseem Islam");
+        for(UserInterface user : userDataBase.getUsers())
+        {
+            if((!friends.isFriend(user.getUserID()))&&(!friends.isBlocked(user.getUserID())))
+                friendsSuggestionsModel.addElement(user.getUsername());
+        }
+
+
+    }
     public static void main(String[] args) {
         UserInterfaceID userInterfaceID = null;
-        UserDataBase userDataBase = null;
+        DataBase userDataBase = null;
         new FriendManagerGUI(userDataBase,userInterfaceID);
     }
 

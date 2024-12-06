@@ -1,5 +1,6 @@
 package Backend;
 
+import Backend.Database.DataBase;
 import Backend.Database.UserDataBase;
 import java.time.LocalDate;
 
@@ -11,7 +12,7 @@ public class AccountManager {
     private AccountManager(DataBase userDataBase) {
         this.userDataBase = userDataBase;
     }
-    public static AccountManager getInstance(UserDataBase userDataBase) {
+    public static AccountManager getInstance(DataBase userDataBase) {
         if (instance == null) {
             synchronized (AccountManager.class) {    // i transported the (synchronized in the if block) to prevent blocking the object every call of a thread
                 if (instance == null) {
