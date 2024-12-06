@@ -1,9 +1,7 @@
 package Backend.Database;
-import Backend.*;
-import java.util.List;
 
 // using this interface to apply Dependency inversion Principle
- public interface DataBase {
+ public interface Database {
     public void save();
     public void load();
  }
