@@ -1,7 +1,7 @@
 package Frontend;
 
 import Backend.*;
-import Backend.UserDataBase;
+import Backend.Database.UserDataBase;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
