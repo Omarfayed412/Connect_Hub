@@ -1,10 +1,12 @@
+package Frontend;
+
+import Backend.*;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -81,7 +83,7 @@ public class SignUpWindow2 extends JFrame {
                 }
                 if(!DateValidator.isValidDate(localDate))
                 {
-                    JOptionPane.showMessageDialog(SignUpWindow2.this, "User should be 17 or Older!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(SignUpWindow2.this, "Backend.User should be 17 or Older!", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(PasswordsStrengthTester.isStrong(password)==0)

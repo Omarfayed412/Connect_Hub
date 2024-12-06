@@ -1,8 +1,6 @@
-import java.time.LocalDate;
+package Backend;
+
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.*;
-import java.util.UUID;
 
 public  class User {
     private String email;
@@ -73,7 +71,7 @@ public  class User {
     public void resetStatus() {
         this.status = "OFFLINE";
     }
-    boolean verifyPassword(String inputPassword) {
+    public boolean verifyPassword(String inputPassword) {
         return this.password.equals(PasswordHasher.hash(inputPassword)); //hash input then compare
     }
     public String toJSON() {

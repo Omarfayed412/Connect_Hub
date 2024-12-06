@@ -1,3 +1,9 @@
+package Frontend;
+
+import Backend.AccountManager;
+import Backend.User;
+import Backend.UserDataBase;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +37,7 @@ public class LoginWindow2 extends JFrame {
                             user=ser;
                         }
                     }
-                    if(user.verifyPassword(password)) {
+                    if(user!= null && user.verifyPassword(password)) {
                         accountManager.login(user);
                     }
                     else
