@@ -1,6 +1,5 @@
 package Backend;
 
-import Backend.ContentCreation.IContent;
 import java.util.List;
 
 public class ProfileManager implements ProfileInterface {
@@ -42,22 +41,22 @@ public class ProfileManager implements ProfileInterface {
     }
 
     @Override
-    public List<IContent> getContent() {
+    public List<Content> getContent() {
         return this.profile.getContent();
     }
 
     @Override
-    public void setContent(List<IContent> content) {
+    public void setContent(List<Content> content) {
        this.profile.setContent(content);
     }
 
     @Override
-    public void addContent(IContent content) {
+    public void addContent(Content content) {
        this.profile.addContent(content);
     }
 
     @Override
-    public void removeContent(IContent content) {
+    public void removeContent(Content content) {
        this.profile.removeContent(content);
     }
 }

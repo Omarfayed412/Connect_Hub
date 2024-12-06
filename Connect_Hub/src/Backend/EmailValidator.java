@@ -1,13 +1,13 @@
 package Backend;
 
-import Backend.Database.IUserDatabase;
+import Backend.Database.UserDBA;
 import Backend.Database.UserDataBase;
 
 public class EmailValidator {
     // method returns 0 if (invalid)
     // returns -1 if (already exist)
     // returns 1 if (valid and not exist)
-     static IUserDatabase userRepository= UserDataBase.getUserDataBase();
+     static UserDBA userRepository= UserDataBase.getUserDataBase();
     private static final String EMAIL_REGEX = "^(?!\\.)(?!.*\\.\\.)[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+(?<!\\.)$";
     private static final int INVALID = 0;
     private static final int ALREADY_EXISTS = -1;

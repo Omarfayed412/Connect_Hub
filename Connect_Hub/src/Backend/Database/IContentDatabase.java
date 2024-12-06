@@ -4,14 +4,13 @@
  */
 package Backend.Database;
 
-import Backend.ContentCreation.IContent;
+import Backend.Content;
 
 /**
  *
  * @author Omar Fayed
  */
 public interface IContentDatabase extends Database{
-    public boolean addContent(IContent content);
+    public boolean addContent(Content content);
     public boolean removeContent(String contentID);
-    public IContent getContent(String contentId);
 }

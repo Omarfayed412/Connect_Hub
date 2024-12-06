@@ -1,6 +1,5 @@
 package Backend;
 
-import Backend.ContentCreation.IContent;
 import java.util.List;
 
 public interface ProfileInterface  {
@@ -10,8 +9,8 @@ public interface ProfileInterface  {
     void setProfilePhoto(String profilePhoto);
     String getBio();
     void setBio(String bio);
-    List<IContent> getContent();
-    void setContent(List<IContent> content);
-    void addContent(IContent content);
-    void removeContent(IContent content);
+    List<Content> getContent();
+    void setContent(List<Content> content);
+    void addContent(Content content);
+    void removeContent(Content content);
 }

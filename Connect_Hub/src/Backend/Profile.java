@@ -1,6 +1,5 @@
 package Backend;
 
-import Backend.ContentCreation.IContent;
 import javax.swing.text.AbstractDocument;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,7 @@ public class Profile {
     private String profilePhoto;
     private String coverPhoto;
     private String bio;
-    private List<IContent> content;
+    private List<Content> content;
     private Friends friends;
     public Profile() {
         this.profilePhoto ="\"C:\\Users\\Lenovo\\Desktop\\profile-default-avatar-icon-user-600nw-2463844171.webp\"";  //default photo
@@ -51,18 +50,18 @@ public class Profile {
         this.bio = bio;
     }
 
-    public List<IContent> getContent() {
+    public List<Content> getContent() {
         return content;
     }
 
-    public void setContent(List<IContent> content) {
+    public void setContent(List<Content> content) {
         this.content = content;
     }
 
-    public void addContent(IContent content) {
+    public void addContent(Content content) {
         this.content.add(content);
     }
-    public void removeContent(IContent content) {
+    public void removeContent(Content content) {
         this.content.remove(content);
     }
 
