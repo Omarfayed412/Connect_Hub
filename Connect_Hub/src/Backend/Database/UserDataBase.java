@@ -20,7 +20,7 @@ import java.util.List;
 public class UserDataBase implements IUserDatabase {
     private static List<User> users = null;
     private static UserDataBase userDataBase = null;
-    private static final String users_json = "src/users.json";
+    private static final String users_json = "users.json";
     private static Gson gson = null;
     private static int numberOfUsers;
 
