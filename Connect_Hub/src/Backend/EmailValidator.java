@@ -1,3 +1,5 @@
+package Backend;
+
 public class EmailValidator {
     // method returns 0 if (invalid)
     // returns -1 if (already exist)
