@@ -18,6 +18,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -49,8 +54,8 @@
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
-    "git-widget-placeholder": "main",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "git-widget-placeholder": "Changes-confilcsResolve",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Facebook/Connect_Hub/Connect_Hub/Connect_Hub/src",
     "project.structure.last.edited": "Libraries",
@@ -83,6 +88,27 @@
       <option name="presentableId" value="Default" />
       <updated>1733492679690</updated>
     </task>
+    <task id="LOCAL؜-٠٠٠٠١" summary="ConnectHubCopy is added">
+      <option name="closed" value="true" />
+      <created>1733511436362</created>
+      <option name="number" value="٠٠٠٠١" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠١" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1733511436362</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٢" summary="ConnectHubCopy is added">
+      <option name="closed" value="true" />
+      <created>1733511445111</created>
+      <option name="number" value="٠٠٠٠٢" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٢" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1733511445111</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ConnectHubCopy is added" />
+    <option name="LAST_COMMIT_MESSAGE" value="ConnectHubCopy is added" />
   </component>
 </project>

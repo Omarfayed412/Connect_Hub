@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FriendManagerGUI extends JFrame {
+public class FriendManagerGUI  {
 
     private JTabbedPane tabbedPane1;
     private JButton acceptButton;
@@ -18,7 +18,6 @@ public class FriendManagerGUI extends JFrame {
     private JPanel Container;
     private JPanel friendRequestPanel;
     private JPanel friendListPanel;
-    private JPanel friendSuggestionsPanel;
     private JList suggestionsList;
     private DefaultListModel<String> friendRequestsModel;
     private DefaultListModel<String> friendsListModel;
@@ -29,14 +28,15 @@ public class FriendManagerGUI extends JFrame {
     private UserDBA userDataBase;
     private FriendManager friendManager;
 
-    public FriendManagerGUI(UserDBA userDataBase, UserInterfaceID user, FriendManager friendManager) {
+
+    public FriendManagerGUI(UserDBA userDataBase, UserInterfaceID user, FriendManager friendManager , JFrame jFrame) {
         this.userDataBase = userDataBase;
         this.friendManager = friendManager;
         this.user = user;
-        setVisible(true);   /// set visibility of this page if not the page won't appear
-        setSize(new Dimension(400, 400));  ///  set the dimns of the panel append to us  and it is a necessity
-        setContentPane(Container);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+       jFrame.setVisible(true);   /// set visibility of this page if not the page won't appear
+       jFrame.setSize(new Dimension(400, 400));  ///  set the dimns of the panel append to us  and it is a necessity
+        jFrame.setContentPane(Container);
         LoadRequests();
         LoadFriends();
         //   LoadSuggestions();
@@ -150,13 +150,13 @@ public class FriendManagerGUI extends JFrame {
     }
 
 
-    public static void main(String[] args) {
-
-        UserDBA userDataBase = null;
-        FriendManager friendManager1 = null;
-        UserInterfaceID userInterfaceID  = null;
-        new FriendManagerGUI(userDataBase, userInterfaceID, friendManager1);
-    }
+//    public static void main(String[] args) {
+//
+//        UserDBA userDataBase = null;
+//        FriendManager friendManager1 = null;
+//        UserInterfaceID userInterfaceID  = null;
+//        new FriendManagerGUI(userDataBase, userInterfaceID, friendManager1);
+//    }
 
 
 }
