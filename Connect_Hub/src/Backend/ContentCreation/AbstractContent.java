@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
  * @author Omar Fayed
  */
 //Abstract Product which includes all methods required to be implemented
-public abstract class AbstractContent implements IContent{
+public class AbstractContent implements IContent{
     private String contentId;
     private String authorId;
-    private LocalDateTime timeStamp;
-    private Image imgContent;
+    private String timeStamp;
+    private String imgPath;
     private String txtContent;
     private int duratoin;
     
@@ -29,19 +29,13 @@ public abstract class AbstractContent implements IContent{
     }
 
     @Override
-    public void setTimeStamp(LocalDateTime timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
 
     @Override
-    public void setImgContent(String picPath) {
-        //Get the image from the given relative path
-        try {
-            this.imgContent = Toolkit.getDefaultToolkit().getImage(picPath);
-        } catch (Exception e) { 
-            this.imgContent = null;
-            System.out.println("Error loading Image or null Image found: " + e.getMessage());
-        }
+    public void setImgPath(String picPath) {
+        this.imgPath = picPath;
     }
 
     @Override
@@ -55,10 +49,12 @@ public abstract class AbstractContent implements IContent{
     }
 
     @Override
-    public abstract int getDuration();
+    public int getDuration() {
+        return 0;
+    }
 
     @Override
-    public LocalDateTime getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
@@ -72,15 +68,10 @@ public abstract class AbstractContent implements IContent{
         return authorId;
     }
 
-    public Image getImg() {
-        try {
-            if (this.imgContent == null) throw new NullPointerException();
-            return this.imgContent;
-        } catch (NullPointerException e) {
-            System.out.println("Null Image");
-        }
-        return null;        
+    public String getImgPath() {
+        return imgPath;
     }
+    
     
     public String getTxt() {
         try {

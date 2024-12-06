@@ -21,7 +21,7 @@ import java.util.List;
 public class UserDataBase implements  IUserDatabase{
     private static List<User> users = null;
     private static UserDataBase userDataBase = null;
-    private static final String users_json = "users.json";
+    private static final String users_json = "D:\\Software\\OOP_JAVA\\Connect_Hub\\Connect_Hub\\src\\Backend\\Database\\users.json";
     private static Gson gson = null;
     private static int numberOfUsers;
 
@@ -39,7 +39,6 @@ public class UserDataBase implements  IUserDatabase{
             /// Avoid null Exceptions
             if (numberOfUsers > 0)
                 innerLoad();
-
         }
         return userDataBase;
     }
