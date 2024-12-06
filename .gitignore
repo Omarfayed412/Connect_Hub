@@ -1,12 +1,5 @@
 /Connect_Hub/nbproject/private/
+/Connect_Hub/build/
+/Connect_Hub/dist/
 *.class
-/Connect_Hub/nbproject/
-Connect_Hub/build.xml
-Connect_Hub.iml
-Connect_Hub/build.xml
-Connect_Hub/nbproject/build-impl.xml
-Connect_Hub/nbproject/genfiles.properties
-Connect_Hub/nbproject/project.properties
-Connect_Hub/nbproject/project.xml
-/.idea
-Connect_Hub/build.xml
+nbproject
