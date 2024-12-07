@@ -1,10 +1,11 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend.Database;
 
-import Backend.ContentCreation.IContent;
+import Backend.ContentCreation.*;
 import Backend.User;
 import java.util.ArrayList;
 import com.google.gson.Gson;
@@ -13,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,30 +24,50 @@ import java.util.List;
 
 public class ContentDatabase implements IContentDatabase{
     private static ContentDatabase database = null;
-    private static List<IContent> contentList;
+    private static ArrayList<AbstractContent> contentList = null;
     private static final String contnetJson = "content.json";
     private static Gson gson = null;
-    
-    //Apllying the singlton design pattern 
+    private static int numberOfUsers;
+
+    //Apllying the singlton design pattern
     private ContentDatabase() {
-        System.out.println("in ContentDatabase");
-        contentList = new ArrayList<>();
+        contentList = new ArrayList<AbstractContent>();
+        System.out.println("inside constructor");
         gson = new Gson();
+        numberOfJSONOBJECTS();
     }
-    
-    public synchronized static Database getInstance() {
+
+    public synchronized static ContentDatabase getInstance() {
         if (database == null) {
+            System.out.println("Content Database created");
             database = new ContentDatabase();
-            initialLoad();
+            /// Avoid null Exceptions
+            if (numberOfUsers > 0)
+                initialLoad();
         }
         return database;
     }
-     
-    @Override
-    public boolean addContent(IContent content) {
 
+    public void numberOfJSONOBJECTS() {
+        List<AbstractContent> content = null;
         try {
-            System.out.println("add content");
+            FileReader reader = new FileReader(contnetJson);
+            Type type = new TypeToken<List<AbstractContent>>() {
+            }.getType();
+            content = gson.fromJson(reader, type);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (content == null)
+            numberOfUsers = 0;
+        else
+            numberOfUsers = content.size();
+    }
+
+    @Override
+    public boolean addContent(AbstractContent content) {
+        try {
             contentList.add(content);
             System.out.println("Content added");
             this.save();
@@ -59,10 +81,11 @@ public class ContentDatabase implements IContentDatabase{
     @Override
     public boolean removeContent(String contentID) {
         try {
-        IContent content = getContent(contentID);
-        contentList.remove(content);
-        this.save();
-        return true;
+            AbstractContent content = getContent(contentID);
+            contentList.remove(content);
+            this.save();
+            System.out.println("Content Removed");
+            return true;
         } catch(NullPointerException e) {
             System.out.println("Error removing content: " + e.getMessage());
             return false;
@@ -76,44 +99,43 @@ public class ContentDatabase implements IContentDatabase{
             FileWriter writer = new FileWriter(this.contnetJson);
             gson.toJson(this.contentList, writer);
             writer.close();
+            System.out.println("Content Saved");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void load() {
         try {
             FileReader reader = new FileReader(contnetJson);
             // generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<IContent>>() {
+            Type type = new TypeToken<List<AbstractContent>>() {
             }.getType();
-            System.out.println(contentList);
-            contentList = gson.fromJson(reader, type);
-            System.out.println(contentList);
+            ArrayList<AbstractContent>content = gson.fromJson(reader, type);
+            if (content != null)
+                contentList = content;
             reader.close();
+            System.out.println("Content Loaded");
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         } catch (NullPointerException e) {
             System.out.println("Empty json");
         }
     }
-    
+
     //Loading data from json
     private static void initialLoad() {
         try {
             FileReader reader = new FileReader(contnetJson);
             // generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<IContent>>() {
+            Type type = new TypeToken<List<AbstractContent>>() {
             }.getType();
-            System.out.println(contentList);
-
-            List<IContent>content = gson.fromJson(reader, type);
-            if (content != null) {
+            ArrayList<AbstractContent>content = gson.fromJson(reader, type);
+            if (content != null)
                 contentList = content;
-            }
-            System.out.println(contentList);
             reader.close();
+            System.out.println("Contnet Initial Load");
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         } catch (NullPointerException e) {
@@ -121,18 +143,16 @@ public class ContentDatabase implements IContentDatabase{
         }
     }
 
-    public static List<IContent> getContentList() {
+    public ArrayList<AbstractContent> getContentList() {
         return contentList;
     }
-    
+
     // getContent() method return content if found
     // return null if content not found
     @Override
-    public IContent getContent(String contentId) {
-        for (IContent i : contentList)
+    public AbstractContent getContent(String contentId) {
+        for (AbstractContent i : contentList)
             if(i.getContentId().equalsIgnoreCase(contentId)) return i;
         return null;
     }
-    
-    
 }

@@ -39,7 +39,6 @@ public class UserDatabase implements  IUserDatabase{
             /// Avoid null Exceptions
             if (numberOfUsers > 0)
                 innerLoad();
-
         }
         return userDataBase;
     }
@@ -100,8 +99,12 @@ public class UserDatabase implements  IUserDatabase{
         //serialization into users.json......
         try {
             FileWriter writer = new FileWriter(users_json);
+            for (User user : users) {
+                System.out.println(user.getProfile().getContent());
+            }
             gson.toJson(users, writer);
             writer.close();
+            System.out.println("Users Saved");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,8 +147,8 @@ public class UserDatabase implements  IUserDatabase{
 
     @Override
     public void addUser(User user) {
-          users.add(user);
-          save();
+        users.add(user);
+        save();
     }
 //    public void printUsers()
 //    {

@@ -6,6 +6,7 @@ import Backend.Database.ContentDatabase;
 import Backend.Database.IContentDatabase;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Frontend.MainWindow2;
 import Frontend.ProfileWindow;
 
 import javax.swing.*;
@@ -32,29 +33,33 @@ public class NewsFeed extends JFrame{
     private JButton createPostButton;
     private JFrame secondryWindow = null;
     private Backend.NewsFeed newsFeed;
-    private IContentDatabase contentDatabase = (IContentDatabase) ContentDatabase.getInstance();
-    private IUserDatabase userDatabase;
+    private IContentDatabase contentDatabase = ContentDatabase.getInstance();
+    private IUserDatabase userDatabase = UserDatabase.getUserDataBase();
     private FriendManager friendManager;
+    private User user;
 
-    public NewsFeed(IUserDatabase userDatabase, User user) {
-        this.userDatabase = userDatabase;
-        this.newsFeed = new Backend.NewsFeed(user, contentDatabase, userDatabase);
-        this.friendManager = new FriendManager(user);
+    public NewsFeed(User user) {
+        System.out.println("user");
+        contentDatabase.load();
+        this.userDatabase.load();
+        this.user = userDatabase.getUser(user.getUserID());
+        this.newsFeed = new Backend.NewsFeed(this.user);
+        this.friendManager = new FriendManager(this.user);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 800);
         setContentPane(main);
         setVisible(true);
-        userName.setText(user.getUsername());
-        ImageIcon pPhoto = new ImageIcon(user.getProfile().getProfilePhoto());
+        userName.setText(this.user.getUsername());
+        ImageIcon pPhoto = new ImageIcon(this.user.getProfile().getProfilePhoto());
 
         Image scaledImage = pPhoto.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         profilePhoto.setText("");
         profilePhoto.setIcon(scaledIcon);
         profilePhoto.setText("");
-//        newsLoad(user);
-//        friendsLoad(user);
-//        suggestionsLoad();
+        newsLoad();
+        friendsLoad();
+        suggestionsLoad();
 
         createPostButton.addActionListener(new ActionListener() {
 
@@ -74,13 +79,7 @@ public class NewsFeed extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                userDatabase.save();
-                userDatabase.load();
-                contentDatabase.save();
-                contentDatabase.load();
-                newsLoad(user);
-                friendsLoad(user);
-                suggestionsLoad();
+                refresh();
             }
         });
 
@@ -91,18 +90,43 @@ public class NewsFeed extends JFrame{
                 dispose();
             }
         });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                AccountManager ac = AccountManager.getInstance(userDatabase);
+                ac.logout(user.getUserID());
+                userDatabase.save();
+                contentDatabase.save();
+                System.out.println("Window closed");
+            }
+        });
         logout.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 AccountManager ac = AccountManager.getInstance(userDatabase);
-                ac.logout(user);
+                ac.logout(user.getUserID());
+                userDatabase.save();
+                contentDatabase.save();
+                dispose();
+                new MainWindow2();
             }
         });
 
     }
+    public void refresh() {
+        userDatabase.save();
+        userDatabase.load();
+        contentDatabase.save();
+        contentDatabase.load();
+        this.user = userDatabase.getUser(this.user.getUserID());
+        newsLoad();
+        friendsLoad();
+        suggestionsLoad();
+    }
 
-    public void newsLoad(User user) {
+    public void newsLoad() {
         // main panel for news
         JPanel combinedContainer = new JPanel();
         combinedContainer.setLayout(new BoxLayout(combinedContainer, BoxLayout.Y_AXIS));
@@ -115,7 +139,7 @@ public class NewsFeed extends JFrame{
         List<IContent> stories = newsFeed.getStories();
 
         for (IContent content : stories) {
-            JPanel story = new Story(user.getUsername(), user.getProfile().getProfilePhoto(), content);
+            JPanel story = new Story(content);
             story.setOpaque(true);
             storiesPanel.add(story);
         }
@@ -136,7 +160,7 @@ public class NewsFeed extends JFrame{
         List<IContent> posts = newsFeed.getPosts();
 
         for (IContent content : posts) {
-            JPanel postPanel = new Post(user.getUsername(), user.getProfile().getProfilePhoto(), content);
+            JPanel postPanel = new Post(content);
             postsContainer.add(postPanel);
         }
         combinedContainer.add(postsContainer);
@@ -146,7 +170,7 @@ public class NewsFeed extends JFrame{
         news.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
-    public void friendsLoad(User user) {
+    public void friendsLoad() {
         JPanel mainFriends = new JPanel();
         mainFriends.setLayout(new BoxLayout(mainFriends, BoxLayout.Y_AXIS));
         mainFriends.setBackground(Color.WHITE);
@@ -166,18 +190,18 @@ public class NewsFeed extends JFrame{
         mainFriends.setLayout(new BoxLayout(mainFriends, BoxLayout.Y_AXIS));
         mainFriends.setBackground(Color.WHITE);
         List<User> Suggestions = newsFeed.getSuggestions();
-        for(User user : Suggestions) {
+        for(User ser : Suggestions) {
 
-            FriendAdd f = new FriendAdd(user);
+            FriendAdd f = new FriendAdd(ser);
             f.getAddButton().addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    friendManager.sendRequest(user);
+                    friendManager.sendRequest(ser);
+                    suggestionsLoad();
                 }
             });
             mainFriends.add(f);
-            suggestionsLoad();
         }
         suggestions.setViewportView(mainFriends);
         suggestions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -201,6 +225,7 @@ public class NewsFeed extends JFrame{
                 newsFeed.createPost(createPost.getText(), createPost.getImage());
                 secondryWindow.dispose();
                 secondryWindow = null;
+                newsLoad();
             }
         });
 
@@ -217,15 +242,17 @@ public class NewsFeed extends JFrame{
             @Override
             public void windowClosing(WindowEvent e) {
                 secondryWindow = null;
+                newsLoad();
             }
         });
         createStory.getCreateButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                newsFeed.createPost(createStory.getText(), createStory.getImage());
+                newsFeed.createStory(createStory.getText(), createStory.getImage());
                 secondryWindow.dispose();
                 secondryWindow = null;
+                newsLoad();
             }
         });
 

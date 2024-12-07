@@ -9,7 +9,7 @@ public class Profile {
     private String profilePhoto;
     private String coverPhoto;
     private String bio;
-    private List<IContent> content;
+    private List<String> content;
     private Friends friends;
     public Profile() {
         this.profilePhoto ="C:/Users/mido9/Documents/GitHub/Connect_Hub/Connect_Hub/test/img.png";  //default photo
@@ -51,19 +51,20 @@ public class Profile {
         this.bio = bio;
     }
 
-    public List<IContent> getContent() {
+    public List<String> getContent() {
         return content;
     }
 
-    public void setContent(List<IContent> content) {
-        this.content = content;
-    }
+  //  public void setContent(List<IContent> content) {
+     //   this.content = content;
+    //}
 
     public void addContent(IContent content) {
-        this.content.add(content);
+        System.out.println("Content added");
+        this.content.add(content.getContentId());
     }
     public void removeContent(IContent content) {
-        this.content.remove(content);
+        this.content.remove(content.getContentId());
     }
 
 }

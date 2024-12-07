@@ -1,5 +1,5 @@
+
 package Backend.ContentCreation;
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 
@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
  * @author Omar Fayed
  */
 //Abstract Product which includes all methods required to be implemented
-public abstract class AbstractContent implements IContent{
+public class AbstractContent implements IContent{
     private String contentId;
     private String authorId;
-    private LocalDateTime timeStamp;
-    private String imgContent;
+    private String timeStamp;
+    private String imgPath;
     private String txtContent;
     private int duratoin;
-    
+
     public AbstractContent() {
     }
 
@@ -30,14 +30,13 @@ public abstract class AbstractContent implements IContent{
     }
 
     @Override
-    public void setTimeStamp(LocalDateTime timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
 
     @Override
-    public void setImgContent(String picPath) {
-        //Get the image from the given relative path
-        imgContent = imgContent;
+    public void setImgPath(String picPath) {
+        this.imgPath = picPath;
     }
 
     @Override
@@ -51,10 +50,12 @@ public abstract class AbstractContent implements IContent{
     }
 
     @Override
-    public abstract int getDuration();
+    public int getDuration() {
+        return 0;
+    }
 
     @Override
-    public LocalDateTime getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
@@ -67,11 +68,12 @@ public abstract class AbstractContent implements IContent{
     public String getAuthorId() {
         return authorId;
     }
-
-    public String getImg() {
-            return imgContent;
+    @Override
+    public String getImgPath() {
+        return imgPath;
     }
-    
+
+    @Override
     public String getTxt() {
         try {
             if (this.txtContent == null) throw new NullPointerException();
@@ -79,6 +81,6 @@ public abstract class AbstractContent implements IContent{
         } catch (NullPointerException e) {
             System.out.println("Null Text");
         }
-        return null; 
+        return null;
     }
 }

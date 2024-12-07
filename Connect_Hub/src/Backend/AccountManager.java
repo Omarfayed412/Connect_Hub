@@ -30,8 +30,8 @@ public class AccountManager {
         userDataBase.save();
         userDataBase.load();
     }
-    public void logout(User user){
-        user.resetStatus();
+    public void logout(String user){
+        userDataBase.getUser(user).resetStatus();
         userDataBase.save();
         userDataBase.load(); // loading data after logout
     }

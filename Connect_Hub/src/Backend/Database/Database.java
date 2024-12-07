@@ -4,6 +4,7 @@ package Backend.Database;
  public interface Database {
     public void save();
     public void load();
+   // public void numberOfJSONobjects();
  }
 /*
 user    content

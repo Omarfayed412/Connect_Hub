@@ -1,6 +1,8 @@
 package Frontend;
 
 import Backend.*;
+import Backend.ContentCreation.AbstractContent;
+import Backend.ContentCreation.IContent;
 import Backend.Database.ContentDatabase;
 import Backend.Database.IContentDatabase;
 import Backend.Database.IUserDatabase;
@@ -18,9 +20,10 @@ public class LoginWindow2 extends JFrame {
     private JButton Login;
     private JButton backButton;
     private JPanel DrawingPanel;
+    private User user;
     private MainWindow2 parent; // Reference to the main window (or previous window)
     IUserDatabase userDataBase= UserDatabase.getUserDataBase();
-    IContentDatabase contentDatabase = (IContentDatabase) ContentDatabase.getInstance();
+    IContentDatabase c = ContentDatabase.getInstance();
     AccountManager accountManager;
     public LoginWindow2(JFrame parent) {
         accountManager=AccountManager.getInstance(userDataBase);
@@ -34,7 +37,6 @@ public class LoginWindow2 extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String email = textField1.getText();
                 String password = passwordField1.getText();
-                User user=null;
                 if(CheckEmailExistance.isEmailExist(userDataBase,email)) {
                     for(User ser : userDataBase.getUsers()) {
                         if(ser.getEmail().equals(email)) {
@@ -55,7 +57,7 @@ public class LoginWindow2 extends JFrame {
                     return;
                 }
                 dispose();
-                new NewsFeed(userDataBase, user);
+                new NewsFeed(user);
 
             }
         });

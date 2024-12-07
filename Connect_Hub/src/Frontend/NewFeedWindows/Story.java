@@ -2,6 +2,9 @@ package Frontend.NewFeedWindows;
 
 import Backend.ContentCreation.AbstractContent;
 import Backend.ContentCreation.IContent;
+import Backend.Database.IUserDatabase;
+import Backend.Database.UserDatabase;
+import Backend.User;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -17,16 +20,18 @@ public class Story extends JPanel {
     private JLabel image;
     private JLabel time;
 
-    public Story(String userName, String photo, IContent content) {
+    public Story(IContent content) {
+        IUserDatabase userDatabase = UserDatabase.getUserDataBase();
+        User user = userDatabase.getUser(content.getAuthorId());
         // Post Image load
-        ImageIcon postPhoto = new ImageIcon(content.getImg());
+        ImageIcon postPhoto = new ImageIcon(content.getImgPath());
         Image scaledImage = postPhoto.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         image.setText("");
         image.setIcon(scaledIcon);
         // Profile photo load
         profilePhoto.setText("");
-        ImageIcon profile = new ImageIcon(photo);
+        ImageIcon profile = new ImageIcon(user.getProfile().getProfilePhoto());
         Image profileScaled = profile.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         profilePhoto.setIcon(new ImageIcon(profileScaled));
         // load post text
@@ -37,9 +42,9 @@ public class Story extends JPanel {
          DefaultCaret caret = (DefaultCaret) textArea.getCaret();
         caret.setVisible(false);
         // username add
-        this.userName.setText(userName);
-        LocalDateTime now = content.getTimeStamp();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        this.userName.setText(user.getUsername());
+        LocalDateTime now = LocalDateTime.parse(content.getTimeStamp());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedDateTime = now.format(formatter);
         time.setText(formattedDateTime);
         add(storyWindow);
