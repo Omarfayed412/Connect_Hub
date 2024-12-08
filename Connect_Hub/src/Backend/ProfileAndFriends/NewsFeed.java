@@ -39,6 +39,7 @@ public class NewsFeed {
         System.out.println(user.getProfile().getContent());
         System.out.println("2" + user.getProfile().getContent());
         System.out.println("1" + userDatabase.getUser(user.getUserID()).getProfile().getContent());
+        database.save();
         userDatabase.save();
     }
     // allow user to create story
@@ -54,6 +55,7 @@ public class NewsFeed {
         story.setTxtContent(text);
         database.addContent(story);
         user.getProfile().addContent(story);
+        database.save();
         userDatabase.save();
     }
     // load friends contents
@@ -88,6 +90,7 @@ public class NewsFeed {
     }
 
     public List<IContent> getMyStories(){
+        this.user = userDatabase.getUser(user.getUserID());
         return manageStories(user.getProfile().getContent());
 
     }
@@ -115,6 +118,7 @@ public class NewsFeed {
     }
 
     public List<IContent> getMyPosts(){
+        this.user = userDatabase.getUser(user.getUserID());
         List<IContent> posts = new ArrayList<>();
 
         for (String contentId : user.getProfile().getContent()) {

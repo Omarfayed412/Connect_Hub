@@ -137,6 +137,7 @@ public class FriendManagerGUI  {
                         block.setVisible(false);
                         f.getStatusLabel().setVisible(true);
                         f.getStatusLabel().setText("unfriended");
+                        userDataBase.save();
                     }
 
                 }

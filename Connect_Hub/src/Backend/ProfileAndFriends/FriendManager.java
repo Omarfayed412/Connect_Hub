@@ -77,12 +77,14 @@ public class FriendManager
         this.friends.acceptFriends(friend.getUserID());
         User user = database.getUser(friend.getUserID());
         user.getProfile().getFriends().addFriends(this.client.getUserID());
+        database.save();
         return true;
     }
     public  Boolean declineRequest(User friend)
     {
         refresh();
         friend.getProfile().getFriends().declineFriends(this.client.getUserID());
+        database.save();
         return true;
     }
     public Boolean blockFriend(User friend)
@@ -92,14 +94,16 @@ public class FriendManager
         this.client.getProfile().getFriends().addBlocked(this.client.getUserID());
         User user = database.getUser(friend.getUserID());
         user.getProfile().getFriends().removeFriends(this.client.getUserID());
+        database.save();
         return true;
     }
     public Boolean removeFriend(User friend)
     {
         refresh();
-        this.client.getProfile().getFriends().removeFriends(this.client.getUserID());
+        this.client.getProfile().getFriends().removeFriends(friend.getUserID());
         User user = database.getUser(friend.getUserID());
-        friend.getProfile().getFriends().removeFriends(this.client.getUserID());
+        user.getProfile().getFriends().removeFriends(this.client.getUserID());
+        database.save();
         return true;
     }
     public  Boolean unblockFriend(User friend)
@@ -107,6 +111,7 @@ public class FriendManager
         refresh();
 //        friend.getProfile().getFriends().removeBlocked(this.client.getUserID());
         this.client.getProfile().getFriends().removeBlocked(friend.getUserID());
+        database.save();
         return true;
     }
 

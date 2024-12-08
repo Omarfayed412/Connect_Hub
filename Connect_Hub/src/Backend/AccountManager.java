@@ -35,7 +35,7 @@ public class AccountManager {
     public void logout(String user){
         userDataBase.getUser(user).resetStatus();
         userDataBase.save();
-        userDataBase.load(); // loading data after logout
+
     }
 
 }
