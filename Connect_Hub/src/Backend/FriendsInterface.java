@@ -12,6 +12,6 @@ public interface FriendsInterface {
     public void removeBlocked(String  userId);
     public void acceptFriends(String  userId);
     public void declineFriends(String  userId);
-    public Boolean isBlocked(String userId);
-    public Boolean isFriend(String userId);
+
+
 }

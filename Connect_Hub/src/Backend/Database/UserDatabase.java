@@ -18,24 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDataBase implements  IUserDatabase{
+public class UserDatabase implements  IUserDatabase{
     private static List<User> users = null;
-    private static UserDataBase userDataBase = null;
+    private static UserDatabase userDataBase = null;
     private static final String users_json = "D:\\Software\\OOP_JAVA\\Connect_Hub\\Connect_Hub\\src\\Backend\\Database\\users.json";
     private static Gson gson = null;
     private static int numberOfUsers;
 
 
-    private UserDataBase() {
+    private UserDatabase() {
         users = new ArrayList<User>();
         gson = new Gson();
         numberOfJSONOBJECTS();
     }
 
-    public synchronized static UserDataBase getUserDataBase() {
+    public synchronized static UserDatabase getUserDataBase() {
         if (userDataBase == null) {
             System.out.println("UserDataBase Created");
-            userDataBase = new UserDataBase();
+            userDataBase = new UserDatabase();
             /// Avoid null Exceptions
             if (numberOfUsers > 0)
                 innerLoad();

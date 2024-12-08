@@ -1,14 +1,13 @@
 package Frontend;
 
 import Backend.*;
-import Backend.Database.UserDataBase;
+import Backend.Database.UserDatabase;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -25,7 +24,7 @@ public class SignUpWindow2 extends JFrame {
     private JPanel DrawingPanel;
     // Initialize the Date panel
     private JPanel Date;
-    UserDataBase userDataBase=UserDataBase.getUserDataBase();
+    UserDatabase userDataBase= UserDatabase.getUserDataBase();
     AccountManager accountManager;
     public SignUpWindow2( JFrame parent) {
         accountManager=AccountManager.getInstance(userDataBase);

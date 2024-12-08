@@ -9,11 +9,11 @@ public class Profile {
     private String profilePhoto;
     private String coverPhoto;
     private String bio;
-    private List<IContent> content;
+    private List<String> content;
     private Friends friends;
     public Profile() {
-        this.profilePhoto ="\"C:\\Users\\Lenovo\\Desktop\\profile-default-avatar-icon-user-600nw-2463844171.webp\"";  //default photo
-        this.coverPhoto ="\"C:\\Users\\Lenovo\\Desktop\\profile-default-avatar-icon-user-600nw-2463844171.webp\"" ;    //default photo
+        this.profilePhoto ="C:/Users/mido9/Documents/GitHub/Connect_Hub/Connect_Hub/test/img.png";  //default photo
+        this.coverPhoto ="Connect_Hub/test/try.png" ;    //default photo
         this.bio = null;  //default
         this.content = new ArrayList<>();
         this.friends = new Friends();
@@ -51,19 +51,20 @@ public class Profile {
         this.bio = bio;
     }
 
-    public List<IContent> getContent() {
+    public List<String> getContent() {
         return content;
     }
 
-    public void setContent(List<IContent> content) {
-        this.content = content;
-    }
+  //  public void setContent(List<IContent> content) {
+     //   this.content = content;
+    //}
 
     public void addContent(IContent content) {
-        this.content.add(content);
+        System.out.println("Content added");
+        this.content.add(content.getContentId());
     }
     public void removeContent(IContent content) {
-        this.content.remove(content);
+        this.content.remove(content.getContentId());
     }
 
 }

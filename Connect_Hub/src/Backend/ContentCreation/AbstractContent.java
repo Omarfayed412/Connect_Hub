@@ -1,3 +1,4 @@
+
 package Backend.ContentCreation;
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class AbstractContent implements IContent{
     private String imgPath;
     private String txtContent;
     private int duratoin;
-    
+
     public AbstractContent() {
     }
 
@@ -67,12 +68,12 @@ public class AbstractContent implements IContent{
     public String getAuthorId() {
         return authorId;
     }
-
+    @Override
     public String getImgPath() {
         return imgPath;
     }
-    
-    
+
+    @Override
     public String getTxt() {
         try {
             if (this.txtContent == null) throw new NullPointerException();
@@ -80,6 +81,6 @@ public class AbstractContent implements IContent{
         } catch (NullPointerException e) {
             System.out.println("Null Text");
         }
-        return null; 
+        return null;
     }
 }

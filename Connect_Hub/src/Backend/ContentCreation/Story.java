@@ -14,7 +14,7 @@ public class Story extends AbstractContent {
     public Story() {
         super();
     }
-    
+
     //Get duration returns difference of days between current time and date at which the story has been uploaded
     @Override
     public int getDuration() {
@@ -23,5 +23,5 @@ public class Story extends AbstractContent {
         LocalDateTime parsedDateTime = LocalDateTime.parse(this.getTimeStamp(), formatter);
         return currentTime.compareTo(parsedDateTime);
     }
-    
+
 }

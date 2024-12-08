@@ -1,7 +1,7 @@
 package Backend.Database;
 
 // using this interface to apply Dependency inversion Principle
-  interface Database {
+ public interface Database {
     public void save();
     public void load();
    // public void numberOfJSONobjects();

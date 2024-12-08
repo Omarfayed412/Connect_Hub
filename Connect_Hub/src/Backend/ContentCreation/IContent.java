@@ -13,4 +13,6 @@ public interface IContent {
     public int getDuration();
     public String getContentId();
     public String getAuthorId();
+    public String getImgPath();
+    public String getTxt();
 }
