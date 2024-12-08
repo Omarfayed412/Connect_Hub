@@ -1,12 +1,12 @@
 package Frontend;
 
 import Backend.*;
-import Backend.ContentCreation.AbstractContent;
-import Backend.ContentCreation.IContent;
 import Backend.Database.ContentDatabase;
 import Backend.Database.IContentDatabase;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.User.User;
+import Backend.Validations.CheckEmailExistance;
 import Frontend.NewFeedWindows.NewsFeed;
 
 import javax.swing.*;

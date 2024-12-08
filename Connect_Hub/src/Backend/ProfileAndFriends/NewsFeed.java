@@ -1,4 +1,4 @@
-package Backend;
+package Backend.ProfileAndFriends;
 
 import Backend.ContentCreation.IContent;
 import Backend.ContentCreation.Post;
@@ -7,10 +7,9 @@ import Backend.Database.ContentDatabase;
 import Backend.Database.IContentDatabase;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.User.User;
 
-import java.awt.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 

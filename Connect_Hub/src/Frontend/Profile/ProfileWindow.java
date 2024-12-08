@@ -1,9 +1,9 @@
-package Frontend;
+package Frontend.Profile;
 
 import Backend.AccountManager;
 import Backend.ContentCreation.IContent;
 import Backend.Database.UserDatabase;
-import Backend.User;
+import Backend.User.User;
 import Frontend.NewFeedWindows.NewsFeed;
 import Frontend.NewFeedWindows.Post;
 import Frontend.NewFeedWindows.Story;
@@ -31,13 +31,13 @@ public class ProfileWindow extends JFrame {
     private UserDatabase userDatabase = UserDatabase.getUserDataBase();
     private User user;
     private JFrame secondryWindow = null;
-    private Backend.NewsFeed newsFeed;
+    private Backend.ProfileAndFriends.NewsFeed newsFeed;
     
 
     public ProfileWindow(User user) {
         userDatabase.load();
         this.user = userDatabase.getUser(user.getUserID());
-        this.newsFeed = new Backend.NewsFeed(user);
+        this.newsFeed = new Backend.ProfileAndFriends.NewsFeed(user);
         setContentPane(panel1);
         setTitle("Profile");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

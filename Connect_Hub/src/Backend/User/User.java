@@ -1,9 +1,6 @@
-package Backend;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.*;
-import java.util.UUID;
+package Backend.User;
+import Backend.PasswordHasher;
+import Backend.ProfileAndFriends.Profile;
 
 public  class User implements UserInterface{
     private String email;

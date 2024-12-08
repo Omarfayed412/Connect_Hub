@@ -5,7 +5,7 @@
 package Backend.Database;
 
 import Backend.ContentCreation.*;
-import Backend.User;
+
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
 public class ContentDatabase implements IContentDatabase{
     private static ContentDatabase database = null;
     private static ArrayList<AbstractContent> contentList = null;
-    private static final String contnetJson = "D:\\Software\\OOP_JAVA\\Connect_Hub\\Connect_Hub\\src\\Backend\\Database\\content.json";
+    private static final String contnetJson = "content.json";
     private static Gson gson = null;
     private static int numberOfUsers;
     

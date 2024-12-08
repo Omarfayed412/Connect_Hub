@@ -1,6 +1,5 @@
-package Backend;
+package Backend.User;
 
-import java.time.LocalDate;
 // applying builder design pattern
 public interface UserBuilder {
     UserBuilderConcerete setUserID();

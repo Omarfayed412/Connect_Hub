@@ -1,7 +1,9 @@
-package Backend;
+package Backend.ProfileAndFriends;
 
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.User.User;
+import Backend.User.UserInterface;
 
 import java.util.List;
 

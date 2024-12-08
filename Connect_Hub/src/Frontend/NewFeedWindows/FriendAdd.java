@@ -1,6 +1,6 @@
 package Frontend.NewFeedWindows;
 
-import Backend.User;
+import Backend.User.User;
 
 import javax.swing.*;
 import java.awt.*;

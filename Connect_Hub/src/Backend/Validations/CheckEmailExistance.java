@@ -1,6 +1,7 @@
-package Backend;
+package Backend.Validations;
 
 import Backend.Database.IUserDatabase;
+import Backend.User.User;
 
 public class CheckEmailExistance {
     public static Boolean isEmailExist(IUserDatabase usersDatabase, String email)

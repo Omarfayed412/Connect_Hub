@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Validations;
 
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;

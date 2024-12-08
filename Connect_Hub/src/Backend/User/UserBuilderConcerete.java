@@ -1,6 +1,8 @@
-package Backend;
+package Backend.User;
 
-import java.time.LocalDate;
+import Backend.PasswordHasher;
+import Backend.ProfileAndFriends.Profile;
+
 import java.util.UUID;
 
 public class UserBuilderConcerete implements UserBuilder {

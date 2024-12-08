@@ -1,4 +1,4 @@
-package Backend;
+package Backend.ProfileAndFriends;
 
 import java.util.ArrayList;
 import java.util.List;

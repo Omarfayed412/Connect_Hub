@@ -1,10 +1,9 @@
 package Frontend.NewFeedWindows;
 
-import Backend.ContentCreation.AbstractContent;
 import Backend.ContentCreation.IContent;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
-import Backend.User;
+import Backend.User.User;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;

@@ -1,4 +1,6 @@
-package Backend;
+package Backend.User;
+
+import Backend.ProfileAndFriends.Profile;
 
 public interface UserInterface {
     Profile getProfile();

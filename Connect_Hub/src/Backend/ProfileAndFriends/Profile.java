@@ -1,7 +1,7 @@
-package Backend;
+package Backend.ProfileAndFriends;
 
 import Backend.ContentCreation.IContent;
-import javax.swing.text.AbstractDocument;
+
 import java.util.ArrayList;
 import java.util.List;
 
