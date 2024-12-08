@@ -198,7 +198,9 @@ public class NewsFeed extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     friendManager.sendRequest(ser);
-                    suggestionsLoad();
+                    f.getAddButton().setVisible(false);
+                    f.getStatusLabel().setVisible(true);
+                    f.getStatusLabel().setText("Request sent");
                 }
             });
             mainFriends.add(f);

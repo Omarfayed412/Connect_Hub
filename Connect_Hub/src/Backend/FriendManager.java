@@ -34,6 +34,12 @@ public class FriendManager
         refresh();
         return friends.getPending();
     }
+
+    public List<String> getBlocked() {
+        refresh();
+        return friends.getBlocked();
+    }
+
     public Boolean isFriend(String userId)
     {
         refresh();
@@ -67,7 +73,8 @@ public class FriendManager
     {
         refresh();
         this.friends.acceptFriends(friend.getUserID());
-        friend.getProfile().getFriends().addFriends(this.client.getUserID());
+        User user = database.getUser(friend.getUserID());
+        user.getProfile().getFriends().addFriends(this.client.getUserID());
         return true;
     }
     public  Boolean declineRequest(User friend)
@@ -79,14 +86,17 @@ public class FriendManager
     public Boolean blockFriend(User friend)
     {
         refresh();
+        this.client.getProfile().getFriends().removeFriends(friend.getUserID());
         this.client.getProfile().getFriends().addBlocked(this.client.getUserID());
-//        friend.getProfile().getFriends().addBlocked(this.client.getUserID());
+        User user = database.getUser(friend.getUserID());
+        user.getProfile().getFriends().removeFriends(this.client.getUserID());
         return true;
     }
     public Boolean removeFriend(User friend)
     {
         refresh();
         this.client.getProfile().getFriends().removeFriends(this.client.getUserID());
+        User user = database.getUser(friend.getUserID());
         friend.getProfile().getFriends().removeFriends(this.client.getUserID());
         return true;
     }
@@ -94,7 +104,7 @@ public class FriendManager
     {
         refresh();
 //        friend.getProfile().getFriends().removeBlocked(this.client.getUserID());
-        this.client.getProfile().getFriends().removeBlocked(this.client.getUserID());
+        this.client.getProfile().getFriends().removeBlocked(friend.getUserID());
         return true;
     }
 

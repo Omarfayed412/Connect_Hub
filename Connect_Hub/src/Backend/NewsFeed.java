@@ -84,9 +84,19 @@ public class NewsFeed {
     // get stories for specific user
     public List<IContent> getStories(){
         loadFriendsContents();
+        return manageStories(friendsContents);
+
+    }
+
+    public List<IContent> getMyStories(){
+        return manageStories(user.getProfile().getContent());
+
+    }
+
+    private List<IContent> manageStories(List<String> contentIdList) {
         List<IContent> stories = new ArrayList<>();
         LocalDateTime currentTime = LocalDateTime.now();
-        for (String contentId : friendsContents) {
+        for(String contentId : contentIdList) {
             IContent content = database.getContent(contentId);
             if (contentId.charAt(0) == 'p')
                 continue;
@@ -101,9 +111,21 @@ public class NewsFeed {
                 }
             }
             stories.add(content);
-            System.out.println(content);
         }
         return stories;
+    }
+
+    public List<IContent> getMyPosts(){
+        List<IContent> posts = new ArrayList<>();
+
+        for (String contentId : user.getProfile().getContent()) {
+            IContent content = database.getContent(contentId);
+            if (contentId.charAt(0) == 's')
+                continue;
+            System.out.println("Ny Post add");
+            posts.add(content);
+        }
+        return posts;
     }
 
     // get suggestion friends for user
