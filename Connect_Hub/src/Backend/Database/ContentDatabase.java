@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -25,18 +24,18 @@ import java.util.List;
 public class ContentDatabase implements IContentDatabase{
     private static ContentDatabase database = null;
     private static ArrayList<AbstractContent> contentList = null;
-    private static final String contnetJson = "content.json";
+    private static final String contnetJson = "D:\\Software\\OOP_JAVA\\Connect_Hub\\Connect_Hub\\src\\Backend\\Database\\content.json";
     private static Gson gson = null;
     private static int numberOfUsers;
-
-    //Apllying the singlton design pattern
+    
+    //Apllying the singlton design pattern 
     private ContentDatabase() {
         contentList = new ArrayList<AbstractContent>();
         System.out.println("inside constructor");
         gson = new Gson();
         numberOfJSONOBJECTS();
     }
-
+    
     public synchronized static ContentDatabase getInstance() {
         if (database == null) {
             System.out.println("Content Database created");
@@ -47,7 +46,7 @@ public class ContentDatabase implements IContentDatabase{
         }
         return database;
     }
-
+    
     public void numberOfJSONOBJECTS() {
         List<AbstractContent> content = null;
         try {
@@ -64,7 +63,7 @@ public class ContentDatabase implements IContentDatabase{
         else
             numberOfUsers = content.size();
     }
-
+    
     @Override
     public boolean addContent(AbstractContent content) {
         try {
@@ -81,11 +80,11 @@ public class ContentDatabase implements IContentDatabase{
     @Override
     public boolean removeContent(String contentID) {
         try {
-            AbstractContent content = getContent(contentID);
-            contentList.remove(content);
-            this.save();
+        AbstractContent content = getContent(contentID);
+        contentList.remove(content);
+        this.save();
             System.out.println("Content Removed");
-            return true;
+        return true;
         } catch(NullPointerException e) {
             System.out.println("Error removing content: " + e.getMessage());
             return false;
@@ -104,7 +103,7 @@ public class ContentDatabase implements IContentDatabase{
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void load() {
         try {
@@ -113,8 +112,8 @@ public class ContentDatabase implements IContentDatabase{
             Type type = new TypeToken<List<AbstractContent>>() {
             }.getType();
             ArrayList<AbstractContent>content = gson.fromJson(reader, type);
-            if (content != null)
-                contentList = content;
+            if (content != null) 
+                contentList = content;            
             reader.close();
             System.out.println("Content Loaded");
         } catch (IOException e) {
@@ -123,7 +122,7 @@ public class ContentDatabase implements IContentDatabase{
             System.out.println("Empty json");
         }
     }
-
+    
     //Loading data from json
     private static void initialLoad() {
         try {
@@ -132,7 +131,7 @@ public class ContentDatabase implements IContentDatabase{
             Type type = new TypeToken<List<AbstractContent>>() {
             }.getType();
             ArrayList<AbstractContent>content = gson.fromJson(reader, type);
-            if (content != null)
+            if (content != null) 
                 contentList = content;
             reader.close();
             System.out.println("Contnet Initial Load");
@@ -146,7 +145,7 @@ public class ContentDatabase implements IContentDatabase{
     public ArrayList<AbstractContent> getContentList() {
         return contentList;
     }
-
+    
     // getContent() method return content if found
     // return null if content not found
     @Override

@@ -18,24 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDatabase implements  IUserDatabase{
+public class UserDataBase implements  IUserDatabase{
     private static List<User> users = null;
-    private static UserDatabase userDataBase = null;
-    private static final String users_json = "users.json";
+    private static UserDataBase userDataBase = null;
+    private static final String users_json = "D:\\Software\\OOP_JAVA\\Connect_Hub\\Connect_Hub\\src\\Backend\\Database\\users.json";
     private static Gson gson = null;
     private static int numberOfUsers;
 
 
-    private UserDatabase() {
+    private UserDataBase() {
         users = new ArrayList<User>();
         gson = new Gson();
         numberOfJSONOBJECTS();
     }
 
-    public synchronized static UserDatabase getUserDataBase() {
+    public synchronized static UserDataBase getUserDataBase() {
         if (userDataBase == null) {
             System.out.println("UserDataBase Created");
-            userDataBase = new UserDatabase();
+            userDataBase = new UserDataBase();
             /// Avoid null Exceptions
             if (numberOfUsers > 0)
                 innerLoad();
@@ -99,12 +99,8 @@ public class UserDatabase implements  IUserDatabase{
         //serialization into users.json......
         try {
             FileWriter writer = new FileWriter(users_json);
-            for (User user : users) {
-                System.out.println(user.getProfile().getContent());
-            }
             gson.toJson(users, writer);
             writer.close();
-            System.out.println("Users Saved");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,8 +143,8 @@ public class UserDatabase implements  IUserDatabase{
 
     @Override
     public void addUser(User user) {
-        users.add(user);
-        save();
+          users.add(user);
+          save();
     }
 //    public void printUsers()
 //    {
