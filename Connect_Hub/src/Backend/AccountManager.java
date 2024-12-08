@@ -1,6 +1,8 @@
 package Backend;
 
 import Backend.Database.IUserDatabase;
+import Backend.User.User;
+import Backend.User.UserBuilderConcerete;
 
 //this class follows singletone design pattern
 // i used lazy initilization approach

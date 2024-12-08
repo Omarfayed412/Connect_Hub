@@ -1,4 +1,4 @@
-package Backend;
+package Backend.User;
 import Backend.Database.Database;
 
 import java.util.List;

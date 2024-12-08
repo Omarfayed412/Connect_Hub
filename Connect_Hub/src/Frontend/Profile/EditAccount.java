@@ -1,8 +1,8 @@
-package Frontend;
+package Frontend.Profile;
 
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
-import Backend.User;
+import Backend.User.User;
 
 import javax.swing.*;
 import java.awt.*;

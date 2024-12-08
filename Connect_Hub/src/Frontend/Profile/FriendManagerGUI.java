@@ -1,7 +1,8 @@
-package Frontend;
-import Backend.*;
+package Frontend.Profile;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.ProfileAndFriends.FriendManager;
+import Backend.User.User;
 import Frontend.NewFeedWindows.FriendAdd;
 
 import javax.swing.*;

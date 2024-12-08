@@ -1,4 +1,4 @@
-package Backend;
+package Backend.ProfileAndFriends;
 import java.util.List;
 
 public interface FriendsInterface {

@@ -1,6 +1,6 @@
 package Backend.Database;
 
-import Backend.User;
+import Backend.User.User;
 import java.util.List;
 
 

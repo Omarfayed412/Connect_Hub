@@ -6,8 +6,10 @@ import Backend.Database.ContentDatabase;
 import Backend.Database.IContentDatabase;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.ProfileAndFriends.FriendManager;
+import Backend.User.User;
 import Frontend.MainWindow2;
-import Frontend.ProfileWindow;
+import Frontend.Profile.ProfileWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +34,7 @@ public class NewsFeed extends JFrame{
     private JButton createStoryButton;
     private JButton createPostButton;
     private JFrame secondryWindow = null;
-    private Backend.NewsFeed newsFeed;
+    private Backend.ProfileAndFriends.NewsFeed newsFeed;
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();
     private IUserDatabase userDatabase = UserDatabase.getUserDataBase();
     private FriendManager friendManager;
@@ -43,7 +45,7 @@ public class NewsFeed extends JFrame{
         contentDatabase.load();
         this.userDatabase.load();
         this.user = userDatabase.getUser(user.getUserID());
-        this.newsFeed = new Backend.NewsFeed(this.user);
+        this.newsFeed = new Backend.ProfileAndFriends.NewsFeed(this.user);
         this.friendManager = new FriendManager(this.user);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 800);

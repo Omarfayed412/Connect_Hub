@@ -2,6 +2,9 @@ package Frontend;
 
 import Backend.*;
 import Backend.Database.UserDatabase;
+import Backend.User.UserNameChecker;
+import Backend.Validations.DateValidator;
+import Backend.Validations.EmailValidator;
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
