@@ -63,6 +63,7 @@ public class ProfileWindow extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                userDatabase.save();
                 new NewsFeed(user);
                 dispose();
             }

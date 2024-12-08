@@ -118,9 +118,7 @@ public class NewsFeed extends JFrame{
 
     }
     public void refresh() {
-        userDatabase.save();
         userDatabase.load();
-        contentDatabase.save();
         contentDatabase.load();
         this.user = userDatabase.getUser(this.user.getUserID());
         newsLoad();
