@@ -60,39 +60,35 @@ public class GroupNotifications  extends Notification{
         this.user = user;
     }
     
-    public String toStringAccepted() {
+    public void toStringAccepted() {
         try {
-            return "You have been added to group " + this.group.getName() + ".\n";
+            super.setSContent("You have been added to group " + this.group.getName() + ".\n");
         } catch (NullPointerException e) {
             System.out.println("No group added to the notification.");
-            return null;
         }    
     }
     
-    public String toStringNewPost() {
+    public void toStringNewPost() {
         try {
-            return "A new post has been added to your group " + this.group.getName() + ".\n";
+            super.setSContent("A new post has been added to your group " + this.group.getName() + ".\n");
         } catch (NullPointerException e) {
             System.out.println("No group added to the notification.");
-            return null;
         }
     }
     
-    public String toStringStatus() {
+    public void toStringStatus() {
         try {
-            return "Your group " + this.group.getName() + " has changed its status.\n";
+            super.setSContent("Your group " + this.group.getName() + " has changed its status.\n");
         } catch (NullPointerException e) {
             System.out.println("No group added to the notification.");
-            return null;
         }
     }
     
-    public String toStringRequest() {
+    public void toStringRequest() {
         try {
-            return this.user.getUsername() + " Requested to enter your group " + this.group.getName() + ".\n";
+            super.setSContent(this.user.getUsername() + " Requested to enter your group " + this.group.getName() + ".\n");
         } catch (NullPointerException e) {
             System.out.println("No group or user added to the notification.");
-            return null;
         }
     }
 }

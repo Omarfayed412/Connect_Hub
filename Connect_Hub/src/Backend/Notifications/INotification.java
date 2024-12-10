@@ -6,8 +6,11 @@ package Backend.Notifications;
 
 /**
  *
- * @author 20112
+ * @author Omar Fayed
  */
-public interface INotificatio {
-    
+public interface INotification {
+    public void setID(String Id);
+    public String getID();
+    public String getSContent();
+    public void setSContent(String content);
 }

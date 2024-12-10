@@ -29,12 +29,12 @@ public class FriendRequestNotification extends Notification{
         this.user = user;
     }
     
-    //returns a string containing the info of the notification
-    public String toStringAccepted() {
-        return this.user.getUsername() + "has accepted your friend request.\n";
+    //Sets the string containing the info of the notification
+    public void toStringAccepted() {
+        super.setSContent(this.user.getUsername() + "has accepted your friend request.\n");
     }
     
-    public String toStringRecieved() {
-        return this.user.getUsername() + "has sent you a friend request.\n";
+    public void toStringRecieved() {
+        super.setSContent(this.user.getUsername() + "has sent you a friend request.\n");
     }
 }

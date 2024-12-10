@@ -10,9 +10,20 @@ package Backend.Notifications;
  */
 public abstract class Notification implements INotification{
     private String Id;
+    private String content;
 
     public Notification() {
     }
+
+    @Override
+    public String getSContent() {
+        return content;
+    }
+
+    @Override
+    public void setSContent(String content) {
+        this.content = content;
+    }  
     
     @Override
     public void setID(String Id) {
@@ -23,5 +34,6 @@ public abstract class Notification implements INotification{
     public String getID() {
         return this.Id;
     }
+    
     
 }
