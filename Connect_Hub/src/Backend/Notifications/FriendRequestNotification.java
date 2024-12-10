@@ -11,11 +11,11 @@ import Backend.User.User;
  * @author Omar Fayed
  */
 
-public class friendRequestNotification {
+public class FriendRequestNotification extends Notification{
     //profile of sender/acceptor
     private User user = null;
 
-    public friendRequestNotification(User user) {
+    public FriendRequestNotification(User user) {
         this.user = user;
     }
     
