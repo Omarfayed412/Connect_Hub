@@ -33,6 +33,11 @@ public class NewsFeed extends JFrame{
     private JScrollPane suggestions;
     private JButton createStoryButton;
     private JButton createPostButton;
+    private JScrollPane sGroups;
+    private JPanel search;
+    private JTextField searchFeild;
+    private JButton searchButton;
+    private JScrollPane searchScroll;
     private JFrame secondryWindow = null;
     private Backend.ProfileAndFriends.NewsFeed newsFeed;
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();

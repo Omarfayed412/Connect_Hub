@@ -18,6 +18,8 @@ public class Post extends JPanel {
     private JLabel time;
     private JLabel image;
     private JTextArea textArea;
+    private JButton editButton;
+    private JButton deleteButton;
     // Creates a panel for displaying posts
 
     public Post(IContent content) {
@@ -47,7 +49,8 @@ public class Post extends JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = now.format(formatter);
         time.setText(formattedDateTime);
-
+        editButton.setVisible(false);
+        deleteButton.setVisible(false);
         add(postPanel);
 
 
