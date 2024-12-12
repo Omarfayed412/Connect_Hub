@@ -25,6 +25,7 @@ public class PrimaryAdminRole extends AdminRole {
     public void removeMember(Group group, User user) {
         if (group.isMember(user)) {
             group.removeMember(user);
+            user.getGroupManager().leaveGroup(group);
             refresh();
         }
 
@@ -32,12 +33,14 @@ public class PrimaryAdminRole extends AdminRole {
 
     public void promoteToAdmin(Group group, User user) {
         group.promoteToAdmin(user);
+        user.getGroupManager().promoteToAdmin(group);
         refresh();
     }
 
     public void demoteAdmin(Group group, User user) {
         if (group.isAdmin(user)) {
             group.demoteAdmin(user);
+            user.getGroupManager().demoteToAdmin(group);
             refresh();
         }
 
@@ -47,6 +50,7 @@ public class PrimaryAdminRole extends AdminRole {
         if (groupsDataBase.IsGroupFound(group)&&group.isPrimaryAdmin(user)) {
             user.getGroupManager().deleteGroup(group);
             groupsDataBase.removeGroup(group);
+            refresh();
         }
     }
 }
