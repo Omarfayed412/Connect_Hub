@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class GroupsDataBase implements GroupsInterface {
         if(groupsDataBase == null)
         {
             groupsDataBase = new GroupsDataBase();
+            innerLoad();
 
         }
         return groupsDataBase;
@@ -32,7 +34,14 @@ public class GroupsDataBase implements GroupsInterface {
 
     @Override
     public void save() {
-
+        //serialization into users.json......
+        try {
+            FileWriter writer = new FileWriter(groups_json);
+            gson.toJson(groups, writer);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private ArrayList<Object> deserializeUsers() {
