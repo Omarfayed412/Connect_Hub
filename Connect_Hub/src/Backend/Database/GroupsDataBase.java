@@ -87,6 +87,10 @@ public class GroupsDataBase implements GroupsInterface {
         groups.add(group);
         save();
     }
+    public synchronized void removeGroup(Group group) {
+        groups.remove(group);
+        save();
+    }
     public synchronized Group getGroupByName(String groupName)
     {
         for (Group group : groups)
