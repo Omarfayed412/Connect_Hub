@@ -82,7 +82,7 @@ public class GroupsDataBase implements GroupsInterface {
             if(group.equals(group)) return group;
         return null;
     }
-    public Boolean IsGroupFound(Object object) { return ( groups.contains(object) ) ? true : false; }
+    public Boolean IsGroupFound(Group group) { return ( groups.contains(group) ) ? true : false; }
     public synchronized void addGroup(Group group) {
         groups.add(group);
         save();
@@ -94,7 +94,7 @@ public class GroupsDataBase implements GroupsInterface {
     public synchronized Group getGroupByName(String groupName)
     {
         for (Group group : groups)
-           /* if(object.getUsername().matches(userName))*/ return group;
+            if(group.getName().matches(groupName)) return group;
         return null;
     }
 }
