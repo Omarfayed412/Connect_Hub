@@ -51,6 +51,14 @@ public class GroupManager {
            this.groupAdmined.remove(group);
        }
     }
+    public void promoteToAdmin(Group group)
+    {
+        this.groupAdmined.add(group);
+    }
+    public void demoteToAdmin(Group group)
+    {
+        this.groupAdmined.remove(group);
+    }
     public void createGroup(String desc,String name,String photoPath) //edit it to have the attributse of the builder
     {
          Group group=new GroupBuilderConcerete().setName(name).setDescription(desc).setPhotoPath(photoPath).setPrimaryAdmin(this.user).setGroupID().build();

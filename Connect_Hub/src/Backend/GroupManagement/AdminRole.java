@@ -38,6 +38,7 @@ public class AdminRole extends MemberRole {
     public void removeNormalMember(Group group, User user) {
         if (!group.isAdmin(user)) {
             group.removeMember(user);
+            user.getGroupManager().leaveGroup(group);
             refresh();
         }
     }
