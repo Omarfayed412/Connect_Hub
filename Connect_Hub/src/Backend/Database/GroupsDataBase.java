@@ -1,7 +1,7 @@
 package Backend.Database;
 
 import Backend.Database.pics.GroupsInterface;
-import Backend.User.User;
+import Backend.GroupManagement.Group;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GroupsDataBase implements GroupsInterface {
     private static GroupsDataBase groupsDataBase = null;
-    private static ArrayList<Object> groups = null;
+    private static ArrayList<Group> groups = null;
     private static final String groups_json = "groups.json";
     private static Gson gson = null;
     private static int numberOfGroups;
@@ -44,26 +44,26 @@ public class GroupsDataBase implements GroupsInterface {
         }
     }
 
-    private ArrayList<Object> deserializeUsers() {
+    private ArrayList<Group> deserializeUsers() {
         try (FileReader reader = new FileReader(groups_json)) {
-            Type type = new TypeToken<List<User>>() {}.getType();
+            Type type = new TypeToken<List<Group>>() {}.getType();
             return gson.fromJson(reader, type);
         } catch (IOException e) {
             System.err.println("Error reading users from file: " + e.getMessage());
-            return new ArrayList<Object>();
+            return new ArrayList<Group>();
         }
     }
 
     private static void innerLoad() {
         groups = groupsDataBase.deserializeUsers();
         if(groups == null)
-            groups = new ArrayList<Object>();
+            groups = new ArrayList<Group>();
     }
     @Override
     public void load() {
     try {
         FileReader reader = new FileReader(groups_json);
-        Type type = new TypeToken<ArrayList<Object>>(){}.getType();
+        Type type = new TypeToken<ArrayList<Group>>(){}.getType();
         groups = gson.fromJson(reader,type);
         reader.close();
     }catch (IOException e)
@@ -72,25 +72,25 @@ public class GroupsDataBase implements GroupsInterface {
     }
 
     @Override
-    public ArrayList<Object> getGroups() {
+    public ArrayList<Group> getGroups() {
         return groups;
     }
 
-    public synchronized Object getGroup(Object object)
+    public synchronized Object getGroup(Group group)
     {
-        for (Object object1 : groups)
-            if(object1.equals(object)) return object1;
+        for (Group group1 : groups)
+            if(group.equals(group)) return group;
         return null;
     }
     public Boolean IsGroupFound(Object object) { return ( groups.contains(object) ) ? true : false; }
-    public synchronized void addGroup(Object object) {
-        groups.add(object);
+    public synchronized void addGroup(Group group) {
+        groups.add(group);
         save();
     }
-    public synchronized Object getGroupByName(String groupName)
+    public synchronized Group getGroupByName(String groupName)
     {
-        for (Object object : groups)
-           /* if(object.getUsername().matches(userName))*/ return object;
+        for (Group group : groups)
+           /* if(object.getUsername().matches(userName))*/ return group;
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package Backend.Database;
 
 import Backend.Database.pics.GroupsInterface;
+import Backend.GroupManagement.Group;
 import Backend.User.User;
 
 public class SearchGroup {
@@ -15,13 +16,13 @@ public class SearchGroup {
 
     /// return User object if found and not in the blocked list
     /// return null if object is blocked or not found
-    public Object getGroup(String groupName) {
+    public Group getGroup(String groupName) {
 
-        Object object = this.groupsDataBase.getGroupByName(groupName);
+        Group group = this.groupsDataBase.getGroupByName(groupName);
 
-        if(object == null ) return null;
+        if(group == null ) return null;
 
-        return object;
+        return group;
 
     }
 
