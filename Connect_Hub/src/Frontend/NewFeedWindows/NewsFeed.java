@@ -8,6 +8,7 @@ import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
 import Backend.ProfileAndFriends.FriendManager;
 import Backend.User.User;
+import Frontend.GroupWindows.CreateGroup;
 import Frontend.MainWindow2;
 import Frontend.Profile.ProfileWindow;
 
@@ -38,6 +39,7 @@ public class NewsFeed extends JFrame{
     private JTextField searchFeild;
     private JButton searchButton;
     private JScrollPane searchScroll;
+    private JButton createGroupButton;
     private JFrame secondryWindow = null;
     private Backend.ProfileAndFriends.NewsFeed newsFeed;
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();
@@ -95,6 +97,25 @@ public class NewsFeed extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 new ProfileWindow(user);
                 dispose();
+            }
+        });
+
+        createGroupButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (secondryWindow != null) {
+                    return;
+                }
+                secondryWindow = new JFrame("Create Group");
+                secondryWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        secondryWindow = null;
+                    }
+                });
+
+                new CreateGroup(secondryWindow, user);
             }
         });
 

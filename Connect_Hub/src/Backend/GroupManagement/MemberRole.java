@@ -1,5 +1,5 @@
 package Backend.GroupManagement;
-import Backend.Database.pics.GroupsInterface;
+import Backend.Database.GroupsInterface;
 import Backend.ContentCreation.Post;
 import Backend.Database.GroupsDataBase;
 import Backend.Database.IUserDatabase;
@@ -9,19 +9,12 @@ import Backend.User.User;
 public class MemberRole {
 
     private static  MemberRole instance;
-    protected IUserDatabase userDatabase;
-    protected GroupsInterface groupsDataBase;
+    protected static IUserDatabase userDatabase;
+    protected static GroupsInterface groupsDataBase;
     // Private constructor to prevent instantiation
     public MemberRole() {
         userDatabase =UserDatabase.getUserDataBase();
         groupsDataBase=GroupsDataBase.getGroupsDataBase();
-    }
-    protected void refresh()
-    {
-        userDatabase.save();
-        userDatabase.load();
-        groupsDataBase.save();
-        groupsDataBase.load();
     }
 
     public static MemberRole getInstance() {
@@ -35,26 +28,40 @@ public class MemberRole {
         return instance;
     }
 
-    public void requestToJoinGroup(User user, Group group) {
+    public static void requestToJoinGroup(User user, Group group) {
+        groupsDataBase.load();
+        userDatabase.load();
+        group = groupsDataBase.getGroup(group.getGroupID());
+        user = userDatabase.getUser(user.getUserID());
         if (!group.isMember(user)) {
             group.addRequest(user);
             user.getGroupManager().RequettojoinGroup(group);
-            refresh();
+            groupsDataBase.save();
+            userDatabase.save();
         }
     }
 
     public void leaveGroup(User user, Group group) {
+        groupsDataBase.load();
+        userDatabase.load();
+        group = groupsDataBase.getGroup(group.getGroupID());
+        user = userDatabase.getUser(user.getUserID());
         if (group.isMember(user)) {
             user.getGroupManager().leaveGroup(group);
             group.removeMember(user);
-            refresh();
+            groupsDataBase.save();
         }
     }
 
     public void post(Post post, Group group, User user) {
+        groupsDataBase.load();
+        userDatabase.load();
+        group = groupsDataBase.getGroup(group.getGroupID());
+        user = userDatabase.getUser(user.getUserID());
         if (group.isMember(user)) {
             group.addPost(post);
-            refresh();
+            groupsDataBase.save();
+            userDatabase.save();
         }
     }
 }

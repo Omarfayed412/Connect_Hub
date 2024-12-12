@@ -19,6 +19,7 @@ public class AdminWindow extends JFrame {
     private JButton editGroupInfromationButton;
     private JButton createPostButton;
     private JScrollPane posts;
+    private JButton newsFeedButton;
     private JFrame secondryWindow;
 
     public AdminWindow() {

@@ -1,6 +1,6 @@
 package Backend.Database;
 
-import Backend.Database.pics.GroupsInterface;
+import Backend.ContentCreation.AbstractContent;
 import Backend.GroupManagement.Group;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,16 +20,45 @@ public class GroupsDataBase implements GroupsInterface {
     private static int numberOfGroups;
 
     private GroupsDataBase() {
+        groups = new ArrayList<>();
+        System.out.println("inside constructor groupsDataBase");
+        gson = new Gson();
+        numberOfJSONOBJECTS();
+        System.out.println("constructed groups dataBase finished");
     }
 
     synchronized public static GroupsDataBase getGroupsDataBase() {
-        if(groupsDataBase == null)
-        {
+        System.out.println("Groups DataBase called");
+        if (groupsDataBase == null) {
+            System.out.println("Content Database created");
             groupsDataBase = new GroupsDataBase();
-            innerLoad();
-
+            /// Avoid null Exceptions
+            System.out.println("Groups DataBase created");
+            if (numberOfGroups > 0) {
+                System.out.println("Number of groups created: " + numberOfGroups);
+                innerLoad();
+            }
         }
         return groupsDataBase;
+    }
+    public void numberOfJSONOBJECTS() {
+        System.out.println("inside numberOfJSONOBJECTS");
+        List<Group> group = null;
+        try {
+            FileReader reader = new FileReader(groups_json);
+            Type type = new TypeToken<List<Group>>() {
+            }.getType();
+            System.out.println(" level 1");
+            group = gson.fromJson(reader, type);
+            reader.close();
+            System.out.println("file readed successfully ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (group == null)
+            numberOfGroups = 0;
+        else
+            numberOfGroups = group.size();
     }
 
     @Override
@@ -55,12 +84,14 @@ public class GroupsDataBase implements GroupsInterface {
     }
 
     private static void innerLoad() {
+        System.out.println("inside inner load groups");
         groups = groupsDataBase.deserializeUsers();
         if(groups == null)
             groups = new ArrayList<Group>();
     }
     @Override
     public void load() {
+        System.out.println("Groups DataBase loaded");
     try {
         FileReader reader = new FileReader(groups_json);
         Type type = new TypeToken<ArrayList<Group>>(){}.getType();
@@ -76,25 +107,29 @@ public class GroupsDataBase implements GroupsInterface {
         return groups;
     }
 
-    public synchronized Object getGroup(Group group)
+    public synchronized Group getGroup(String groupId)
     {
         for (Group group1 : groups)
-            if(group.equals(group)) return group;
+            if(group1.getGroupID().equals(groupId)) return group1;
         return null;
     }
     public Boolean IsGroupFound(Group group) { return ( groups.contains(group) ) ? true : false; }
     public synchronized void addGroup(Group group) {
+        System.out.println(groups.size() + "beforeeeeeeeeeeeeeeeee");
         groups.add(group);
+        System.out.println(groups.size() + "Afterrrrrrrrrrrrrrrrrrrrr");
+    }
+    public synchronized void removeGroup(String groupId) {
+        groups.remove(getGroup(groupId));
         save();
     }
-    public synchronized void removeGroup(Group group) {
-        groups.remove(group);
-        save();
-    }
-    public synchronized Group getGroupByName(String groupName)
+    public synchronized List<Group> getGroupByName(String groupName)
     {
+        List<Group> groupsLs = new ArrayList<>();
         for (Group group : groups)
-            if(group.getName().matches(groupName)) return group;
-        return null;
+            if(group.getName().contains(groupName)) groupsLs.add(group);
+        if (groupsLs.isEmpty())
+            return null;
+        return groupsLs;
     }
 }

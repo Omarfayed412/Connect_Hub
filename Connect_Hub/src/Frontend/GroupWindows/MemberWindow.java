@@ -1,6 +1,5 @@
 package Frontend.GroupWindows;
 
-import Backend.AccountManager;
 import Frontend.NewFeedWindows.CreatePost;
 
 import javax.swing.*;
@@ -9,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.lang.reflect.Member;
 
 public class MemberWindow extends JFrame {
     private JPanel main;
@@ -18,6 +16,7 @@ public class MemberWindow extends JFrame {
     private JLabel groupName;
     private JButton leaveGroupButton;
     private JButton createPostButton;
+    private JButton newsFeedButton;
     private JFrame secondryWindow;
 
     public MemberWindow() {

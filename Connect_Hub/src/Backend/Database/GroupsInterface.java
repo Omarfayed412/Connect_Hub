@@ -1,6 +1,5 @@
-package Backend.Database.pics;
+package Backend.Database;
 
-import Backend.Database.Database;
 import Backend.GroupManagement.Group;
 
 import java.util.ArrayList;
@@ -9,7 +8,8 @@ public interface GroupsInterface extends Database {
     void save();
     void load();
     ArrayList<Group> getGroups();
-    public void removeGroup(Group group);
+    public Group getGroup(String id);
+    public void removeGroup(String group);
     public Boolean IsGroupFound(Group group);
 
 }

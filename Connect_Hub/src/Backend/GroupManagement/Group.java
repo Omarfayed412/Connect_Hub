@@ -1,4 +1,9 @@
 package Backend.GroupManagement;
+import Backend.ContentCreation.IContent;
+import Backend.Database.ContentDatabase;
+import Backend.Database.IContentDatabase;
+import Backend.Database.IUserDatabase;
+import Backend.Database.UserDatabase;
 import Backend.GroupManagement.GroupBuilderInterface;
 import Backend.ContentCreation.Post;
 import Backend.GroupManagement.GroupBuilderConcerete;
@@ -10,17 +15,21 @@ public class Group {
     private String description;
     private String photoPath;
     private String groupID;
-    private User primaryAdmin;
-    private List<User> members;
-    private List<User> admins;
-    private List<Post> posts;
-    private List<User> pendingRequests;
+    private String primaryAdmin;
+    private List<String> members;
+    private List<String> admins;
+    private List<String> posts;
+    private List<String> pendingRequests;
+    public String getGroupID() {
+        return groupID;
+    }
+
     Group(GroupBuilderConcerete builder) {
         this.name = builder.getName();
         this.description = builder.getDescription();
         this.photoPath = builder.getPhotoPath();
         this.groupID = builder.getGroupID();
-        this.primaryAdmin = builder.getPrimaryAdmin();
+        this.primaryAdmin = builder.getPrimaryAdmin().getUserID();
         this.members = builder.getMembers();
         this.admins = builder.getAdmins();
         this.posts = builder.getPosts();
@@ -28,46 +37,57 @@ public class Group {
     }
     public void addRequest(User user)
     {
-        pendingRequests.add(user);
+        pendingRequests.add(user.getUserID());
     }
     public void removePending(User user)
     {
-        pendingRequests.remove(user);
+        pendingRequests.remove(user.getUserID());
     }
     public void addMember(User user) //validate if already exist in the frontend listeners
     {
-        members.add(user);
+        members.add(user.getUserID());
     }
     public void removeMember(User user)
     {
-        members.remove(user);
-        if(admins.contains(user))
-            admins.remove(user);
+        members.remove(user.getUserID());
+        if(admins.contains(user.getUserID()))
+            admins.remove(user.getUserID());
     }
     public void addPost(Post post)
     {
-        posts.add(post);
+        posts.add(post.getContentId());
+
     }
     public void removePost(Post post)  //validate in the frontend that it exist before removing it
     {
-        posts.remove(post);
+        posts.remove(post.getContentId());
+
     }
     public void promoteToAdmin(User user)
     {
-        if(!admins.contains(user)&&members.contains(user))
-          admins.add(user);
+        if(!admins.contains(user.getUserID())&&members.contains(user.getUserID()))
+          admins.add(user.getUserID());
     }
     public void demoteAdmin(User user)
     {
-        admins.remove(user);
+        admins.remove(user.getUserID());
     }
      public boolean isMember(User user)
      {
-         return members.contains(user);
+         return members.contains(user.getUserID());
      }
      public boolean isAdmin(User user)
      {
-         return ((primaryAdmin.getUserID().equals(user.getUserID()))||admins.contains(user));
+         return ((primaryAdmin.equals(user.getUserID()))||admins.contains(user.getUserID()));
+     }
+     public void deleteGroup(){
+        IUserDatabase userDatabase = UserDatabase.getUserDataBase();
+        for(String userID : members){
+            userDatabase.getUser(userID).getGroupManager().leaveGroup(this);
+        }
+         for(String userID : admins){
+             userDatabase.getUser(userID).getGroupManager().leaveGroup(this);
+         }
      }
 
     public String getName() {
@@ -94,40 +114,52 @@ public class Group {
         this.photoPath = photoPath;
     }
 
-    public User getPrimaryAdmin() {
+    public String getPrimaryAdmin() {
         return primaryAdmin;
     }
 
     public void setPrimaryAdmin(User primaryAdmin) {
-        this.primaryAdmin = primaryAdmin;
+        this.primaryAdmin = primaryAdmin.getUserID();
     }
 
     public List<User> getMembers() {
+        IUserDatabase userDatabase = UserDatabase.getUserDataBase();
+        List<User> members = new ArrayList<>();
+        userDatabase.load();
+        for (String member : this.members) {
+            members.add(userDatabase.getUser(member));
+        }
         return members;
     }
 
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
+//    public void setMembers(List<User> members) {
+//        this.members = members;
+//    }
 
-    public List<User> getAdmins() {
-        return admins;
-    }
+//    public List<User> getAdmins() {
+//        return admins;
+//    }
 
-    public void setAdmins(List<User> admins) {
-        this.admins = admins;
-    }
+//    public void setAdmins(List<User> admins) {
+//        this.admins = admins;
+//    }
 
     public List<Post> getPosts() {
+        IContentDatabase contentDatabase = ContentDatabase.getInstance();
+        List<Post> posts = new ArrayList<>();
+        contentDatabase.load();
+        for (String post : this.posts) {
+            posts.add((Post) contentDatabase.getContent(post));
+        }
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
+//    public void setPosts(List<Post> posts) {
+//        this.posts = posts;
+//    }
     public boolean isPrimaryAdmin(User user)
     {
-        return user.getUserID().equals(this.primaryAdmin.getUserID());
+        return user.getUserID().equals(this.primaryAdmin);
     }
 
 }

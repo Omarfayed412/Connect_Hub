@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public interface INotfDatabase extends Database{
     public boolean addNotification(Notification notification);
-    public boolean removeNotification(Notification notification);
+    public boolean removeNotification(String notification);
     public Notification getNotification(String Id);
     public ArrayList<Notification> getNotifications();
 }

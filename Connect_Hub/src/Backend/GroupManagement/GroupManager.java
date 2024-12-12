@@ -8,66 +8,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupManager {
-    private List<Group> groupJoined;
-    private List<Group>groupAdmined;
-    private List<Group>JoinRequests;
-    private User user;
+    private List<String> groupJoined;
+    private List<String>groupAdmined;
+    private List<String>JoinRequests;
+    private String userId;
     protected UserDatabase userDatabase=UserDatabase.getUserDataBase();
     protected GroupsDataBase groupsDataBase=GroupsDataBase.getGroupsDataBase();
-    public void refresh()
-    {
-        userDatabase.save();
-        userDatabase.load();
-        groupsDataBase.save();
-        groupsDataBase.load();
-    }
+
     public GroupManager(User user) {
-        this.user=user;
+        this.userId=user.getUserID();
         this.groupAdmined = new ArrayList<>();
         JoinRequests = new ArrayList<>();
         this.groupJoined = new ArrayList<>();
     }
 
+    public List<String> getGroupJoined() {
+        return groupJoined;
+    }
+
     public void RequettojoinGroup(Group group)
     {
-        this.JoinRequests.add(group);
+        this.JoinRequests.add(group.getGroupID());
     }
     public void joinGroup(Group group)
     {
-        groupJoined.add(group);
+        groupJoined.add(group.getGroupID());
     }
     public void leaveGroup(Group group)
     {
-        groupJoined.remove(group);
+        groupJoined.remove(group.getGroupID());
     }
     public void removeRequest(Group group)
     {
-        this.JoinRequests.remove(group);
+        this.JoinRequests.remove(group.getGroupID());
     }
-    public void deleteGroup(Group group)
+    public void deleteGroup(String groupId)
     {
-       if(this.groupAdmined.contains(group))
-       {
-           this.groupAdmined.remove(group);
-       }
+        this.groupAdmined.remove(groupId);
     }
     public void promoteToAdmin(Group group)
     {
-        this.groupAdmined.add(group);
+        this.groupAdmined.add(group.getGroupID());
     }
     public void demoteToAdmin(Group group)
     {
-        this.groupAdmined.remove(group);
+        this.groupAdmined.remove(group.getGroupID());
     }
     public void createGroup(String desc,String name,String photoPath) //edit it to have the attributse of the builder
     {
-         Group group=new GroupBuilderConcerete().setName(name).setDescription(desc).setPhotoPath(photoPath).setPrimaryAdmin(this.user).setGroupID().build();
+        groupsDataBase.load();
+        System.out.println(groupsDataBase.getGroups().size()+"    1===============================================");
+        User user = userDatabase.getUser(this.userId);
+        System.out.println(user+ "user");
+         Group group=new GroupBuilderConcerete().setName(name).setDescription(desc).setPhotoPath(photoPath).setPrimaryAdmin(user).setGroupID().build();
+         System.out.println(group + "group");
          group.addMember(user);
          PrimaryAdminRole.getInstance().promoteToAdmin(group,user);
-         this.groupAdmined.add(group);
-         this.groupJoined.add(group);
-         groupsDataBase.addGroup(group);
-         refresh();
+         this.groupAdmined.add(group.getGroupID());
+         this.groupJoined.add(group.getGroupID());
+        System.out.println(groupsDataBase.getGroups().size()+"    1111===============================================");
+        groupsDataBase.addGroup(group);
+         System.out.println(groupsDataBase.getGroups().size()+"   2===============================================");
+         groupsDataBase.save();
 
     }
 

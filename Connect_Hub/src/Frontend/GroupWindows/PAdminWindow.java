@@ -18,6 +18,7 @@ public class PAdminWindow extends JFrame {
     private JButton editGroupInfromationButton;
     private JLabel groupName;
     private JButton createPostButton;
+    private JButton newsFeedButton;
     private JFrame secondryWindow;
 
 
