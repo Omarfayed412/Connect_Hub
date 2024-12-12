@@ -1,4 +1,5 @@
 package Backend.User;
+import Backend.GroupManagement.GroupManager;
 import Backend.PasswordHasher;
 import Backend.ProfileAndFriends.Profile;
 
@@ -10,6 +11,7 @@ public  class User implements UserInterface{
     private String userID;
     private String status;
     private Profile profile;
+    private GroupManager groupManager;
       User(UserBuilderConcerete userBuilderConcerete) {   // 3shan  i used builder implementation
         this.userID = userBuilderConcerete.getUserID();
         this.email = userBuilderConcerete.getEmail();
@@ -17,8 +19,13 @@ public  class User implements UserInterface{
         this.password = userBuilderConcerete.getPassword(); //working with hashed in the program
         this.dateOfBirth = userBuilderConcerete.getDateOfBirth();
         this.status = userBuilderConcerete.getStatus();
-        this.profile = userBuilderConcerete.getProfile();   //each user has one profile
+        this.profile = userBuilderConcerete.getProfile();//each user has one profile
+          this.groupManager=new GroupManager(this);
       }
+
+    public GroupManager getGroupManager() {
+        return groupManager;
+    }
 
     public Profile getProfile() {
         return profile;
