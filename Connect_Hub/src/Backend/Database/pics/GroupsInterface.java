@@ -9,4 +9,7 @@ public interface GroupsInterface extends Database {
     void save();
     void load();
     ArrayList<Group> getGroups();
+    public void removeGroup(Group group);
+    public Boolean IsGroupFound(Group group);
+
 }
