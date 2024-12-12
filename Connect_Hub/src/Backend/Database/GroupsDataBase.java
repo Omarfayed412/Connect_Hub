@@ -83,7 +83,7 @@ public class GroupsDataBase implements GroupsInterface {
         return null;
     }
     public Boolean IsGroupFound(Object object) { return ( groups.contains(object) ) ? true : false; }
-    public synchronized void addUser(Object object) {
+    public synchronized void addGroup(Object object) {
         groups.add(object);
         save();
     }
