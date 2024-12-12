@@ -60,7 +60,7 @@ public class GroupManager {
     {
         GroupsInterface groupsDataBase = GroupsDataBase.getGroupsDataBase();
         groupsDataBase.load();
-        System.out.println(groupsDataBase.getGroups().size()+"    1===============================================");
+       // System.out.println(groupsDataBase.getGroups().size()+"    1===============================================");
         IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         User user = userDatabase.getUser(this.userId);
         System.out.println(user+ "user");
@@ -70,7 +70,7 @@ public class GroupManager {
          PrimaryAdminRole.getInstance().promoteToAdmin(group,user);
          this.groupAdmined.add(group.getGroupID());
          this.groupJoined.add(group.getGroupID());
-        System.out.println(groupsDataBase.getGroups().size()+"    1111===============================================");
+        //System.out.println(groupsDataBase.getGroups().size()+"    1111===============================================");
         groupsDataBase.addGroup(group);
          System.out.println(groupsDataBase.getGroups().size()+"   2===============================================");
          groupsDataBase.save();

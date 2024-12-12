@@ -30,7 +30,7 @@ public class GroupsDataBase implements GroupsInterface {
     synchronized public static GroupsDataBase getGroupsDataBase() {
         System.out.println("Groups DataBase called");
         if (groupsDataBase == null) {
-            System.out.println("Content Database created with size ++++++++++++++" + groups.size());
+            System.out.println("Content Database created with size ++++++++++++++");
             groupsDataBase = new GroupsDataBase();
             /// Avoid null Exceptions
             System.out.println("Groups DataBase created");
@@ -86,6 +86,7 @@ public class GroupsDataBase implements GroupsInterface {
     private static void innerLoad() {
         System.out.println("inside inner load groups");
         groups = groupsDataBase.deserializeUsers();
+
         if(groups == null)
             groups = new ArrayList<Group>();
     }
@@ -115,9 +116,9 @@ public class GroupsDataBase implements GroupsInterface {
     }
     public Boolean IsGroupFound(Group group) { return ( groups.contains(group) ) ? true : false; }
     public synchronized void addGroup(Group group) {
-        System.out.println(groups.size() + "beforeeeeeeeeeeeeeeeee");
+        //System.out.println(groups.size() + "beforeeeeeeeeeeeeeeeee");
         groups.add(group);
-        System.out.println(groups.size() + "Afterrrrrrrrrrrrrrrrrrrrr");
+        //System.out.println(groups.size() + "Afterrrrrrrrrrrrrrrrrrrrr");
     }
     public synchronized void removeGroup(String groupId) {
         groups.remove(getGroup(groupId));
