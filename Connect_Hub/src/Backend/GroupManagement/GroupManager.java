@@ -1,6 +1,8 @@
 package Backend.GroupManagement;
 
 import Backend.Database.GroupsDataBase;
+import Backend.Database.GroupsInterface;
+import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
 import Backend.User.User;
 
@@ -12,8 +14,8 @@ public class GroupManager {
     private List<String>groupAdmined;
     private List<String>JoinRequests;
     private String userId;
-    protected UserDatabase userDatabase=UserDatabase.getUserDataBase();
-    protected GroupsDataBase groupsDataBase=GroupsDataBase.getGroupsDataBase();
+    //protected UserDatabase userDatabase=UserDatabase.getUserDataBase();
+    //protected GroupsDataBase groupsDataBase=GroupsDataBase.getGroupsDataBase();
 
     public GroupManager(User user) {
         this.userId=user.getUserID();
@@ -56,8 +58,10 @@ public class GroupManager {
     }
     public void createGroup(String desc,String name,String photoPath) //edit it to have the attributse of the builder
     {
+        GroupsInterface groupsDataBase = GroupsDataBase.getGroupsDataBase();
         groupsDataBase.load();
         System.out.println(groupsDataBase.getGroups().size()+"    1===============================================");
+        IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         User user = userDatabase.getUser(this.userId);
         System.out.println(user+ "user");
          Group group=new GroupBuilderConcerete().setName(name).setDescription(desc).setPhotoPath(photoPath).setPrimaryAdmin(user).setGroupID().build();

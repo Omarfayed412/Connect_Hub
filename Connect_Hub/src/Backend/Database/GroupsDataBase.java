@@ -30,7 +30,7 @@ public class GroupsDataBase implements GroupsInterface {
     synchronized public static GroupsDataBase getGroupsDataBase() {
         System.out.println("Groups DataBase called");
         if (groupsDataBase == null) {
-            System.out.println("Content Database created");
+            System.out.println("Content Database created with size ++++++++++++++" + groups.size());
             groupsDataBase = new GroupsDataBase();
             /// Avoid null Exceptions
             System.out.println("Groups DataBase created");

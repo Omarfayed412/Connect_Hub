@@ -10,6 +10,7 @@ public interface GroupsInterface extends Database {
     ArrayList<Group> getGroups();
     public Group getGroup(String id);
     public void removeGroup(String group);
+    public void addGroup(Group group);
     public Boolean IsGroupFound(Group group);
 
 }
