@@ -23,13 +23,12 @@ public class UserDatabase implements  IUserDatabase{
     private static UserDatabase userDataBase = null;
     private static final String users_json = "users.json";
     private static Gson gson = null;
-    private static int numberOfUsers;
+
 
 
     private UserDatabase() {
         users = new ArrayList<User>();
         gson = new Gson();
-        numberOfJSONOBJECTS();
     }
 
     public synchronized static UserDatabase getUserDataBase() {
@@ -37,45 +36,28 @@ public class UserDatabase implements  IUserDatabase{
             System.out.println("UserDataBase Created");
             userDataBase = new UserDatabase();
             /// Avoid null Exceptions
-            if (numberOfUsers > 0)
                 innerLoad();
         }
         return userDataBase;
     }
 
-    public void numberOfJSONOBJECTS() {
-        List<User> userList = null;
-        try {
-            FileReader reader = new FileReader(users_json);
-            Type type = new TypeToken<List<User>>() {
-            }.getType();
-            userList = gson.fromJson(reader, type);
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (userList == null)
-            numberOfUsers = 0;
-        else
-            numberOfUsers = userList.size();
-
-
-    }
-
 
     /// Deserialization..... first instance
 
-    private static void innerLoad() {
-        try {
-            FileReader reader = new FileReader(users_json);
-            /// generic method to return the type of the object inside the List
-            Type type = new TypeToken<List<User>>() {
-            }.getType();
-            users = gson.fromJson(reader, type);
-            reader.close();
+    private List<User> deserializeUsers() {
+        try (FileReader reader = new FileReader(users_json)) {
+            Type type = new TypeToken<List<User>>() {}.getType();
+            return gson.fromJson(reader, type);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error reading users from file: " + e.getMessage());
+            return new ArrayList<User>();
         }
+    }
+
+    private static void innerLoad() {
+        users = userDataBase.deserializeUsers();
+        if(users == null)
+            users = new ArrayList<User>();
     }
 
     @Override
@@ -93,6 +75,12 @@ public class UserDatabase implements  IUserDatabase{
 
     }
 
+    public synchronized User getUserByName(String userName)
+    {
+        for (User user : users)
+            if(user.getUsername().matches(userName)) return user;
+        return null;
+    }
 
     /// Serialization.....
     public void save() {
@@ -106,13 +94,13 @@ public class UserDatabase implements  IUserDatabase{
         }
     }
 
-    public List<User> getUsers() {
+    public synchronized List<User> getUsers() {
         return users;
     }
 
     /// getUser() method return user if found
     /// return null if user not found
-    public User getUser(String userId)
+    public synchronized User getUser(String userId)
     {
         for (User user : users)
             if(user.getUserID().matches(userId)) return user;
@@ -123,7 +111,7 @@ public class UserDatabase implements  IUserDatabase{
     public Boolean IsUserFound(User user) { return ( users.contains(user) ) ? true : false; }
 
     /// return number of current users
-    public int getNumberOfUsers() { return numberOfUsers; }
+    public int getNumberOfUsers() { return users.size(); }
 
     /// returns true if email is already used
     /// return false if email is not used
@@ -142,7 +130,7 @@ public class UserDatabase implements  IUserDatabase{
     }
 
     @Override
-    public void addUser(User user) {
+    public synchronized void addUser(User user) {
           users.add(user);
           save();
     }

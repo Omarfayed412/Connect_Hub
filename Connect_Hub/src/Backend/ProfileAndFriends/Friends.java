@@ -68,7 +68,8 @@ import java.util.List;
      public boolean isPending(String userId){
          return pending.contains(userId);
      }
-    public Boolean isBlocked(String userId)
+    /// return true if blocked
+     public Boolean isBlocked(String userId)
     {
         Boolean flag  = false;
         for(String temp : blocked)
