@@ -1,10 +1,17 @@
 package Backend.GroupManagement;
 
+import Backend.Database.GroupsDataBase;
+import Backend.Database.GroupsInterface;
+import Backend.Database.IUserDatabase;
+import Backend.Database.UserDatabase;
+import Backend.Notifications.GroupNotifications;
 import Backend.User.*;
 import Backend.GroupManagement.*;
 public class AdminRole extends MemberRole {
     // Singleton instance
     private static volatile AdminRole instance;
+    private static GroupsInterface groupDatabase = GroupsDataBase.getGroupsDataBase();
+    private static IUserDatabase userDatabase = UserDatabase.getUserDataBase();
 
     // Private constructor to prevent instantiation
      AdminRole() {}
@@ -22,24 +29,45 @@ public class AdminRole extends MemberRole {
     }
 
     public void approveRequest(Group group, User user) {
+         groupDatabase.load();
+         userDatabase.load();
+         group = groupDatabase.getGroup(group.getGroupID());
+         user = userDatabase.getUser(user.getUserID());
         group.removePending(user);
         user.getGroupManager().removeRequest(group);
-        group.addMember(user);
+        group.addMember(user.getUserID());
         user.getGroupManager().joinGroup(group);
-        refresh();
+        GroupNotifications groupNotifications = new GroupNotifications();
+        groupNotifications.setGroup(group);
+        groupNotifications.setUser(user);
+        groupNotifications.toStringAccepted();
+        userDatabase.getUser(user.getUserID()).addGroupNotifications(groupNotifications);
+        groupDatabase.save();
+        userDatabase.save();
+
     }
 
     public void declineRequest(Group group, User user) {
+        groupDatabase.load();
+        userDatabase.load();
+        group = groupDatabase.getGroup(group.getGroupID());
+        user = userDatabase.getUser(user.getUserID());
         group.removePending(user);
         user.getGroupManager().removeRequest(group);
-        refresh();
+        groupDatabase.save();
+        userDatabase.save();
     }
 
     public void removeNormalMember(Group group, User user) {
+        groupDatabase.load();
+        userDatabase.load();
+        group = groupDatabase.getGroup(group.getGroupID());
+        user = userDatabase.getUser(user.getUserID());
         if (!group.isAdmin(user)) {
             group.removeMember(user);
             user.getGroupManager().leaveGroup(group);
-            refresh();
+            groupDatabase.save();
+            userDatabase.save();
         }
     }
 }

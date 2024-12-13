@@ -4,6 +4,7 @@
  */
 package Backend.Notifications;
 
+import Backend.Database.UserDatabase;
 import Backend.User.User;
 
 /**
@@ -13,28 +14,28 @@ import Backend.User.User;
 
 public class FriendRequestNotification extends Notification{
     //profile of sender/acceptor
-    private User user = null;
+    private String user = null;
 
     public FriendRequestNotification(User user) {
-        this.user = user;
+        this.user = user.getUserID();
     }
-    
+
     //returns profile of sender/acceptor
-    public User getContent() {
+    public String getContent() {
         return this.user;
     }
-    
+
     //pass the profile of sender
     public void setContent(User user) {
-        this.user = user;
+        this.user = user.getUserID();
     }
-    
+
     //Sets the string containing the info of the notification
     public void toStringAccepted() {
-        super.setSContent(this.user.getUsername() + "has accepted your friend request.\n");
+        super.setSContent(UserDatabase.getUserDataBase().getUser(this.user).getUsername()+ " has accepted your friend request.\n");
     }
     
     public void toStringRecieved() {
-        super.setSContent(this.user.getUsername() + "has sent you a friend request.\n");
+        super.setSContent(UserDatabase.getUserDataBase().getUser(this.user).getUsername() + " has sent you a friend request.\n");
     }
 }

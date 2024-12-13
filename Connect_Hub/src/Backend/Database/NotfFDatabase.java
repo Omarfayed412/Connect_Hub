@@ -4,6 +4,7 @@
  */
 package Backend.Database;
 
+import Backend.ContentCreation.AbstractContent;
 import Backend.Notifications.Notification;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,9 +27,13 @@ public class NotfFDatabase implements INotfDatabase{
     private static int numberOfnotification;
 
     private NotfFDatabase() {
+        notificationList = new ArrayList<>();
+        System.out.println("inside constructor");
+        gson = new Gson();
+        //numberOfJSONOBJECTS();
     }
 
-    synchronized public static NotfFDatabase getGroupsDataBase() {
+    synchronized public static NotfFDatabase getNotfFDataBase() {
         if(notfDataBase == null)
         {
             notfDataBase = new NotfFDatabase();
@@ -90,8 +95,8 @@ public class NotfFDatabase implements INotfDatabase{
     }
     
     @Override
-    public synchronized boolean removeNotification(Notification notification) {
-        notificationList.remove(notification);
+    public synchronized boolean removeNotification(String notificationId) {
+        notificationList.remove(getNotification(notificationId));
         save();
         return true;
     }

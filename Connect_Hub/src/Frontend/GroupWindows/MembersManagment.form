@@ -25,7 +25,7 @@
             <border type="none"/>
             <children/>
           </scrollpane>
-          <scrollpane id="6d7f0" binding="Requests">
+          <scrollpane id="6d7f0" binding="requests">
             <constraints>
               <tabbedpane title="Reguests"/>
             </constraints>

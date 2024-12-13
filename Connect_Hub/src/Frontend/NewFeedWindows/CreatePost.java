@@ -14,6 +14,14 @@ public class CreatePost {
     private JLabel imageLabel;
     private String image = null;
 
+    public JTextArea getTextArea1() {
+        return textArea1;
+    }
+
+    public JLabel getImageLabel() {
+        return imageLabel;
+    }
+
     public CreatePost(JFrame frame) {
         frame.setContentPane(panel1);
         frame.setVisible(true);

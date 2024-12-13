@@ -3,12 +3,15 @@ package Backend.ProfileAndFriends;
 import Backend.ContentCreation.IContent;
 import Backend.ContentCreation.Post;
 import Backend.ContentCreation.Story;
-import Backend.Database.ContentDatabase;
-import Backend.Database.IContentDatabase;
-import Backend.Database.IUserDatabase;
-import Backend.Database.UserDatabase;
+import Backend.Database.*;
+import Backend.GroupManagement.Group;
+import Backend.GroupManagement.GroupManager;
+import Backend.Search.SearchGroup;
+import Backend.Search.SearchUser;
 import Backend.User.User;
+import Frontend.GroupWindows.GroupPost;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
@@ -17,10 +20,12 @@ public class NewsFeed {
     private User user;
     private IContentDatabase database;
     private IUserDatabase userDatabase;
+    private GroupsInterface groupsDatabase;
     private List<String> friendsContents;
     public NewsFeed(User user) {
         this.database = ContentDatabase.getInstance();
         this.userDatabase = UserDatabase.getUserDataBase();
+        this.groupsDatabase = GroupsDataBase.getGroupsDataBase();
         this.user = user;
     }
     // allow user to create post
@@ -100,6 +105,8 @@ public class NewsFeed {
         LocalDateTime currentTime = LocalDateTime.now();
         for(String contentId : contentIdList) {
             IContent content = database.getContent(contentId);
+            if (content == null)
+                continue;
             if (contentId.charAt(0) == 'p')
                 continue;
             if (contentId.charAt(0) == 's') {
@@ -148,7 +155,47 @@ public class NewsFeed {
         return suggestions;
     }
 
+    public List<Group> getSuggestionsGroup(){
+        this.user = userDatabase.getUser(user.getUserID());
+        List<Group> suggestions = new ArrayList<>();
+        List<Group> allGroups = groupsDatabase.getGroups();
+        GroupManager groupsIN = user.getGroupManager();
+        for (Group group : allGroups) {
+            if (groupsIN.inGroup(group.getGroupID())) {
+                continue;
+            }
+            suggestions.add(group);
+        }
+        return suggestions;
 
+    }
+
+    public List<User> searchUser(String text){
+        this.userDatabase.load();
+        SearchUser s = new SearchUser(userDatabase, user);
+        return s.getUsers(text);
+    }
+
+    public List<Group> searchGroup(String text){
+        this.groupsDatabase.load();
+        SearchGroup s = new SearchGroup(groupsDatabase);
+        return s.getGroup(text);
+
+    }
+
+    public List<JPanel> getGroupPosts(){
+        this.user = userDatabase.getUser(user.getUserID());
+        List<String> gj = user.getGroupManager().getGroupJoined();
+        List<JPanel> posts = new ArrayList<>();
+        for (String group : gj) {
+            for(IContent content : groupsDatabase.getGroup(group).getPosts()) {
+                GroupPost p = new GroupPost(content, groupsDatabase.getGroup(group));
+                posts.add(p);
+            }
+        }
+
+        return posts;
+    }
 
 
 
