@@ -20,6 +20,7 @@ public class Story extends JPanel {
     private JLabel time;
 
     public Story(IContent content) {
+        setSize(400, 800);
         IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         User user = userDatabase.getUser(content.getAuthorId());
         // Post Image load

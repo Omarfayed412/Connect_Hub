@@ -10,3 +10,7 @@ Connect_Hub/Connect_Hub.iml
 /.idea
 Connect_Hub/.idea/workspace.xml
 Connect_Hub.iml
+out/production/Connect_Hub/Backend/Backend.iml
+/out
+groups.json
+notification.json

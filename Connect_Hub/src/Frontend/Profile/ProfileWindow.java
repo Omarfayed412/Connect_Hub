@@ -4,6 +4,7 @@ import Backend.AccountManager;
 import Backend.ContentCreation.IContent;
 import Backend.Database.UserDatabase;
 import Backend.User.User;
+import Frontend.GroupWindows.ViewGroups;
 import Frontend.NewFeedWindows.NewsFeed;
 import Frontend.NewFeedWindows.Post;
 import Frontend.NewFeedWindows.Story;
@@ -28,6 +29,7 @@ public class ProfileWindow extends JFrame {
     private JLabel profilePhoto;
     private JLabel userName;
     private JScrollPane postsScroll;
+    private JButton viewJoinedGroupsButton;
     private UserDatabase userDatabase = UserDatabase.getUserDataBase();
     private User user;
     private JFrame secondryWindow = null;
@@ -96,6 +98,25 @@ public class ProfileWindow extends JFrame {
 
             }
         });
+        viewJoinedGroupsButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (secondryWindow != null) {
+                    return;
+                }
+                secondryWindow = new JFrame("Groups");
+                ViewGroups win = new ViewGroups(secondryWindow, ProfileWindow.this, user);
+                secondryWindow.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        secondryWindow = null;
+
+                    }
+                });
+
+            }
+        });
         friendsManageButton.addActionListener(new ActionListener() {
 
             @Override
@@ -113,7 +134,6 @@ public class ProfileWindow extends JFrame {
                     }
                 });
                 userDatabase.save();
-                userDatabase.load();
                 ProfileWindow.this.user = userDatabase.getUser(user.getUserID());
 
             }
@@ -178,6 +198,7 @@ public class ProfileWindow extends JFrame {
         postsScroll.setViewportView(combinedContainer);
         postsScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         postsScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        postsScroll.getVerticalScrollBar().setValue(0);
     }
 
 }

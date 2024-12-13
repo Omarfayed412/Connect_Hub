@@ -22,7 +22,16 @@ public class Post extends JPanel {
     private JButton deleteButton;
     // Creates a panel for displaying posts
 
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public JButton getEditButton() {
+        return editButton;
+    }
+
     public Post(IContent content) {
+        setSize(400, 800);
         IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         User user = userDatabase.getUser(content.getAuthorId());
         // Post Image load
