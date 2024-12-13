@@ -3,6 +3,7 @@ package Backend.Database;
 import Backend.GroupManagement.Group;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GroupsInterface extends Database {
     void save();
@@ -12,5 +13,7 @@ public interface GroupsInterface extends Database {
     public void removeGroup(String group);
     public void addGroup(Group group);
     public Boolean IsGroupFound(Group group);
+    public List<Group> getGroupByName(String groupName);
+
 
 }

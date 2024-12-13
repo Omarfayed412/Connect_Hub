@@ -6,6 +6,8 @@ import Backend.ContentCreation.Story;
 import Backend.Database.*;
 import Backend.GroupManagement.Group;
 import Backend.GroupManagement.GroupManager;
+import Backend.Search.SearchGroup;
+import Backend.Search.SearchUser;
 import Backend.User.User;
 
 import java.time.LocalDateTime;
@@ -161,6 +163,19 @@ public class NewsFeed {
             suggestions.add(group);
         }
         return suggestions;
+
+    }
+
+    public List<User> searchUser(String text){
+        this.userDatabase.load();
+        SearchUser s = new SearchUser(userDatabase, user);
+        return s.getUsers(text);
+    }
+
+    public List<Group> searchGroup(String text){
+        this.groupsDatabase.load();
+        SearchGroup s = new SearchGroup(groupsDatabase);
+        return s.getGroup(text);
 
     }
 

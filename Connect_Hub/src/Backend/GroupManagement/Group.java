@@ -57,6 +57,10 @@ public class Group {
         posts.add(post.getContentId());
 
     }
+    public boolean isPending(User user){
+        return pendingRequests.contains(user.getUserID());
+    }
+
     public void removePost(String post)  //validate in the frontend that it exist before removing it
     {
         IContentDatabase contentDB = ContentDatabase.getInstance();

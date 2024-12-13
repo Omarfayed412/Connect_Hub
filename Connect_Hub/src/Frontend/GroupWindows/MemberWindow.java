@@ -57,6 +57,14 @@ public class MemberWindow extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                groupDatabase.load();
+                Group g = groupDatabase.getGroup(group.getGroupID());
+                if (!g.isMember(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer a member");
+                    dispose();
+                    new NewsFeed(user);
+                    return;
+                }
                 if (secondryWindow != null) {
                     return;
                 }
@@ -106,6 +114,14 @@ public class MemberWindow extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                groupDatabase.load();
+                Group g = groupDatabase.getGroup(group.getGroupID());
+                if (!g.isMember(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer a member");
+                    dispose();
+                    new NewsFeed(user);
+                    return;
+                }
                 contentDatabase.load();
                 groupDatabase.load();
                 Group gr = groupDatabase.getGroup(group.getGroupID());

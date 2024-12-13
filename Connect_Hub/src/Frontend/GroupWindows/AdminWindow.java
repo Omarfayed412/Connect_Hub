@@ -3,11 +3,12 @@ package Frontend.GroupWindows;
 import Backend.ContentCreation.IContent;
 import Backend.ContentCreation.Post;
 import Backend.Database.*;
+import Backend.GroupManagement.AdminRole;
 import Backend.GroupManagement.Group;
-import Backend.GroupManagement.PrimaryAdminRole;
 import Backend.User.User;
 import Frontend.NewFeedWindows.CreatePost;
 import Frontend.NewFeedWindows.NewsFeed;
+import Frontend.SignUpWindow2;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -34,7 +35,7 @@ public class AdminWindow extends JFrame {
     private JFrame secondryWindow;
     private Group group;
     private User user;
-    private PrimaryAdminRole primaryAdminRole = PrimaryAdminRole.getInstance();
+    private AdminRole adminRole = AdminRole.getInstance();
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();
     private IUserDatabase userDatabase = UserDatabase.getUserDataBase();
     private GroupsInterface groupDatabase = GroupsDataBase.getGroupsDataBase();
@@ -56,6 +57,14 @@ public class AdminWindow extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                groupDatabase.load();
+                Group g = groupDatabase.getGroup(group.getGroupID());
+                if (!g.isMember(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer a member");
+                    dispose();
+                    new NewsFeed(user);
+                    return;
+                }
                 if (secondryWindow != null) {
                     return;
                 }
@@ -84,7 +93,7 @@ public class AdminWindow extends JFrame {
                         post.setContentId(id);
                         post.setTxtContent(text);
                         contentDatabase.addContent(post);
-                        primaryAdminRole.post(post, group, user);
+                        adminRole.post(post, group, user);
                         contentDatabase.save();
                         secondryWindow.dispose();
                         secondryWindow = null;
@@ -97,6 +106,19 @@ public class AdminWindow extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                groupDatabase.load();
+                Group g = groupDatabase.getGroup(group.getGroupID());
+                if (!g.isAdmin(user)){
+                    JOptionPane.showMessageDialog(null, "You are no longer an admin");
+                    refresh();
+                    return;
+                }
+                if (!g.isMember(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer a member");
+                    dispose();
+                    new NewsFeed(user);
+                    return;
+                }
                 if (secondryWindow != null) {
                     return;
                 }
@@ -126,20 +148,23 @@ public class AdminWindow extends JFrame {
                 });
             }
         });
-        refreshButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                contentDatabase.load();
-                groupDatabase.load();
-                loadProfile();
-                loadPosts();
-            }
-        });
         manageMembersButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                groupDatabase.load();
+                Group g = groupDatabase.getGroup(group.getGroupID());
+                if (!g.isAdmin(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer an admin");
+                    refresh();
+                    return;
+                }
+                if (!g.isMember(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer a member");
+                    dispose();
+                    new NewsFeed(user);
+                    return;
+                }
                 if (secondryWindow != null) {
                     return;
                 }
@@ -161,14 +186,53 @@ public class AdminWindow extends JFrame {
                 new NewsFeed(user);
             }
         });
+        refreshButton.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                groupDatabase.load();
+                Group g = groupDatabase.getGroup(group.getGroupID());
+                if (!g.isMember(user)) {
+                    JOptionPane.showMessageDialog(null, "You are no longer a member");
+                    dispose();
+                    new NewsFeed(user);
+                    return;
+                }
+                refresh();
+            }
+        });
+        leaveGroupButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Leave Group------------------------------------------>");
+                adminRole.leaveGroup(user, group);
+                dispose();
+                new NewsFeed(user);
+            }
+        });
         contentDatabase.load();
         groupDatabase.load();
         loadPosts();
         loadProfile();
 
     }
+    public void refresh(){
+        contentDatabase.load();
+        groupDatabase.load();
+        Group gr = groupDatabase.getGroup(group.getGroupID());
+        loadProfile();
+        if (!gr.isAdmin(user)){
+            editGroupInfromationButton.setVisible(false);
+            manageMembersButton.setVisible(false);
+        }
+        else{
+            editGroupInfromationButton.setVisible(true);
+            manageMembersButton.setVisible(true);
+        }
 
+        loadPosts();
+    }
     public void loadProfile(){
         this.group = groupDatabase.getGroup(group.getGroupID());
         groupName.setText(group.getName());

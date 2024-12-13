@@ -4,11 +4,18 @@ import Backend.*;
 import Backend.ContentCreation.IContent;
 import Backend.Database.*;
 import Backend.GroupManagement.Group;
+import Backend.GroupManagement.MemberRole;
 import Backend.ProfileAndFriends.FriendManager;
 import Backend.User.User;
+import Frontend.GroupWindows.AdminWindow;
 import Frontend.GroupWindows.CreateGroup;
+import Frontend.GroupWindows.MemberWindow;
+import Frontend.GroupWindows.PAdminWindow;
 import Frontend.MainWindow2;
 import Frontend.Profile.ProfileWindow;
+import Frontend.Profile.UserView;
+import Frontend.SearchPanels.GroupSearch;
+import Frontend.SearchPanels.UserSearch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Objects;
 
 public class NewsFeed extends JFrame{
     private JTabbedPane Feed;
@@ -38,6 +46,7 @@ public class NewsFeed extends JFrame{
     private JButton searchButton;
     private JScrollPane searchScroll;
     private JButton createGroupButton;
+    private JScrollPane GroupsIn;
     private JFrame secondryWindow = null;
     private Backend.ProfileAndFriends.NewsFeed newsFeed;
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();
@@ -148,6 +157,14 @@ public class NewsFeed extends JFrame{
                 contentDatabase.save();
                 dispose();
                 new MainWindow2();
+            }
+        });
+
+        searchButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                search(searchFeild.getText());
             }
         });
 
@@ -333,6 +350,150 @@ public class NewsFeed extends JFrame{
         sGroups.getVerticalScrollBar().setValue(0);
 
     }
+
+    public void search(String text){
+
+        List<User> users = newsFeed.searchUser(text);
+        List<Group> groups = newsFeed.searchGroup(text);
+        JPanel searchP = new JPanel();
+        searchP.setLayout(new BoxLayout(searchP, BoxLayout.Y_AXIS));
+        searchP.setBackground(Color.WHITE);
+        // display it on a panel
+        for(User userIN : users) {
+            //System.out.println("User Found"userIN);
+            UserSearch userSearch = new UserSearch(userIN);
+            JButton button1 = userSearch.getButton1();
+            JButton block = userSearch.getBlockButton();
+            JButton view = userSearch.getViewProfileButton();
+            JLabel status = userSearch.getStatus();
+            if(Objects.equals(userIN.getUserID(), user.getUserID())) {
+                button1.setVisible(false);
+                block.setVisible(false);
+                view.addActionListener(new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dispose();
+                        new ProfileWindow(user);
+                    }
+                });
+
+            }
+            else {
+                if (friendManager.isFriend(userIN.getUserID()))
+                    button1.setText("UnFriend");
+                else
+                    button1.setText("Add Friend");
+                button1.addActionListener(new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (friendManager.isFriend(userIN.getUserID())) {
+                            friendManager.removeFriend(userIN);
+                            status.setText("Friend Removed");
+                        }
+                        else {
+                            friendManager.sendRequest(userIN);
+                            status.setText("Request sent");
+                        }
+                        button1.setVisible(false);
+                        block.setVisible(false);
+                        status.setVisible(true);
+
+                    }
+                });
+                block.addActionListener(new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        friendManager.blockFriend(userIN);
+                        button1.setVisible(false);
+                        view.setVisible(false);
+                        block.setVisible(false);
+                        status.setVisible(true);
+                        status.setText("User blocked");
+                    }
+                });
+                view.addActionListener(new ActionListener(){
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dispose();
+                        new UserView(user, userIN, friendManager);
+                    }
+                });
+            }
+            searchP.add(userSearch);
+        }
+        for (Group group : groups) {
+            GroupSearch groupSearch = new GroupSearch(group);
+            JButton button1 = groupSearch.getButton1();
+            JButton view = groupSearch.getViewButton();
+            JLabel status = groupSearch.getStatus();
+            if (group.isMember(user)) {
+                if (!group.isPrimaryAdmin(user))
+                    button1.setText("Leave Group");
+                else
+                    button1.setVisible(false);
+            }
+            else {
+                if(group.isPending(user)) {
+                    button1.setVisible(false);
+                    status.setText("Request sent");
+                    status.setVisible(true);
+                }
+                button1.setText("Join Group");
+
+            }
+            button1.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    MemberRole memberRole = MemberRole.getInstance();
+                    if (group.isMember(user)) {
+                        memberRole.leaveGroup(user, group);
+                        status.setText("Leave Group");
+                        status.setVisible(true);
+                        button1.setVisible(false);
+                        view.setVisible(false);
+                    }
+                    else {
+                        button1.setText("Join Group");
+                        groupDatabase.getGroup(group.getGroupID()).addRequest(user);
+                        userDatabase.getUser(user.getUserID()).getGroupManager().RequettojoinGroup(group);
+                        status.setText("Request sent");
+                        status.setVisible(true);
+                        button1.setVisible(false);
+                        view.setVisible(false);
+                        groupDatabase.save();
+                    }
+                }
+            });
+            view.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    if (group.isPrimaryAdmin(user))
+                        new PAdminWindow(user, group);
+                    else if (group.isAdmin(user))
+                        new AdminWindow(user, group);
+                    else
+                        new MemberWindow(user, group);
+
+                }
+            });
+            searchP.add(groupSearch);
+
+
+        }
+        searchScroll.setViewportView(searchP);
+        searchScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        searchScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        searchScroll.getVerticalScrollBar().setValue(0);
+
+    }
+
 
 
 }

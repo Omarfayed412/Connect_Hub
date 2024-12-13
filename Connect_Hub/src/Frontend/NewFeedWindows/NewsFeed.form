@@ -109,6 +109,14 @@
             <border type="none"/>
             <children/>
           </scrollpane>
+          <scrollpane id="4f0a6" binding="GroupsIn">
+            <constraints>
+              <tabbedpane title="My Groups"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </scrollpane>
           <scrollpane id="31e02" binding="suggestions">
             <constraints>
               <tabbedpane title="Suggestions Friends"/>
