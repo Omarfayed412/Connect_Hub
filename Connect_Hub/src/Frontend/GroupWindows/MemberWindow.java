@@ -5,6 +5,7 @@ import Backend.ContentCreation.Post;
 import Backend.Database.*;
 import Backend.GroupManagement.Group;
 import Backend.GroupManagement.MemberRole;
+import Backend.Notifications.GroupNotifications;
 import Backend.User.User;
 import Frontend.NewFeedWindows.CreatePost;
 import Frontend.NewFeedWindows.NewsFeed;
@@ -53,6 +54,7 @@ public class MemberWindow extends JFrame {
         contentDatabase.load();
         groupDatabase.load();
         loadProfile();
+        loadPosts();
         createPostButton.addActionListener(new ActionListener() {
 
             @Override
@@ -98,6 +100,16 @@ public class MemberWindow extends JFrame {
                         secondryWindow.dispose();
                         secondryWindow = null;
                         loadPosts();
+                        GroupNotifications groupNotifications = new GroupNotifications();
+                        groupNotifications.setGroup(group);
+                        groupNotifications.setUser(user);
+                        groupNotifications.toStringNewPost();
+                        for (String members: group.getMemberIDs()) {
+                            if (members.equals(user.getUserID()))
+                                continue;
+                            userDatabase.getUser(members).addGroupNotifications(groupNotifications);
+                        }
+                        userDatabase.save();
                     }
                 });
             }

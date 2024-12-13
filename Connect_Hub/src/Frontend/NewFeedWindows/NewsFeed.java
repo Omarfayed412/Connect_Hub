@@ -5,13 +5,14 @@ import Backend.ContentCreation.IContent;
 import Backend.Database.*;
 import Backend.GroupManagement.Group;
 import Backend.GroupManagement.MemberRole;
+import Backend.Notifications.FriendRequestNotification;
+import Backend.Notifications.GroupNotifications;
 import Backend.ProfileAndFriends.FriendManager;
 import Backend.User.User;
-import Frontend.GroupWindows.AdminWindow;
-import Frontend.GroupWindows.CreateGroup;
-import Frontend.GroupWindows.MemberWindow;
-import Frontend.GroupWindows.PAdminWindow;
+import Frontend.GroupWindows.*;
 import Frontend.MainWindow2;
+import Frontend.Notifications.GroupNews;
+import Frontend.Notifications.UserNews;
 import Frontend.Profile.ProfileWindow;
 import Frontend.Profile.UserView;
 import Frontend.SearchPanels.GroupSearch;
@@ -46,7 +47,8 @@ public class NewsFeed extends JFrame{
     private JButton searchButton;
     private JScrollPane searchScroll;
     private JButton createGroupButton;
-    private JScrollPane GroupsIn;
+    private JScrollPane groupsIn;
+    private JScrollPane notScroll;
     private JFrame secondryWindow = null;
     private Backend.ProfileAndFriends.NewsFeed newsFeed;
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();
@@ -78,6 +80,7 @@ public class NewsFeed extends JFrame{
         friendsLoad();
         suggestionsLoad();
         suggestionsGroupsLoad();
+        groupIn();
 
         createPostButton.addActionListener(new ActionListener() {
 
@@ -167,7 +170,7 @@ public class NewsFeed extends JFrame{
                 search(searchFeild.getText());
             }
         });
-
+        notificationsLoad();
     }
     public void refresh() {
         userDatabase.load();
@@ -177,6 +180,8 @@ public class NewsFeed extends JFrame{
         friendsLoad();
         suggestionsLoad();
         suggestionsGroupsLoad();
+        groupIn();
+        notificationsLoad();
     }
 
     public void newsLoad() {
@@ -216,6 +221,12 @@ public class NewsFeed extends JFrame{
             JPanel postPanel = new Post(content);
             postsContainer.add(postPanel);
         }
+        List<JPanel> gp = newsFeed.getGroupPosts().reversed();
+
+        for (JPanel panel : gp) {
+            postsContainer.add(panel);
+        }
+
         combinedContainer.add(postsContainer);
         // main horizontal scroll
         news.setViewportView(combinedContainer);
@@ -494,6 +505,60 @@ public class NewsFeed extends JFrame{
 
     }
 
+    public void notificationsLoad(){
+        JPanel notifications = new JPanel();
+        notifications.setLayout(new BoxLayout(notifications, BoxLayout.Y_AXIS));
+        notifications.setBackground(Color.WHITE);
+        // get user friends
+        List<FriendRequestNotification> fr = user.getFRNotifications().reversed();
+        List<GroupNotifications> gr = user.getGroupNotifications().reversed();
+        // display it on a panel
+        for(FriendRequestNotification requestNotification : fr) {
+            UserNews userNews = new UserNews(requestNotification);
+            notifications.add(userNews);
+        }
+        for(GroupNotifications requestNotification : gr) {
+            GroupNews userNews = new GroupNews(requestNotification);
+            notifications.add(userNews);
+        }
+        notScroll.setViewportView(notifications);
+        notScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        notScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        notScroll.getVerticalScrollBar().setValue(0);
+    }
+
+    public void groupIn(){
+        this.user = userDatabase.getUser(this.user.getUserID());
+        List<String> groups = user.getGroupManager().getGroupJoined();
+        System.out.println(groups.size() + "+===============================================");
+        JPanel groupsJoined = new JPanel();
+        groupsJoined.setLayout(new BoxLayout(groupsJoined, BoxLayout.Y_AXIS));
+        groupsJoined.setBackground(Color.WHITE);
+        for(String groupId : groups) {
+            System.out.println(groupId+"groups in");
+            Group group = groupDatabase.getGroup(groupId);
+            GroupPanel f = new GroupPanel(group);
+            JButton viewButton = f.getViewGroup();
+            viewButton.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (group.isPrimaryAdmin(user))
+                        new PAdminWindow(user, group);
+                    else if (group.isAdmin(user))
+                        new AdminWindow(user, group);
+                    else
+                        new MemberWindow(user, group);
+                    dispose();
+                }
+            });
+
+            groupsJoined.add(f);
+        }
+        groupsIn.setViewportView(groupsJoined);
+        groupsIn.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        groupsIn.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    }
 
 
 }

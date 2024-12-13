@@ -1,8 +1,9 @@
-package Frontend.NewFeedWindows;
+package Frontend.GroupWindows;
 
 import Backend.ContentCreation.IContent;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.GroupManagement.Group;
 import Backend.User.User;
 
 import javax.swing.*;
@@ -11,15 +12,20 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Story extends JPanel {
-    private JPanel storyWindow;
-    private JTextArea textArea;
+public class GroupPost extends JPanel {
+    private JPanel postPanel;
+    private JLabel image;
     private JLabel profilePhoto;
     private JLabel userName;
-    private JLabel image;
     private JLabel time;
+    private JTextArea textArea;
+    private JButton deleteButton;
+    private JButton editButton;
+    private JLabel groupImage;
+    private JLabel groupName;
+    private JLabel gL;
 
-    public Story(IContent content) {
+    public GroupPost(IContent content, Group group) {
         setSize(400, 800);
         IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         User user = userDatabase.getUser(content.getAuthorId());
@@ -39,16 +45,24 @@ public class Story extends JPanel {
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
-         DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+        DefaultCaret caret = (DefaultCaret) textArea.getCaret();
         caret.setVisible(false);
         // username add
         this.userName.setText(user.getUsername());
         LocalDateTime now = LocalDateTime.parse(content.getTimeStamp());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = now.format(formatter);
         time.setText(formattedDateTime);
-        add(storyWindow);
+        editButton.setVisible(false);
+        deleteButton.setVisible(false);
+        postPhoto = new ImageIcon(group.getPhotoPath());
+        scaledImage = postPhoto.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        scaledIcon = new ImageIcon(scaledImage);
+        groupImage.setText("");
+        groupImage.setIcon(scaledIcon);
+        groupName.setText(group.getName());
+        add(postPanel);
 
- }
+    }
 
 }

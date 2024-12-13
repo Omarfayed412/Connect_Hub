@@ -2,6 +2,7 @@ package Backend.ProfileAndFriends;
 
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.Notifications.FriendRequestNotification;
 import Backend.User.User;
 import Backend.User.UserInterface;
 
@@ -10,11 +11,11 @@ import java.util.List;
 public class FriendManager
 {
 
-    private UserInterface client;
+    private User client;
     private FriendsInterface friends;
     private IUserDatabase database = UserDatabase.getUserDataBase();
 
-    public FriendManager(UserInterface client) {
+    public FriendManager(User client) {
         this.client = client;
         this.friends = this.client.getProfile().getFriends();
     }
@@ -22,13 +23,16 @@ public class FriendManager
         this.client = database.getUser(client.getUserID());
         this.friends = client.getProfile().getFriends();
     }
-    public Boolean sendRequest(UserInterface friend)
+    public Boolean sendRequest(User friend)
     {
         database.load();
         refresh();
         friend = database.getUser(friend.getUserID());
         friend = database.getUser(friend.getUserID());
         friend.getProfile().getFriends().addPending(this.client.getUserID());
+        FriendRequestNotification frn = new FriendRequestNotification(this.client);
+        frn.toStringRecieved();
+        friend.addFriendRequestNotification(frn);
         database.save();
         return true;
     }
@@ -86,6 +90,9 @@ public class FriendManager
         this.friends.acceptFriends(friend.getUserID());
         User user = database.getUser(friend.getUserID());
         user.getProfile().getFriends().addFriends(this.client.getUserID());
+        FriendRequestNotification frn = new FriendRequestNotification(client);
+        frn.toStringAccepted();
+        friend.addFriendRequestNotification(frn);
         database.save();
         return true;
     }
@@ -93,8 +100,7 @@ public class FriendManager
     {
         database.load();
         refresh();
-        friend = database.getUser(friend.getUserID());
-        friend.getProfile().getFriends().declineFriends(this.client.getUserID());
+        this.friends.declineFriends(friend.getUserID());
         database.save();
         return true;
     }

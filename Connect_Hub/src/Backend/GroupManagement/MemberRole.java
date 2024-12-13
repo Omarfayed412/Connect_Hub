@@ -57,10 +57,8 @@ public class MemberRole {
         userDatabase.load();
         group = groupsDataBase.getGroup(group.getGroupID());
         user = userDatabase.getUser(user.getUserID());
-        if (group.isMember(user)) {
-            group.addPost(post);
-            groupsDataBase.save();
-            userDatabase.save();
-        }
+        group.addPost(post);
+        groupsDataBase.save();
+        userDatabase.save();
     }
 }

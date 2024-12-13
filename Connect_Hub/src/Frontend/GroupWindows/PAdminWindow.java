@@ -5,6 +5,7 @@ import Backend.ContentCreation.Post;
 import Backend.Database.*;
 import Backend.GroupManagement.Group;
 import Backend.GroupManagement.PrimaryAdminRole;
+import Backend.Notifications.GroupNotifications;
 import Backend.User.User;
 import Frontend.NewFeedWindows.CreatePost;
 import Frontend.NewFeedWindows.NewsFeed;
@@ -56,6 +57,7 @@ public class PAdminWindow extends JFrame {
         contentDatabase.load();
         groupDatabase.load();
         loadProfile();
+        loadPosts();
         manageMembersButton.addActionListener(new ActionListener() {
 
             @Override
@@ -127,6 +129,16 @@ public class PAdminWindow extends JFrame {
                         secondryWindow.dispose();
                         secondryWindow = null;
                         loadPosts();
+                        GroupNotifications groupNotifications = new GroupNotifications();
+                        groupNotifications.setGroup(group);
+                        groupNotifications.setUser(user);
+                        groupNotifications.toStringNewPost();
+                        for (String members: group.getMemberIDs()) {
+                            if (members.equals(user.getUserID()))
+                                continue;
+                            userDatabase.getUser(members).addGroupNotifications(groupNotifications);
+                        }
+                        userDatabase.save();
                     }
                 });
             }
@@ -160,6 +172,16 @@ public class PAdminWindow extends JFrame {
                         secondryWindow = null;
                         groupDatabase.save();
                         loadProfile();
+                        GroupNotifications groupNotifications = new GroupNotifications();
+                        groupNotifications.setGroup(group);
+                        groupNotifications.setUser(user);
+                        groupNotifications.toStringStatus();
+                        for (String members: group.getMemberIDs()) {
+                            if (members.equals(user.getUserID()))
+                                continue;
+                            userDatabase.getUser(members).addGroupNotifications(groupNotifications);
+                        }
+                        userDatabase.save();
                     }
                 });
             }
@@ -195,7 +217,57 @@ public class PAdminWindow extends JFrame {
         List<IContent> posts = group.getPosts().reversed();
         System.out.println(posts.size()+"Size----------------------------->");
         for (IContent content : posts) {
-            JPanel postPanel = new Frontend.NewFeedWindows.Post(content);
+            Frontend.NewFeedWindows.Post postPanel = new Frontend.NewFeedWindows.Post(content);
+            JButton e = postPanel.getEditButton();
+            JButton d = postPanel.getDeleteButton();
+            e.setVisible(true);
+            d.setVisible(true);
+            e.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    secondryWindow = new JFrame();
+                    secondryWindow.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            secondryWindow = null;
+                        }
+                    });
+                    CreatePost c = new CreatePost(secondryWindow);
+                    c.getTextArea1().setText(content.getTxt());
+                    ImageIcon postPhoto = new ImageIcon(content.getImgPath());
+                    Image scaledImage = postPhoto.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
+                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                    c.getImageLabel().setText("");
+                    c.getImageLabel().setIcon(scaledIcon);
+                    c.getCreateButton().addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String image = c.getImage();
+                            String text = c.getText();
+                            if (image != null)
+                                content.setImgPath(image);;
+                            content.setTxtContent(text);
+                            contentDatabase.save();
+                            secondryWindow.dispose();
+                            secondryWindow = null;
+                            loadPosts();
+                        }
+                    });
+                }
+            });
+            d.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    groupDatabase.getGroup(group.getGroupID()).removePost(content.getContentId());
+                    contentDatabase.removeContent(content.getContentId());
+                    contentDatabase.save();
+                    groupDatabase.save();
+                    loadPosts();
+                }
+            });
             postsContainer.add(postPanel);
         }
         // main horizontal scroll

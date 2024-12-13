@@ -8,7 +8,7 @@ package Backend.Notifications;
  *
  * @author Omar Fayed
  */
-public abstract class Notification implements INotification{
+public class Notification implements INotification{
     private String Id;
     private String content;
 

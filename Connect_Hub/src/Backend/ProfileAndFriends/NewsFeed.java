@@ -9,7 +9,9 @@ import Backend.GroupManagement.GroupManager;
 import Backend.Search.SearchGroup;
 import Backend.Search.SearchUser;
 import Backend.User.User;
+import Frontend.GroupWindows.GroupPost;
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
@@ -103,6 +105,8 @@ public class NewsFeed {
         LocalDateTime currentTime = LocalDateTime.now();
         for(String contentId : contentIdList) {
             IContent content = database.getContent(contentId);
+            if (content == null)
+                continue;
             if (contentId.charAt(0) == 'p')
                 continue;
             if (contentId.charAt(0) == 's') {
@@ -179,7 +183,19 @@ public class NewsFeed {
 
     }
 
+    public List<JPanel> getGroupPosts(){
+        this.user = userDatabase.getUser(user.getUserID());
+        List<String> gj = user.getGroupManager().getGroupJoined();
+        List<JPanel> posts = new ArrayList<>();
+        for (String group : gj) {
+            for(IContent content : groupsDatabase.getGroup(group).getPosts()) {
+                GroupPost p = new GroupPost(content, groupsDatabase.getGroup(group));
+                posts.add(p);
+            }
+        }
 
+        return posts;
+    }
 
 
 

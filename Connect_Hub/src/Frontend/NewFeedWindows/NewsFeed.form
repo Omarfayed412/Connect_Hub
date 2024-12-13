@@ -109,7 +109,7 @@
             <border type="none"/>
             <children/>
           </scrollpane>
-          <scrollpane id="4f0a6" binding="GroupsIn">
+          <scrollpane id="4f0a6" binding="groupsIn">
             <constraints>
               <tabbedpane title="My Groups"/>
             </constraints>
@@ -167,7 +167,7 @@
               </scrollpane>
             </children>
           </grid>
-          <scrollpane id="b6fe2">
+          <scrollpane id="b6fe2" binding="notScroll">
             <constraints>
               <tabbedpane title="Notificatons"/>
             </constraints>

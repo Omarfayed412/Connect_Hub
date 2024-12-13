@@ -7,6 +7,7 @@ import Backend.Database.UserDatabase;
 import Backend.GroupManagement.GroupBuilderInterface;
 import Backend.ContentCreation.Post;
 import Backend.GroupManagement.GroupBuilderConcerete;
+import Backend.Notifications.GroupNotifications;
 import Backend.User.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,17 @@ public class Group {
     public void addRequest(User user)
     {
         pendingRequests.add(user.getUserID());
+        GroupNotifications groupNotifications = new GroupNotifications();
+        groupNotifications.setGroup(this);
+        groupNotifications.setUser(user);
+        groupNotifications.toStringRequest();
+        IUserDatabase db = UserDatabase.getUserDataBase();
+        db.load();
+        for(String admin : admins) {
+            User u = db.getUser(admin);
+            u.addGroupNotifications(groupNotifications);
+        }
+        db.save();
     }
     public void removePending(User user)
     {

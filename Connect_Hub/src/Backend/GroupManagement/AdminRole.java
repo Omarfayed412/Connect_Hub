@@ -4,6 +4,7 @@ import Backend.Database.GroupsDataBase;
 import Backend.Database.GroupsInterface;
 import Backend.Database.IUserDatabase;
 import Backend.Database.UserDatabase;
+import Backend.Notifications.GroupNotifications;
 import Backend.User.*;
 import Backend.GroupManagement.*;
 public class AdminRole extends MemberRole {
@@ -36,6 +37,11 @@ public class AdminRole extends MemberRole {
         user.getGroupManager().removeRequest(group);
         group.addMember(user.getUserID());
         user.getGroupManager().joinGroup(group);
+        GroupNotifications groupNotifications = new GroupNotifications();
+        groupNotifications.setGroup(group);
+        groupNotifications.setUser(user);
+        groupNotifications.toStringAccepted();
+        userDatabase.getUser(user.getUserID()).addGroupNotifications(groupNotifications);
         groupDatabase.save();
         userDatabase.save();
 

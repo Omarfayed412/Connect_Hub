@@ -18,16 +18,17 @@ public class GroupNotifications  extends Notification{
     private String groupID;
     private String contentID ;
     private String userID;
-    private IUserDatabase userDatabase = UserDatabase.getUserDataBase();
-    private IContentDatabase contentDatabase = ContentDatabase.getInstance();
-    private GroupsInterface groupsDatabase = GroupsDataBase.getGroupsDataBase();
-    private INotfDatabase notfDatabase = NotfFDatabase.getNotfFDataBase();
+//    private IUserDatabase userDatabase = UserDatabase.getUserDataBase();
+//    private IContentDatabase contentDatabase = ContentDatabase.getInstance();
+//    private GroupsInterface groupsDatabase = GroupsDataBase.getGroupsDataBase();
+//    private INotfDatabase notfDatabase = NotfFDatabase.getNotfFDataBase();
     
     public GroupNotifications() {
         
     }
 
     public Group getGroup() {
+        GroupsInterface groupsDatabase = GroupsDataBase.getGroupsDataBase();
         Group group = groupsDatabase.getGroup(groupID);
         try {
             return group;
@@ -38,6 +39,7 @@ public class GroupNotifications  extends Notification{
     }
 
     public IContent getContent() {
+        IContentDatabase contentDatabase = ContentDatabase.getInstance();
         IContent content = contentDatabase.getContent(contentID);
         try {
             return content;
@@ -48,6 +50,7 @@ public class GroupNotifications  extends Notification{
     }
 
     public User getUser() {
+        IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         User user = userDatabase.getUser(userID);
         try {
             return user;
@@ -61,8 +64,8 @@ public class GroupNotifications  extends Notification{
         this.groupID = group.getGroupID();
     }
 
-    public void setContent(AbstractContent content) {
-        this.contentID = content.getContentId();
+    public void setContent(String content) {
+        this.contentID = content;
     }
 
     public void setUser(User user) {
@@ -79,7 +82,7 @@ public class GroupNotifications  extends Notification{
     
     public void toStringNewPost() {
         try {
-            super.setSContent("A new post has been added to your group " + getGroup().getName() + ".\n");
+            super.setSContent(getUser().getUsername() +" a new post to your group " + getGroup().getName() + ".\n");
         } catch (NullPointerException e) {
             System.out.println("No group added to the notification.");
         }
@@ -96,6 +99,13 @@ public class GroupNotifications  extends Notification{
     public void toStringRequest() {
         try {
             super.setSContent(getUser().getUsername() + " Requested to enter your group " + getGroup().getName() + ".\n");
+        } catch (NullPointerException e) {
+            System.out.println("No group or user added to the notification.");
+        }
+    }
+    public void toStringMemberJoined(User member) {
+        try {
+            super.setSContent(member.getUsername() + "joined " + getGroup().getName()+ " group" + ".\n");
         } catch (NullPointerException e) {
             System.out.println("No group or user added to the notification.");
         }
