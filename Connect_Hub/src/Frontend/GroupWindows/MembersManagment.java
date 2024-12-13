@@ -61,7 +61,7 @@ public class MembersManagment {
             }
             else if(group.isPrimaryAdmin(userDatabase.getUser(member))) {
                 button1.setVisible(false);
-                button2.setVisible(true);
+                button2.setVisible(false);
                 statusLabel.setVisible(true);
                 statusLabel.setText("Primary Admin");
             }

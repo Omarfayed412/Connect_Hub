@@ -76,11 +76,12 @@ public class UserDatabase implements  IUserDatabase{
 
     }
 
-    public synchronized User getUserByName(String userName)
+    public synchronized List<User> getUserByName(String userName)
     {
+        List<User> users1 = new ArrayList<>();
         for (User user : users)
-            if(user.getUsername().matches(userName)) return user;
-        return null;
+            if(user.getUsername().contains(userName)) users1.add(user);
+        return users1;
     }
 
     /// Serialization.....

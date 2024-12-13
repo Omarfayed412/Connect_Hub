@@ -24,20 +24,27 @@ public class FriendManager
     }
     public Boolean sendRequest(UserInterface friend)
     {
+        database.load();
         refresh();
+        friend = database.getUser(friend.getUserID());
+        friend = database.getUser(friend.getUserID());
         friend.getProfile().getFriends().addPending(this.client.getUserID());
+        database.save();
         return true;
     }
     public List<String> getFriends() {
+        database.load();
         refresh();
     return friends.getFriends();
 }
     public List<String> getPending() {
+        database.load();
         refresh();
         return friends.getPending();
     }
 
     public List<String> getBlocked() {
+        database.load();
         refresh();
         return friends.getBlocked();
     }
@@ -73,7 +80,9 @@ public class FriendManager
     }
     public Boolean acceptRequest(User friend)
     {
+        database.load();
         refresh();
+        friend = database.getUser(friend.getUserID());
         this.friends.acceptFriends(friend.getUserID());
         User user = database.getUser(friend.getUserID());
         user.getProfile().getFriends().addFriends(this.client.getUserID());
@@ -82,16 +91,21 @@ public class FriendManager
     }
     public  Boolean declineRequest(User friend)
     {
+        database.load();
         refresh();
+        friend = database.getUser(friend.getUserID());
         friend.getProfile().getFriends().declineFriends(this.client.getUserID());
         database.save();
         return true;
     }
     public Boolean blockFriend(User friend)
     {
+        database.load();
         refresh();
+        friend = database.getUser(friend.getUserID());
+        System.out.println("Blocking ====================== " + friend.getUsername());
         this.client.getProfile().getFriends().removeFriends(friend.getUserID());
-        this.client.getProfile().getFriends().addBlocked(this.client.getUserID());
+        this.client.getProfile().getFriends().addBlocked(friend.getUserID());
         User user = database.getUser(friend.getUserID());
         user.getProfile().getFriends().removeFriends(this.client.getUserID());
         database.save();
@@ -99,7 +113,9 @@ public class FriendManager
     }
     public Boolean removeFriend(User friend)
     {
+        database.load();
         refresh();
+        friend = database.getUser(friend.getUserID());
         this.client.getProfile().getFriends().removeFriends(friend.getUserID());
         User user = database.getUser(friend.getUserID());
         user.getProfile().getFriends().removeFriends(this.client.getUserID());
@@ -108,6 +124,7 @@ public class FriendManager
     }
     public  Boolean unblockFriend(User friend)
     {
+        database.load();
         refresh();
 //        friend.getProfile().getFriends().removeBlocked(this.client.getUserID());
         this.client.getProfile().getFriends().removeBlocked(friend.getUserID());

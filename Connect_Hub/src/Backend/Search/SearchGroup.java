@@ -1,15 +1,16 @@
-package Backend.Database;
+package Backend.Search;
 
+import Backend.Database.GroupsDataBase;
+import Backend.Database.GroupsInterface;
 import Backend.GroupManagement.Group;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchGroup {
-    private GroupsDataBase groupsDataBase;
+    private GroupsInterface groupsDataBase;
 
 
-    public SearchGroup(GroupsDataBase groupsDataBase)
+    public SearchGroup(GroupsInterface groupsDataBase)
     {
         this.groupsDataBase = groupsDataBase;
     }
@@ -18,9 +19,8 @@ public class SearchGroup {
     /// return User object if found and not in the blocked list
     /// return null if object is blocked or not found
     public List<Group> getGroup(String groupName) {
-        List<Group> groups = this.groupsDataBase.getGroupByName(groupName);
 
-        return groups;
+        return this.groupsDataBase.getGroupByName(groupName);
 
     }
 
