@@ -35,14 +35,11 @@ public class PrimaryAdminRole extends AdminRole {
 
     }
 
-    public void promoteToAdmin(Group group, User user) {
-        System.out.println("innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-        userDatabase.load();
-        user = userDatabase.getUser(user.getUserID());
+    public void promoteToAdmin(Group group, String userId) {
+        User user = userDatabase.getUser(userId);
 
         group.promoteToAdmin(user);
         user.getGroupManager().promoteToAdmin(group);
-        userDatabase.save();
     }
 
     public void demoteAdmin(Group group, User user) {

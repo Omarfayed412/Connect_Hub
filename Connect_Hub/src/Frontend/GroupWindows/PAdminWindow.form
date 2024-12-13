@@ -32,7 +32,7 @@
             </constraints>
             <properties/>
           </component>
-          <scrollpane id="5d21">
+          <scrollpane id="5d21" binding="feed">
             <constraints>
               <grid row="5" column="0" row-span="3" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <minimum-size width="-1" height="500"/>

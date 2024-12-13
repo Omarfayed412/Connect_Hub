@@ -46,23 +46,21 @@ public class CreateGroup {
             }
 
         });
-        createButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createGroup(frame);
-            }
-        });
     }
 
-    public void createGroup(JFrame frame) {
+    public JButton getCreateButton() {
+        return createButton;
+    }
+
+    public void createGroup() {
         userDatabase.load();
         this.user = userDatabase.getUser(this.user.getUserID());
+        System.out.println("Last load");
         String groupName = this.groupName.getText();
         String discription = this.discription.getText();
         user.getGroupManager().createGroup(discription, groupName,imagePath);
         userDatabase.save();
-        frame.dispose();
 
     }
 

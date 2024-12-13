@@ -64,7 +64,7 @@ public class AdminWindow extends JFrame {
                         secondryWindow = null;
                     }
                 });
-                new EditGroup(secondryWindow);
+                //new EditGroup(secondryWindow);
             }
         });
         manageMembersButton.addActionListener(new ActionListener() {
@@ -81,7 +81,7 @@ public class AdminWindow extends JFrame {
                         secondryWindow = null;
                     }
                 });
-                new MembersManagment(secondryWindow);
+                //new MembersManagment(secondryWindow);
             }
         });
 

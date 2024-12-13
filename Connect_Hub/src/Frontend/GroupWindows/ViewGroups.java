@@ -53,11 +53,11 @@ public class ViewGroups {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                    if (group.isPrimaryAdmin(user))
-                       new PAdminWindow();
-                   else if (group.isMember(user))
-                       new MemberWindow();
-                   else
+                       new PAdminWindow(user, group);
+                   else if (group.isAdmin(user))
                        new AdminWindow();
+                   else
+                       new MemberWindow();
                    mainFrame.dispose();
                    profileFrame.dispose();
                 }

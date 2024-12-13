@@ -3,10 +3,9 @@ package Backend.ProfileAndFriends;
 import Backend.ContentCreation.IContent;
 import Backend.ContentCreation.Post;
 import Backend.ContentCreation.Story;
-import Backend.Database.ContentDatabase;
-import Backend.Database.IContentDatabase;
-import Backend.Database.IUserDatabase;
-import Backend.Database.UserDatabase;
+import Backend.Database.*;
+import Backend.GroupManagement.Group;
+import Backend.GroupManagement.GroupManager;
 import Backend.User.User;
 
 import java.time.LocalDateTime;
@@ -17,10 +16,12 @@ public class NewsFeed {
     private User user;
     private IContentDatabase database;
     private IUserDatabase userDatabase;
+    private GroupsInterface groupsDatabase;
     private List<String> friendsContents;
     public NewsFeed(User user) {
         this.database = ContentDatabase.getInstance();
         this.userDatabase = UserDatabase.getUserDataBase();
+        this.groupsDatabase = GroupsDataBase.getGroupsDataBase();
         this.user = user;
     }
     // allow user to create post
@@ -146,6 +147,21 @@ public class NewsFeed {
             suggestions.add(user);
         }
         return suggestions;
+    }
+
+    public List<Group> getSuggestionsGroup(){
+        this.user = userDatabase.getUser(user.getUserID());
+        List<Group> suggestions = new ArrayList<>();
+        List<Group> allGroups = groupsDatabase.getGroups();
+        GroupManager groupsIN = user.getGroupManager();
+        for (Group group : allGroups) {
+            if (groupsIN.inGroup(group.getGroupID())) {
+                continue;
+            }
+            suggestions.add(group);
+        }
+        return suggestions;
+
     }
 
 

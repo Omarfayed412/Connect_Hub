@@ -34,7 +34,7 @@ public class AdminRole extends MemberRole {
          user = userDatabase.getUser(user.getUserID());
         group.removePending(user);
         user.getGroupManager().removeRequest(group);
-        group.addMember(user);
+        group.addMember(user.getUserID());
         user.getGroupManager().joinGroup(group);
         groupDatabase.save();
         userDatabase.save();

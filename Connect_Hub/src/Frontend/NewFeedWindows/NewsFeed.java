@@ -2,10 +2,8 @@ package Frontend.NewFeedWindows;
 
 import Backend.*;
 import Backend.ContentCreation.IContent;
-import Backend.Database.ContentDatabase;
-import Backend.Database.IContentDatabase;
-import Backend.Database.IUserDatabase;
-import Backend.Database.UserDatabase;
+import Backend.Database.*;
+import Backend.GroupManagement.Group;
 import Backend.ProfileAndFriends.FriendManager;
 import Backend.User.User;
 import Frontend.GroupWindows.CreateGroup;
@@ -44,6 +42,7 @@ public class NewsFeed extends JFrame{
     private Backend.ProfileAndFriends.NewsFeed newsFeed;
     private IContentDatabase contentDatabase = ContentDatabase.getInstance();
     private IUserDatabase userDatabase = UserDatabase.getUserDataBase();
+    private GroupsInterface groupDatabase = GroupsDataBase.getGroupsDataBase();
     private FriendManager friendManager;
     private User user;
 
@@ -69,6 +68,7 @@ public class NewsFeed extends JFrame{
         newsLoad();
         friendsLoad();
         suggestionsLoad();
+        suggestionsGroupsLoad();
 
         createPostButton.addActionListener(new ActionListener() {
 
@@ -115,7 +115,16 @@ public class NewsFeed extends JFrame{
                     }
                 });
 
-                new CreateGroup(secondryWindow, user);
+                CreateGroup c = new CreateGroup(secondryWindow, user);
+                c.getCreateButton().addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        c.createGroup();
+                        secondryWindow.dispose();
+                        secondryWindow = null;
+                    }
+                });
             }
         });
 
@@ -150,6 +159,7 @@ public class NewsFeed extends JFrame{
         newsLoad();
         friendsLoad();
         suggestionsLoad();
+        suggestionsGroupsLoad();
     }
 
     public void newsLoad() {
@@ -286,6 +296,39 @@ public class NewsFeed extends JFrame{
 
     }
 
+    public void suggestionsGroupsLoad(){
+        JPanel groups = new JPanel();
+        groups.setLayout(new BoxLayout(groups, BoxLayout.Y_AXIS));
+        groups.setBackground(Color.WHITE);
+        List<Group> suggestions = newsFeed.getSuggestionsGroup();
+        System.out.println(suggestions+ "Suggestions loaded------------------------------");
+        for(Group group : suggestions) {
+
+            GroupSG f = new GroupSG(group);
+            f.getJoinButton().addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    groupDatabase.load();
+                    userDatabase.load();
+                    user = userDatabase.getUser(user.getUserID());
+                    Group g=  groupDatabase.getGroup(group.getGroupID());
+                    g.addRequest(user);
+                    user.getGroupManager().RequettojoinGroup(g);
+                    f.getJoinButton().setVisible(false);
+                    f.getStatus().setText("Request sent");
+                    f.getStatus().setVisible(true);
+                    groupDatabase.save();
+                    userDatabase.save();
+                }
+            });
+            groups.add(f);
+        }
+        this.sGroups.setViewportView(groups);
+        this.sGroups.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.sGroups.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+    }
 
 
 }

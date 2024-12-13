@@ -62,6 +62,7 @@ public class UserDatabase implements  IUserDatabase{
 
     @Override
     public void load() {
+        System.out.println("\\u001B[31m" + "Warninggggggggg Loading Users" + "\u001B[0m");
         try {
             FileReader reader = new FileReader(users_json);
             /// generic method to return the type of the object inside the List
@@ -85,6 +86,10 @@ public class UserDatabase implements  IUserDatabase{
     /// Serialization.....
     public void save() {
         //serialization into users.json......
+        for (User user : users)
+        {
+            System.out.println("Saving user: " + user.getGroupManager().getGroupJoined());
+        }
         try {
             FileWriter writer = new FileWriter(users_json);
             gson.toJson(users, writer);

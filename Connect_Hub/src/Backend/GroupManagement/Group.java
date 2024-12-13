@@ -43,9 +43,9 @@ public class Group {
     {
         pendingRequests.remove(user.getUserID());
     }
-    public void addMember(User user) //validate if already exist in the frontend listeners
+    public void addMember(String userID) //validate if already exist in the frontend listeners
     {
-        members.add(user.getUserID());
+        members.add(userID);
     }
     public void removeMember(User user)
     {
@@ -58,9 +58,14 @@ public class Group {
         posts.add(post.getContentId());
 
     }
-    public void removePost(Post post)  //validate in the frontend that it exist before removing it
+    public void removePost(String post)  //validate in the frontend that it exist before removing it
     {
-        posts.remove(post.getContentId());
+        IContentDatabase contentDB = ContentDatabase.getInstance();
+        contentDB.load();
+        posts.remove(post);
+        contentDB.removeContent(post);
+        contentDB.save();
+
 
     }
     public void promoteToAdmin(User user)
@@ -87,6 +92,9 @@ public class Group {
         }
          for(String userID : admins){
              userDatabase.getUser(userID).getGroupManager().leaveGroup(this);
+         }
+         for(String postID : posts){
+             removePost(postID);
          }
      }
 
@@ -131,6 +139,12 @@ public class Group {
         }
         return members;
     }
+    public List<String > getMemberIDs() {
+        return members;
+    }
+    public List<String> getPendingRequests() {
+        return pendingRequests;
+    }
 
 //    public void setMembers(List<User> members) {
 //        this.members = members;
@@ -144,12 +158,14 @@ public class Group {
 //        this.admins = admins;
 //    }
 
-    public List<Post> getPosts() {
+    public List<IContent> getPosts() {
         IContentDatabase contentDatabase = ContentDatabase.getInstance();
-        List<Post> posts = new ArrayList<>();
+        List<IContent> posts = new ArrayList<>();
         contentDatabase.load();
         for (String post : this.posts) {
-            posts.add((Post) contentDatabase.getContent(post));
+            IContent p =  contentDatabase.getContent(post);
+            System.out.println("post Status"+ p);
+            posts.add(p);
         }
         return posts;
     }

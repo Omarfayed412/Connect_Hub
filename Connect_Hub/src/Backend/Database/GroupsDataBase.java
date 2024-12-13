@@ -24,11 +24,13 @@ public class GroupsDataBase implements GroupsInterface {
         System.out.println("inside constructor groupsDataBase");
         gson = new Gson();
         numberOfJSONOBJECTS();
+
         System.out.println("constructed groups dataBase finished");
     }
 
     synchronized public static GroupsDataBase getGroupsDataBase() {
         System.out.println("Groups DataBase called");
+        System.out.println("inside getGroupsDataBase    -----------------   "+ groups);
         if (groupsDataBase == null) {
             System.out.println("Content Database created with size ++++++++++++++");
             groupsDataBase = new GroupsDataBase();
@@ -87,8 +89,10 @@ public class GroupsDataBase implements GroupsInterface {
         System.out.println("inside inner load groups");
         groups = groupsDataBase.deserializeUsers();
 
+        System.out.println("inside inner load");
         if(groups == null)
             groups = new ArrayList<Group>();
+        System.out.println("groups loaded"+ groups);
     }
     @Override
     public void load() {
@@ -97,6 +101,8 @@ public class GroupsDataBase implements GroupsInterface {
         FileReader reader = new FileReader(groups_json);
         Type type = new TypeToken<ArrayList<Group>>(){}.getType();
         groups = gson.fromJson(reader,type);
+        if (groups == null)
+            groups = new ArrayList<>();
         reader.close();
     }catch (IOException e)
     {e.printStackTrace();}

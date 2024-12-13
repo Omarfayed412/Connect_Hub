@@ -48,6 +48,9 @@ public class GroupManager {
     {
         this.groupAdmined.remove(groupId);
     }
+    public boolean inGroup(String groupId){
+        return this.groupJoined.contains(groupId);
+    }
     public void promoteToAdmin(Group group)
     {
         this.groupAdmined.add(group.getGroupID());
@@ -61,15 +64,14 @@ public class GroupManager {
         GroupsInterface groupsDataBase = GroupsDataBase.getGroupsDataBase();
         groupsDataBase.load();
        // System.out.println(groupsDataBase.getGroups().size()+"    1===============================================");
-        IUserDatabase userDatabase = UserDatabase.getUserDataBase();
-        User user = userDatabase.getUser(this.userId);
-        System.out.println(user+ "user");
-         Group group=new GroupBuilderConcerete().setName(name).setDescription(desc).setPhotoPath(photoPath).setPrimaryAdmin(user).setGroupID().build();
+         Group group=new GroupBuilderConcerete().setName(name).setDescription(desc).setPhotoPath(photoPath).setPrimaryAdmin(UserDatabase.getUserDataBase().getUser(userId)).setGroupID().build();
          System.out.println(group + "group");
-         group.addMember(user);
-         PrimaryAdminRole.getInstance().promoteToAdmin(group,user);
+         group.addMember(userId);
+         PrimaryAdminRole.getInstance().promoteToAdmin(group,userId);
+        this.groupJoined.add(group.getGroupID());
          this.groupAdmined.add(group.getGroupID());
-         this.groupJoined.add(group.getGroupID());
+         System.out.println(UserDatabase.getUserDataBase().getUser(userId).getGroupManager().groupJoined + "  gggggggggggggggggggggg");
+         System.out.println("listttttttttttttttt"+ groupJoined);
         //System.out.println(groupsDataBase.getGroups().size()+"    1111===============================================");
         groupsDataBase.addGroup(group);
          System.out.println(groupsDataBase.getGroups().size()+"   2===============================================");
