@@ -46,11 +46,10 @@ public class MemberRole {
         userDatabase.load();
         group = groupsDataBase.getGroup(group.getGroupID());
         user = userDatabase.getUser(user.getUserID());
-        if (group.isMember(user)) {
-            user.getGroupManager().leaveGroup(group);
-            group.removeMember(user);
-            groupsDataBase.save();
-        }
+        user.getGroupManager().leaveGroup(group);
+        group.removeMember(user);
+        groupsDataBase.save();
+        userDatabase.save();
     }
 
     public void post(Post post, Group group, User user) {

@@ -1,5 +1,8 @@
 package Frontend.GroupWindows;
 
+import Backend.Database.ContentDatabase;
+import Backend.Database.GroupsDataBase;
+import Backend.Database.IContentDatabase;
 import Backend.GroupManagement.Group;
 
 import javax.swing.*;
@@ -16,11 +19,10 @@ public class EditGroup {
     private JButton saveButton;
     private JButton changeGroupPhotoButton;
     private JTextField textField1;
-    private Group group;
     private String imagePath;
 
     public EditGroup(JFrame frame, Group group) {
-        this.group = group;
+        group = GroupsDataBase.getGroupsDataBase().getGroup(group.getGroupID());
         frame.setContentPane(panel1);
         frame.setVisible(true);
         textField1.setText(group.getName());
@@ -30,7 +32,7 @@ public class EditGroup {
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         photo.setText("");
         photo.setIcon(scaledIcon);
-        frame.setSize(600, 300);
+        frame.setSize(600, 500);
         changeGroupPhotoButton.addActionListener(new ActionListener() {
 
             @Override

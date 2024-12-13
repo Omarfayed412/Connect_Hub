@@ -50,8 +50,7 @@ public class Group {
     public void removeMember(User user)
     {
         members.remove(user.getUserID());
-        if(admins.contains(user.getUserID()))
-            admins.remove(user.getUserID());
+        admins.remove(user.getUserID());
     }
     public void addPost(Post post)
     {
@@ -85,7 +84,12 @@ public class Group {
      {
          return ((primaryAdmin.equals(user.getUserID()))||admins.contains(user.getUserID()));
      }
-     public void deleteGroup(){
+
+    public List<String> getAdmins() {
+        return admins;
+    }
+
+    public void deleteGroup(){
         IUserDatabase userDatabase = UserDatabase.getUserDataBase();
         for(String userID : members){
             userDatabase.getUser(userID).getGroupManager().leaveGroup(this);

@@ -198,6 +198,7 @@ public class ProfileWindow extends JFrame {
         postsScroll.setViewportView(combinedContainer);
         postsScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         postsScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        postsScroll.getVerticalScrollBar().setValue(0);
     }
 
 }

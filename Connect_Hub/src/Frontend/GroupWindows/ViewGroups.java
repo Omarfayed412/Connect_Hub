@@ -55,9 +55,9 @@ public class ViewGroups {
                    if (group.isPrimaryAdmin(user))
                        new PAdminWindow(user, group);
                    else if (group.isAdmin(user))
-                       new AdminWindow();
+                       new AdminWindow(user, group);
                    else
-                       new MemberWindow();
+                       new MemberWindow(user, group);
                    mainFrame.dispose();
                    profileFrame.dispose();
                 }

@@ -172,7 +172,7 @@ public class NewsFeed extends JFrame{
         storiesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         storiesPanel.setBackground(Color.LIGHT_GRAY);
         // get friends stories
-        List<IContent> stories = newsFeed.getStories();
+        List<IContent> stories = newsFeed.getStories().reversed();
 
         for (IContent content : stories) {
             JPanel story = new Story(content);
@@ -193,7 +193,7 @@ public class NewsFeed extends JFrame{
         JPanel postsContainer = new JPanel();
         postsContainer.setLayout(new BoxLayout(postsContainer, BoxLayout.Y_AXIS));
         postsContainer.setBackground(Color.WHITE);
-        List<IContent> posts = newsFeed.getPosts();
+        List<IContent> posts = newsFeed.getPosts().reversed();
 
         for (IContent content : posts) {
             JPanel postPanel = new Post(content);
@@ -204,6 +204,7 @@ public class NewsFeed extends JFrame{
         news.setViewportView(combinedContainer);
         news.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         news.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        news.getVerticalScrollBar().setValue(0);
     }
 
     public void friendsLoad() {
@@ -219,6 +220,7 @@ public class NewsFeed extends JFrame{
         friends.setViewportView(mainFriends);
         friends.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         friends.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        friends.getVerticalScrollBar().setValue(0);
     }
 
     public void suggestionsLoad(){
@@ -244,6 +246,7 @@ public class NewsFeed extends JFrame{
         suggestions.setViewportView(mainFriends);
         suggestions.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         suggestions.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        suggestions.getVerticalScrollBar().setValue(0);
 
     }
 
@@ -327,6 +330,7 @@ public class NewsFeed extends JFrame{
         this.sGroups.setViewportView(groups);
         this.sGroups.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.sGroups.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sGroups.getVerticalScrollBar().setValue(0);
 
     }
 

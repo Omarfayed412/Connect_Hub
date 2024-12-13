@@ -30,6 +30,7 @@ public class PAdminWindow extends JFrame {
     private JButton createPostButton;
     private JButton newsFeedButton;
     private JScrollPane feed;
+    private JButton refreshButton;
     private JFrame secondryWindow;
     private Group group;
     private User user;
@@ -52,24 +53,9 @@ public class PAdminWindow extends JFrame {
         discription.setEditable(false);
         DefaultCaret caret = (DefaultCaret) discription.getCaret();
         caret.setVisible(false);
+        contentDatabase.load();
+        groupDatabase.load();
         loadProfile();
-        createPostButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (secondryWindow != null) {
-                    return;
-                }
-                secondryWindow = new JFrame();
-                secondryWindow.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        secondryWindow = null;
-                    }
-                });
-                new CreatePost(secondryWindow);
-            }
-        });
         manageMembersButton.addActionListener(new ActionListener() {
 
             @Override
@@ -178,29 +164,35 @@ public class PAdminWindow extends JFrame {
                 });
             }
         });
-        loadPosts();
+        refreshButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentDatabase.load();
+                groupDatabase.load();
+                loadProfile();
+                loadPosts();
+            }
+        });
 
     }
     public void loadProfile(){
-        groupDatabase.load();
         this.group = groupDatabase.getGroup(group.getGroupID());
         groupName.setText(group.getName());
         discription.setText(group.getDescription());
         ImageIcon pPhoto = new ImageIcon(group.getPhotoPath());
-        Image scaledImage = pPhoto.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        Image scaledImage = pPhoto.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         groupPhoto.setText("");
         groupPhoto.setIcon(scaledIcon);
         groupPhoto.setText("");
     }
     public void loadPosts() {
-        contentDatabase.load();
-        groupDatabase.load();
         this.group = groupDatabase.getGroup(group.getGroupID());
         JPanel postsContainer = new JPanel();
         postsContainer.setLayout(new BoxLayout(postsContainer, BoxLayout.Y_AXIS));
         postsContainer.setBackground(Color.WHITE);
-        List<IContent> posts = group.getPosts();
+        List<IContent> posts = group.getPosts().reversed();
         System.out.println(posts.size()+"Size----------------------------->");
         for (IContent content : posts) {
             JPanel postPanel = new Frontend.NewFeedWindows.Post(content);
@@ -210,6 +202,7 @@ public class PAdminWindow extends JFrame {
         feed.setViewportView(postsContainer);
         feed.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         feed.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        feed.getVerticalScrollBar().setValue(0);
     }
 
 }
